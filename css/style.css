@@ -24,7 +24,7 @@ body {
     overflow-x: hidden;
     background: #FDFDFD;
     color: #505050;
-    font: 300 14px Lato, sans-serif;
+    font: 400 14px Lato, sans-serif;
     letter-spacing: .5px
 }
 h1,
@@ -36,13 +36,13 @@ h4 {
     letter-spacing: 1px
 }
 h1 {
-    font: 300 50px/60px Montserrat, sans-serif
+    font: 400 50px/60px Montserrat, sans-serif
 }
 h2 {
-    font: 300 24px/34px Lato, sans-serif
+    font: 400 24px/34px Lato, sans-serif
 }
 h3 {
-    font: 300 20px/30px Lato, sans-serif
+    font: 400 20px/30px Lato, sans-serif
 }
 h4 {
     font: 400 13px/23px Lato, sans-serif;
@@ -50,7 +50,7 @@ h4 {
     text-transform: uppercase
 }
 p {
-    font: 200 16px/24px Lato, sans-serif;
+    font: 300 16px/24px Lato, sans-serif;
     line-height: 24px
 }
 a,
