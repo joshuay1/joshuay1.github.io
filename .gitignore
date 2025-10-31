@@ -10,3 +10,6 @@ Gemfile.lock
 assets/libs/
 node_modules/
 vendor
+_site.zip
+.gitignore
+_site 2.zip

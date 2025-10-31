@@ -2,15 +2,35 @@
  * Styles for the base elements of the theme.
  ******************************************************************************/
 
+@import "fonts";
+
 // Typography
 
-p,
+/*
+  Fonts:
+  - Headings: Fraunces (serif display)
+  - Body: Commissioner (geometric sans)
+  The Google Fonts stylesheet is loaded via `_config.yml` -> third_party_libraries.google_fonts.url.fonts
+*/
+
+html,
+body {
+  font-family: 'Commissioner', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
 h1,
 h2,
 h3,
 h4,
 h5,
-h6,
+h6 {
+  font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--global-heading-color);
+}
+
+p,
 em,
 div,
 li,
@@ -36,16 +56,18 @@ table {
 
 a,
 table.table a {
-  color: var(--global-theme-color);
+  color: var(--global-link-color);
+  font-weight: 600;
 
   &:hover {
-    color: var(--global-theme-color);
+    color: var(--global-hover-color);
     text-decoration: underline;
   }
 
   &:hover:after :not(.nav-item.dropdown) {
     width: 100%;
   }
+
 }
 
 .table-dark {
@@ -183,7 +205,7 @@ ul.task-list input[type="checkbox"] {
 // Profile
 
 .profile {
-  width: 100%;
+  width: 20%;
 
   .more-info {
     margin-bottom: 5px;
@@ -198,7 +220,7 @@ ul.task-list input[type="checkbox"] {
 }
 
 .profile.float-right {
-  margin-left: 1rem;
+  margin-left: 2rem;
 }
 
 .profile.float-left {
@@ -207,8 +229,6 @@ ul.task-list input[type="checkbox"] {
 
 @media (min-width: 576px) {
   .profile {
-    width: 30%;
-
     .address {
       p {
         display: block;
@@ -279,6 +299,7 @@ ul.task-list input[type="checkbox"] {
 
   .navbar-nav .nav-item .nav-link {
     color: var(--global-text-color);
+    font-weight: 600;
 
     &:hover {
       color: var(--global-hover-color);
@@ -288,7 +309,7 @@ ul.task-list input[type="checkbox"] {
   .navbar-nav .nav-item.active > .nav-link {
     background-color: inherit;
     font-weight: bolder;
-    color: var(--global-theme-color);
+    color: var(--global-nav-link-color);
 
     &:hover {
       color: var(--global-hover-color);
@@ -298,11 +319,10 @@ ul.task-list input[type="checkbox"] {
   .navbar-brand.social {
     padding-bottom: 0;
     padding-top: 0;
-    font-size: 1.7rem;
 
     a {
       i::before {
-        color: var(--global-text-color);
+        color: var(--global-link-color);
         transition-property: all 0.2s ease-in-out;
       }
 
@@ -372,11 +392,10 @@ ul.task-list input[type="checkbox"] {
   text-align: center;
 
   .contact-icons {
-    font-size: 4rem;
 
     a {
       i::before {
-        color: var(--global-text-color);
+        color: var(--global-link-color);
         transition-property: all 0.2s ease-in-out;
       }
 
@@ -730,8 +749,8 @@ footer.sticky-bottom {
 
       .links {
         a.btn {
-          color: var(--global-text-color);
-          border: 1px solid var(--global-text-color);
+          color: var(--global-button-text-color);
+          border: 0px;
           padding-left: 1rem;
           padding-right: 1rem;
           padding-top: 0.25rem;
@@ -814,7 +833,7 @@ footer.sticky-bottom {
 
 // Rouge Color Customization
 figure.highlight {
-  margin: 0 0 1rem;
+  margin: 1rem;
 }
 
 pre {
@@ -1001,6 +1020,20 @@ progress::-moz-progress-bar {
   }
 }
 
+/* Global button overrides to use the custom palette */
+.btn {
+  color: var(--global-button-text-color);
+  background-color: var(--global-button-bg-color);
+  border-color: var(--global-button-bg-color);
+
+  &:hover,
+  &:focus {
+    background-color: var(--global-button-hover-bg-color);
+    border-color: var(--global-button-hover-bg-color);
+    color: var(--global-button-text-color);
+  }
+}
+
 /* Table of Contents */
 nav[data-toggle="toc"] {
   top: 5rem;
@@ -1020,8 +1053,8 @@ nav[data-toggle="toc"] {
   }
 
   .nav-link.active {
-    color: var(--global-theme-color);
-    border-left-color: var(--global-theme-color);
+    color: var(--global-nav-link-color);
+    border-left-color: var(--global-nav-link-color);
     font-size: 0.75rem;
 
     &:hover {
