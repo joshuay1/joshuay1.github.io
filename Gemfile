@@ -1,4 +1,8 @@
 source 'https://rubygems.org'
+
+# Ruby 3.3+ no longer ships certain stdlib components by default.
+# Explicitly include 'observer' to satisfy dependencies that require it.
+gem 'observer'
 group :jekyll_plugins do
     gem 'classifier-reborn'
     gem 'jekyll'
