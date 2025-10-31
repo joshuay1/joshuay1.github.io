@@ -30,7 +30,7 @@
     <script async type="text/json">
       {
             "title": "{{ page.title }}",
-            "description": "{{ page.description }}",
+            "description": "{{ page.description | markdownify | strip_html | strip_newlines }}",
             "published": "{{ page.date | date: '%B %d, %Y' }}",
             "authors": [
               {% for author in page.authors %}
@@ -72,7 +72,7 @@
     <div class="post distill">
       <d-title>
         <h1>{{ page.title }}</h1>
-        <p>{{ page.description }}</p>
+  <p>{{ page.description | markdownify }}</p>
       </d-title>
       {% if page.authors %}
         <d-byline></d-byline>

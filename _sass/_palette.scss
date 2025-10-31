@@ -1,0 +1,52 @@
+/*
+ * Project palette overrides generated from user-provided values.
+ * This file should be imported after `_variables.scss` and before `_themes.scss`
+ * so that the theme CSS custom properties are emitted from these values.
+ */
+
+// Site palette (user-specified) — updated per user on 2025-10-30
+$site-bg-color-custom: #f5f5f5 !default; // light grey page background
+$sidebar-bg-color-custom: #F8F9FA !default;
+$text-color-custom: #666260 !default;
+$sidebar-text-color-custom: #495057 !default;
+
+$headline-color-custom: #343A40 !default;
+$heading-color-custom: #212529 !default;
+
+$body-link-color-custom: #6F777F !default;
+$nav-link-color-custom: #495057 !default;
+$sidebar-link-color-custom: #495057 !default;
+
+$footer-text-color-custom: #6F777F !default;
+
+$button-text-color-custom: #F8F9FA !default;
+$button-hover-text-color-custom: #ffffff !default;
+
+$button-bg-color-custom: #404040 !default;
+$button-hover-bg-color-custom: #121417 !default;
+
+$border-color-custom: #DEE2E6 !default;
+
+// Map to existing theme SASS variables used by `_themes.scss`
+$white-color: $site-bg-color-custom !default;
+$card-bg-color: #ffffff !default; // keep cards/containers white for contrast
+$black-color: $text-color-custom !default; // primary body text
+$grey-color: lighten($black-color, 35%) !default; // used for lighter text variants
+$grey-color-light: lighten($grey-color, 20%) !default;
+$grey-color-dark: darken($site-bg-color-custom, 20%) !default;
+
+// Theme color maps to headline color
+$cyan-color: $headline-color-custom !default;
+
+// Accent / highlight color (user suggestion)
+$highlight-color: #497860 !default;
+
+// Border and link/button variables
+$border-color-custom: $border-color-custom !default; // keep name for _themes.scss
+$body-link-color: $body-link-color-custom !default;
+$nav-link-color: $nav-link-color-custom !default;
+$sidebar-link-color: $sidebar-link-color-custom !default;
+$hover-color-custom: $button-hover-bg-color-custom !default;
+$button-bg-color: $button-bg-color-custom !default;
+$button-hover-bg-color: $button-hover-bg-color-custom !default;
+$button-text-color: $button-text-color-custom !default;

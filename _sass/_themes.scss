@@ -3,7 +3,7 @@
  ******************************************************************************/
 
 :root {
-  --global-bg-color: #{$white-color};
+  --global-bg-color: #{$card-bg-color};
   --global-code-bg-color: #{$code-bg-color-light};
   --global-text-color: #{$black-color};
   --global-text-color-light: #{$grey-color};
@@ -14,9 +14,17 @@
   --global-footer-text-color: #{$grey-color-light};
   --global-footer-link-color: #{$white-color};
   --global-distill-app-color: #{$grey-color};
-  --global-divider-color: rgba(0, 0, 0, 0.1);
-  --global-card-bg-color: #{$white-color};
-  --global-highlight-color: #{$red-color-dark};
+  --global-divider-color: #{$border-color-custom};
+  --global-link-color: #{$highlight-color};
+  --global-nav-link-color: #{$nav-link-color};
+  --global-sidebar-link-color: #{$sidebar-link-color};
+  --global-hover-color: #{$hover-color-custom};
+  --global-button-bg-color: #{$button-bg-color};
+  --global-button-hover-bg-color: #{$button-hover-bg-color};
+  --global-button-text-color: #{$button-text-color};
+  --global-heading-color: #{$heading-color-custom};
+  --global-card-bg-color: #{$card-bg-color};
+  --global-highlight-color: #{$highlight-color};
 
   --global-tip-block: #42b983;
   --global-tip-block-bg: #e2f5ec;
@@ -66,6 +74,14 @@ html[data-theme="dark"] {
   --global-footer-link-color: #{$black-color};
   --global-distill-app-color: #{$grey-color-light};
   --global-divider-color: #424246;
+  --global-link-color: #{$highlight-color};
+  --global-nav-link-color: #{$nav-link-color};
+  --global-sidebar-link-color: #{$sidebar-link-color};
+  --global-hover-color: #{$hover-color-custom};
+  --global-button-bg-color: #{$button-bg-color};
+  --global-button-hover-bg-color: #{$button-hover-bg-color};
+  --global-button-text-color: #{$button-text-color};
+  --global-heading-color: #{$heading-color-custom};
   --global-card-bg-color: #{$grey-900};
 
   --global-tip-block: #42b983;

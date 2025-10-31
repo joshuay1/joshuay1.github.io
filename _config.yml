@@ -17,8 +17,8 @@ keywords: democracy, civic tech, voting, computational social science # add your
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
 icon: favicon.png
 
-url: 
-# https://joshuacyang.com # the base hostname & protocol for your site
+url: https://joshuay1.github.io # the base hostname & protocol for your site
+# https://joshuacyang.com
 baseurl: # the subpath of your site, e.g. /blog/. Leave blank for root
 last_updated: false # set to true if you want to display last updated in the footer
 impressum_path: # set to path to include impressum link in the footer, use the same path as permalink in a page, helps to conform with EU GDPR
@@ -137,7 +137,7 @@ pagination:
   enabled: true
 
 related_blog_posts:
-  enabled: true
+  enabled: false
   max_related: 5
 
 # Giscus comments (RECOMMENDED)
@@ -164,7 +164,7 @@ disqus_shortname: al-folio # put your disqus shortname
 # you can display them in your blog by adding a link to the RSS feed.
 external_sources:
   - name: medium.com
-    rss_url: https://medium.com/@al-folio/feed
+    rss_url: https://medium.com/@joshuacyyang/feed
 
 # -----------------------------------------------------------------------------
 # Collections
@@ -181,14 +181,14 @@ collections:
     permalink: /projects/:path/
 
 announcements:
-  enabled: false
+  enabled: true
   scrollable: true # adds a vertical scroll bar if there are more than 3 news items
   limit: 5 # leave blank to include all the news in the `_news` folder
 
 latest_posts:
-  enabled: false
+  enabled: true
   scrollable: true # adds a vertical scroll bar if there are more than 3 new posts items
-  limit: 3 # leave blank to include all the blog posts
+  limit: 1 # leave blank to include all the blog posts
 
 # -----------------------------------------------------------------------------
 # Jekyll settings
@@ -463,7 +463,8 @@ third_party_libraries:
     version: "5.5.0"
   google_fonts:
     url:
-      fonts: "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&display=swap"
+      # Use Commissioner for body text (geometric sans) and Fraunces for headings (serif display)
+      fonts: "https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700&family=Commissioner:wght@300;400;600;700&display=swap"
   highlightjs:
     integrity:
       css:
