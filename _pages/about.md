@@ -15,8 +15,10 @@ profile:
   #   <p>Your City, State 12345</p>
 
 news: true # includes a list of news items
+latest_posts: false # includes a list of the newest posts
 selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
+latest_projects: true # includes a list of the newest projects
 ---
 
 Hello 👋🏽 I am Josh, a **postdoc researcher at ETH Zurich 🇨🇭** investigating how **AI can be designed to serve society, and democracy in particular** (yes, a pro-active take). I **finished my PhD in summer 2025** and decided this mission was far too interesting to stop.

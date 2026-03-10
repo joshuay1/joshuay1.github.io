@@ -1,0 +1,21 @@
+<div class="projects">
+{% assign sorted_projects = site.projects | sort: "importance" %}
+
+{% for project in sorted_projects limit: 3 %}
+<div class="row mb-4">
+    <div class="col-sm-3 mt-3 mt-md-0">
+        {% if project.img %}
+        <img class="img-fluid z-depth-1 rounded" src="{{ project.img | relative_url }}">
+        {% endif %}
+    </div>
+    <div class="col-sm-9 mt-3 mt-md-0">
+        <h5><a href="{{ project.url | relative_url }}" style="color: inherit">{{ project.title }}</a></h5>
+        <p>{{ project.description }}</p>
+        <a href="{{ project.url | relative_url }}" class="btn btn-sm z-depth-0" role="button" style="background-color: var(--global-theme-color); color: var(--global-bg-color);">Read More</a>
+    </div>
+</div>
+{% if forloop.last == false %}
+<hr>
+{% endif %}
+{% endfor %}
+</div>
