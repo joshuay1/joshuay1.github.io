@@ -40,6 +40,7 @@ jobs:
         env:
           JEKYLL_ENV: production
         run: |
+          pip3 install --upgrade jupyter
           bundle exec jekyll build --trace
 
       - name: Upload artifact
