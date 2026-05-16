@@ -15,7 +15,15 @@
 
 html,
 body {
-  font-family: 'Commissioner', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family:
+    "Commissioner",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
 }
 
 h1,
@@ -24,7 +32,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
+  font-family: "Fraunces", Georgia, "Times New Roman", serif;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--global-heading-color);
@@ -67,7 +75,6 @@ table.table a {
   &:hover:after :not(.nav-item.dropdown) {
     width: 100%;
   }
-
 }
 
 .table-dark {
@@ -392,7 +399,6 @@ ul.task-list input[type="checkbox"] {
   text-align: center;
 
   .contact-icons {
-
     a {
       i::before {
         color: var(--global-link-color);

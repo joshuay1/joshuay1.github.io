@@ -7,7 +7,7 @@ importance: 3
 category: work
 ---
 
-In 2023, the city of Aarau launched its very first participatory budgeting program, [Stadtidee Aarau](https://www.stadtidee.aarau.ch/), distributing a 50,000 CHF budget among 33 proposed projects. 
+In 2023, the city of Aarau launched its very first participatory budgeting program, [Stadtidee Aarau](https://www.stadtidee.aarau.ch/), distributing a 50,000 CHF budget among 33 proposed projects.
 
 The real-world setup was closely informed by preliminary results from our lab experiments. Working in close collaboration with Sebrina, Jasmin, and Lea from the city of Aarau, we planned every step of the implementation together — from how people would vote, to how the results would be communicated back to residents. The city decided to use a 10-point voting system and aggregate votes using the **Method of Equal Shares (MES)**.
 

@@ -6,26 +6,26 @@
 
 // Site palette (user-specified) — updated per user on 2025-10-30
 $site-bg-color-custom: #f5f5f5 !default; // light grey page background
-$sidebar-bg-color-custom: #F8F9FA !default;
+$sidebar-bg-color-custom: #f8f9fa !default;
 $text-color-custom: #666260 !default;
 $sidebar-text-color-custom: #495057 !default;
 
-$headline-color-custom: #343A40 !default;
+$headline-color-custom: #343a40 !default;
 $heading-color-custom: #212529 !default;
 
-$body-link-color-custom: #6F777F !default;
+$body-link-color-custom: #6f777f !default;
 $nav-link-color-custom: #495057 !default;
 $sidebar-link-color-custom: #495057 !default;
 
-$footer-text-color-custom: #6F777F !default;
+$footer-text-color-custom: #6f777f !default;
 
-$button-text-color-custom: #F8F9FA !default;
+$button-text-color-custom: #f8f9fa !default;
 $button-hover-text-color-custom: #ffffff !default;
 
 $button-bg-color-custom: #404040 !default;
 $button-hover-bg-color-custom: #121417 !default;
 
-$border-color-custom: #DEE2E6 !default;
+$border-color-custom: #dee2e6 !default;
 
 // Map to existing theme SASS variables used by `_themes.scss`
 $white-color: $site-bg-color-custom !default;

@@ -14,6 +14,7 @@ nav_order: 3
 {% assign sorted_projects = site.projects | sort: "importance" %}
 
 {% for project in sorted_projects %}
+
 <div class="row mb-5">
     <div class="col-sm-12">
         <h2 class="category"><a href="{{ project.url | relative_url }}">{{ project.title }}</a></h2>

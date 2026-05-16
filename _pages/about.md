@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: Postdoc / joyang@ethz.ch / <a href='https://coss.ethz.ch/'>Computational Social Science, ETH Zurich</a>. 
+subtitle: Postdoc / joyang@ethz.ch / <a href='https://coss.ethz.ch/'>Computational Social Science, ETH Zurich</a>.
 
 profile:
   align: right
@@ -29,10 +29,10 @@ I try to bring my research to the real world as much as possible. I frequently a
 
 <!-- I see democracy not as a fixed system but as a living, evolving social technology that we must keep improving through experimentation, design, and collective learning. I believe that technology and AI should serve democracy, not the other way around. My work is driven by the idea that we can build systems that translate human diversity into fair and intelligible collective outcomes, rather than reducing it to a single “optimal” answer. I believe in agency — that people, algorithms, and societies can learn to make better decisions together. For me, democracy is not just an institution but an ongoing collective intelligence project, where the goal isn’t perfect agreement but shared understanding and participation. -->
 
-<!-- 
+<!--
 I was born in Canberra, Australia, and I cast my first ever vote using the [**preferential voting system**](https://www.abc.net.au/news/2025-05-01/australian-federal-election-preferential-voting-system-how-to/105204900). Growing up in Taiwan, I experienced its democratic transformation first-hand in the 2010s. Living as both a constant immigrant and a local has shaped my search for connection and understanding across diverse societies. In recent years, I have found a sense of belonging in Switzerland, which I now call home. -->
 
-Outside of work, I am an active member in the Taiwanese 🇹🇼 civic tech g0v community, participating mainly in the [vTaiwan](https://info.vtaiwan.tw/) project, using AI & digital tools to find consensus among the public in multistakeholder governance. We are constantly exploring new tools and methods that enhance deliberation and consensus finding. 
+Outside of work, I am an active member in the Taiwanese 🇹🇼 civic tech g0v community, participating mainly in the [vTaiwan](https://info.vtaiwan.tw/) project, using AI & digital tools to find consensus among the public in multistakeholder governance. We are constantly exploring new tools and methods that enhance deliberation and consensus finding.
 
 During my Computer Science (NLP) master’s at the University of Melbourne 🇦🇺, I conducted fieldwork in the Northern Territory, focusing on [Speech Recognition for Indigenous languages](https://medium.com/@joshuacyyang/can-speech-technologies-save-indigenous-languages-from-dying-a135a88a0fe7). My research explored a human-in-the-loop transcription pipeline that combined respeaking and word-spotting to improve recognition for endangered Indigenous languages.
 
