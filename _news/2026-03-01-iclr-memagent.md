@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-We have a first-authored paper appearing at the MemAgent Workshop at ICLR! We incorporated Bayesian updating into the memory structure of AI agents for social simulation, leading to more stable and realistic opinion shifts. :robot:
+We have a paper appearing at the MemAgent Workshop at ICLR! We incorporated Bayesian updating into the memory structure of AI agents for social simulation, leading to more stable and realistic opinion shifts. :robot:
