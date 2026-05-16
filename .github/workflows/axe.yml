@@ -18,6 +18,7 @@ on:
 
 env:
   URL: ""
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   check:
