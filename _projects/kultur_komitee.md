@@ -9,9 +9,9 @@ category: work
 
 Kultur Komitee is an ongoing, real-world **budget assembly** in Winterthur. Every year, residents come together to deliberate and collectively allocate **400,000 CHF** to fund local art and cultural projects — and I use each cycle as an opportunity to experiment with different voting frameworks and allocation rules!
 
-Most of my work focuses on iterating over the **Method of Equal Shares (MES)**. I design and test new interfaces and algorithms to make the voting process fairer and more transparent. Together with my colleague [Fynn Bachmann](https://fynnbachmann.com/), I have been running the calculations and aggregations for the **2024, 2025, and 2026** editions — collectively shaping how over **1.2 million CHF** have been allocated to art and cultural projects in the city.
+Most of my work focuses on iterating over the aggregation rules like the **Method of Equal Shares (MES)**. I design and test new interfaces and algorithms to make the voting process fairer and more transparent. Together with my colleague [Fynn Bachmann](https://fynnbachmann.com/), I have been running the calculations and aggregations for the **2024, 2025, and 2026** editions — collectively shaping how over **1.2 million CHF** have been allocated to art and cultural projects in the city.
 
-For instance, in the 2025 deployment (KK25), I worked with 38 residents to evaluate 121 proposals. They deliberated in groups and cast individual point votes, which my platform merged into a single fair allocation complete with personalized vote receipts.
+For instance, in the 2025 deployment (KK25), we worked with 38 residents to evaluate 121 proposals. They deliberated in groups and cast individual point votes, which my platform merged into a single fair allocation complete with personalized vote receipts.
 
 In 2026 (KK26), I leveled up the framework even more. I added new features that let voters see exactly how different aggregation rules would change the final results. The platform breaks down how each individual vote translates into actual spending, giving everyone unprecedented transparency into the budgeting process.
 
