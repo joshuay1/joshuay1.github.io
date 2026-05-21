@@ -15,12 +15,14 @@ The project is led by a Swiss research consortium and supported by TA-SWISS, the
 
 <div class="row">
     <div class="col-sm mt-3 mt-md-0 d-flex justify-content-center">
-        <img src="{{ '/assets/img/swiss_ai_futures.png' | relative_url }}" class="img-fluid z-depth-1 rounded" alt="Swiss AI Futures project preview">
+        <div style="width: 100%; height: 640px; overflow: hidden; position: relative;">
+            <iframe src="https://swissaifutures.org" title="Swiss AI Futures website preview" style="width: 125%; height: 800px; border: none; transform: scale(0.8); transform-origin: top left; position: absolute; top: 0; left: 0;"></iframe>
+        </div>
     </div>
 </div>
 
 <div class="caption">
-    Swiss AI Futures brings together online participation and in-person citizen assemblies to help shape the future of AI in Switzerland.
+    Explore the Swiss AI Futures project site, which invites public input on AI, work, education, and labour markets in Switzerland.
 </div>
 
 <div class="text-center mt-3">
