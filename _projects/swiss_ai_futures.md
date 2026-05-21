@@ -1,8 +1,8 @@
 ---
 layout: page
 title: Swiss AI Futures
-description: I am helping run a two citizen assemblies on AI in Switzerland, connecting broad online public input with in-person deliberation for policy.
-img: assets/img/swiss-ai-futures-flyer-en.jpg
+description: I am helping run two citizen assemblies on AI in Switzerland, connecting broad online public input with in-person deliberation for policy.
+img: assets/img/swiss_ai_futures.png
 importance: 2
 category: work
 ---
@@ -17,7 +17,7 @@ The project is led by a Swiss research consortium and supported by TA-SWISS, the
 
 <div class="row">
     <div class="col-sm mt-3 mt-md-0 d-flex justify-content-center">
-        <img src="{{ '/assets/img/swiss-ai-futures-flyer-en.jpg' | relative_url }}" class="img-fluid z-depth-1 rounded" alt="Swiss AI Futures project flyer">
+        <img src="{{ '/assets/img/swiss_ai_futures.png' | relative_url }}" class="img-fluid z-depth-1 rounded" alt="Swiss AI Futures project preview">
     </div>
 </div>
 
