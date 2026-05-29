@@ -1,0 +1,26 @@
+<div class="teaching mt-3">
+  {% assign teaching_items = site.data.teaching %}
+  {% for course in teaching_items limit: include.limit %}
+    <div class="row mb-4">
+      <div class="col-sm-3">
+        <p class="mb-1">
+          <strong>{{ course.period }}</strong>
+        </p>
+        <p class="text-muted mb-0">{{ course.role }}</p>
+      </div>
+      <div class="col-sm-9">
+        <h5 class="mb-1">
+          {{ course.title }}
+          {% if course.code %}
+            <span class="text-muted">({{ course.code }})</span>
+          {% endif %}
+        </h5>
+        <p class="mb-1">{{ course.institution }}, {{ course.location }}</p>
+        <p>{{ course.description }}</p>
+      </div>
+    </div>
+    {% if forloop.last == false %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+</div>

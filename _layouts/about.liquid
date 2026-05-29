@@ -72,6 +72,14 @@ layout: default
       {% include latest_projects.liquid %}
     {% endif %}
 
+    <!-- Teaching -->
+    {% if page.teaching %}
+      <h2>
+        <a href="{{ '/teaching/' | relative_url }}" style="color: inherit">teaching</a>
+      </h2>
+      {% include teaching.liquid limit=2 %}
+    {% endif %}
+
     <!-- Social -->
     {% if page.social %}
       <div class="social">

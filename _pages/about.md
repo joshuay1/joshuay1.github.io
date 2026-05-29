@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: Postdoc / joyang@ethz.ch / <a href='https://coss.ethz.ch/'>Computational Social Science, ETH Zurich</a>.
+subtitle: Postdoc / <a href='mailto:joyang@ethz.ch'>joyang@ethz.ch</a> / <a href='mailto:joshyang@mit.edu'>joshyang@mit.edu</a> / <a href='https://coss.ethz.ch/'>Computational Social Science, ETH Zurich</a>.
 
 profile:
   align: right
@@ -19,11 +19,12 @@ latest_posts: false # includes a list of the newest posts
 selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 latest_projects: true # includes a list of the newest projects
+teaching: true # includes a short teaching section
 ---
 
 Hello 👋🏽 I am Josh, a **postdoc researcher at ETH Zurich 🇨🇭** investigating how **AI can be designed to serve society, and democracy in particular** (yes, a pro-active take). I **finished my PhD in summer 2025** and decided this mission was far too interesting to stop.
 
-Coming from Computer Science, I approach my research through the lens of **responsible and societal AI**, combining insights from Complex Systems, Computational Social Choice, and Human-AI Interaction. My research moves in two main directions. The first focuses on **Digital Democracy**, studying how methods such as agentic AI, LLMs, voting algorithms and recommender systems can support how people vote, deliberate, and make collective decisions. I am particularly interested in what happens once AI systems become part of the social environment itself: how they shape attention, trust, disagreement, and opinion change in complex collective systems, and how agent-based simulations can help study those feedback loops. The second explores **AI Pluralistic Alignment**, developing ways for AI systems to understand and represent diverse human values rather than converging on a single viewpoint.
+Coming from Computer Science, I approach my research through the lens of **responsible and societal AI**, combining insights from Complex Systems, Computational Social Choice, and Human-AI Interaction. My research moves in two main directions. The first focuses on **Digital Democracy**, studying how methods such as agentic AI, LLMs, voting algorithms and recommender systems can support how people vote, deliberate, and make collective decisions. I also look into how LLM agent-based simulations can help study those feedback loops. The second explores **AI Pluralistic Alignment**, developing ways for AI systems to understand and represent diverse human values in support of human flourishing, rather than converging on a single viewpoint.
 
 I try to bring my research to the real world as much as possible. I frequently advise governments and organisations on their digital participatory processes. In Switzerland, I have worked closely with the city of Aarau on the [StadtIdee](https://www.stadtidee.aarau.ch/abstimmung.html/2114) Participatory Budgeting program and also [Kultur Komitee](https://kulturkomitee.win/) Winterthur in their annual citizen assembly to fund art and cultural projects.
 
