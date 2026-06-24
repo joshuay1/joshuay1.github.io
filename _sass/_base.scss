@@ -734,14 +734,15 @@ html[data-theme="dark"] .publication-page {
 
         abbr {
           display: inline-block;
-          background-color: transparent;
+          background-color: transparent !important;
           border-left: 3px solid var(--publication-emphasis-color);
-          color: var(--publication-emphasis-color);
-          border-radius: 0;
+          color: var(--publication-emphasis-color) !important;
+          border-radius: 0 !important;
           margin-bottom: 0.5rem;
 
+          div,
           a {
-            color: var(--publication-emphasis-color);
+            color: var(--publication-emphasis-color) !important;
 
             &:hover {
               text-decoration: none;
