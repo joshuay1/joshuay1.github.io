@@ -46,8 +46,22 @@
 
   <!-- Entry bib key -->
   <div id="{{entry.key}}" class="{% if site.enable_publication_thumbnails %}col-sm-8{% else %}col-sm-10{% endif %}">
+    {% assign publication_page_url = null %}
+    {% if entry.siteurl %}
+      {% if entry.siteurl contains '://' %}
+        {% assign publication_page_url = entry.siteurl %}
+      {% else %}
+        {% assign publication_page_url = entry.siteurl | relative_url %}
+      {% endif %}
+    {% endif %}
     <!-- Title -->
-    <div class="title">{{ entry.title }}</div>
+    <div class="title">
+      {% if publication_page_url %}
+        <a href="{{ publication_page_url }}">{{ entry.title }}</a>
+      {% else %}
+        {{ entry.title }}
+      {% endif %}
+    </div>
     <!-- Author -->
     <div class="author">
       {% assign author_array_size = entry.author_array | size %}
@@ -172,6 +186,9 @@
 
     <!-- Links/Buttons -->
     <div class="links">
+      {% if publication_page_url %}
+        <a href="{{ publication_page_url }}" class="btn btn-sm z-depth-0" role="button">Page</a>
+      {% endif %}
       {% if entry.award %}
         <a class="award btn btn-sm z-depth-0" role="button">
           {%- if entry.award_name %}{{ entry.award_name }}{% else %}Awareded{% endif -%}

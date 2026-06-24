@@ -1,0 +1,259 @@
+---
+layout: default
+---
+{% assign publication = site.data.publications[page.bibkey] %}
+
+{% if publication %}
+  {% assign page_url = page.url | absolute_url %}
+  {% assign preview_url = publication.preview %}
+  {% if preview_url and preview_url contains '://' %}
+    {% assign preview_src = preview_url %}
+  {% elsif preview_url %}
+    {% assign preview_src = preview_url | relative_url %}
+  {% endif %}
+  {% assign primary_paper_url = null %}
+  {% assign primary_paper_detail = null %}
+  {% assign source_label = 'Source' %}
+  {% if publication.doi %}
+    {% assign source_label = 'DOI' %}
+  {% elsif publication.arxiv %}
+    {% assign source_label = 'arXiv' %}
+  {% endif %}
+  {% if publication.pdf_url %}
+    {% assign primary_paper_url = publication.pdf_url %}
+    {% assign primary_paper_detail = 'Open the PDF manuscript' %}
+  {% elsif publication.source_url %}
+    {% assign primary_paper_url = publication.source_url %}
+    {% assign primary_paper_detail = 'Open the paper record' %}
+  {% endif %}
+
+  <article class="publication-page" itemscope itemtype="https://schema.org/ScholarlyArticle">
+    <a class="publication-back-link" href="{{ '/pubs/' | relative_url }}">
+      <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+      Publications
+    </a>
+
+    <header class="publication-hero">
+      <div class="publication-hero-copy">
+        {% if publication.venue_type %}
+          <p class="publication-eyebrow">{{ publication.venue_type }}</p>
+        {% endif %}
+        <h1 itemprop="headline">{{ publication.title }}</h1>
+        <p class="publication-authors" itemprop="author">{{ publication.author_text }}</p>
+        <p class="publication-venue">
+          {% if publication.venue %}{{ publication.venue }}{% endif %}
+          {% if publication.year %}<span>{{ publication.year }}</span>{% endif %}
+        </p>
+
+        <div class="publication-paper-access" aria-label="Paper access links">
+          {% if primary_paper_url %}
+            <a class="publication-paper-cta" href="{{ primary_paper_url }}">
+              <span class="publication-paper-cta-icon">
+                {% if publication.pdf_url %}
+                  <i class="fa-solid fa-file-pdf" aria-hidden="true"></i>
+                {% elsif publication.doi %}
+                  <i class="ai ai-doi" aria-hidden="true"></i>
+                {% elsif publication.arxiv %}
+                  <i class="ai ai-arxiv" aria-hidden="true"></i>
+                {% else %}
+                  <i class="fa-solid fa-file-lines" aria-hidden="true"></i>
+                {% endif %}
+              </span>
+              <span class="publication-paper-cta-copy">
+                <strong>Read the paper</strong>
+                <small>{{ primary_paper_detail }}</small>
+              </span>
+              <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+            </a>
+          {% endif %}
+
+          <div class="publication-actions">
+            {% if publication.pdf_url %}
+              <a class="publication-action" href="{{ publication.pdf_url }}">
+                <i class="fa-solid fa-file-pdf" aria-hidden="true"></i>
+                PDF
+              </a>
+            {% endif %}
+            {% if publication.source_url %}
+              <a class="publication-action" href="{{ publication.source_url }}">
+                {% if publication.doi %}
+                  <i class="ai ai-doi" aria-hidden="true"></i>
+                {% elsif publication.arxiv %}
+                  <i class="ai ai-arxiv" aria-hidden="true"></i>
+                {% else %}
+                  <i class="fa-solid fa-up-right-from-square" aria-hidden="true"></i>
+                {% endif %}
+                {{ source_label }}
+              </a>
+            {% endif %}
+            <a class="publication-action" href="#cite">
+              <i class="fa-solid fa-quote-right" aria-hidden="true"></i>
+              Cite
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {% if preview_src %}
+        <figure class="publication-preview">
+          <img src="{{ preview_src }}" alt="{{ publication.short_title | default: publication.title }} preview" itemprop="image">
+        </figure>
+      {% endif %}
+    </header>
+
+    <div class="publication-layout">
+      <div class="publication-main">
+        <section class="publication-section publication-tldr" id="tldr">
+          <h2>TL;DR</h2>
+          {{ publication.tldr | markdownify }}
+        </section>
+
+        {% if publication.highlights %}
+          <section class="publication-section" id="key-takeaways">
+            <h2>Key Takeaways</h2>
+            <div class="publication-highlight-list">
+              {% for highlight in publication.highlights %}
+                <article>
+                  <h3>{{ highlight.title }}</h3>
+                  <p>{{ highlight.text }}</p>
+                </article>
+              {% endfor %}
+            </div>
+          </section>
+        {% endif %}
+
+        <section class="publication-section" id="why-it-matters">
+          <h2>Why It Matters</h2>
+          {{ publication.why | markdownify }}
+        </section>
+
+        <section class="publication-section" id="abstract">
+          <h2>Abstract</h2>
+          <p itemprop="abstract">{{ publication.abstract }}</p>
+        </section>
+
+        {% if content != blank %}
+          <section class="publication-section" id="paper-content">
+            <h2>Paper Content</h2>
+            {{ content }}
+          </section>
+        {% endif %}
+      </div>
+
+      <aside class="publication-sidebar" aria-label="Publication details">
+        {% if primary_paper_url %}
+          <section class="publication-side-section publication-access-panel">
+            <h2>Paper</h2>
+            <a class="publication-access-main" href="{{ primary_paper_url }}">
+              <span>
+                <strong>Read the paper</strong>
+                <small>{{ primary_paper_detail }}</small>
+              </span>
+              <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+            </a>
+            <div class="publication-access-secondary">
+              {% if publication.pdf_url %}
+                <a href="{{ publication.pdf_url }}">PDF</a>
+              {% endif %}
+              {% if publication.source_url %}
+                <a href="{{ publication.source_url }}">{{ source_label }}</a>
+              {% endif %}
+              <a href="#cite">Cite</a>
+            </div>
+          </section>
+        {% endif %}
+
+        <section class="publication-side-section">
+          <h2>Details</h2>
+          <dl class="publication-details">
+            {% if publication.venue %}
+              <dt>Venue</dt>
+              <dd>{{ publication.venue }}</dd>
+            {% endif %}
+            {% if publication.year %}
+              <dt>Year</dt>
+              <dd>{{ publication.year }}</dd>
+            {% endif %}
+            {% if publication.doi %}
+              <dt>DOI</dt>
+              <dd><a href="https://doi.org/{{ publication.doi }}">{{ publication.doi }}</a></dd>
+            {% endif %}
+            {% if publication.arxiv %}
+              <dt>arXiv</dt>
+              <dd><a href="https://arxiv.org/abs/{{ publication.arxiv }}">{{ publication.arxiv }}</a></dd>
+            {% endif %}
+          </dl>
+        </section>
+
+        {% if publication.stats %}
+          <section class="publication-side-section">
+            <h2>At A Glance</h2>
+            <dl class="publication-stats">
+              {% for stat in publication.stats %}
+                <dt>{{ stat.value }}</dt>
+                <dd>{{ stat.label }}</dd>
+              {% endfor %}
+            </dl>
+          </section>
+        {% endif %}
+
+        {% if publication.best_for %}
+          <section class="publication-side-section">
+            <h2>Useful For</h2>
+            <p class="publication-sidebar-copy">{{ publication.best_for }}</p>
+          </section>
+        {% endif %}
+
+        {% if publication.keywords %}
+          <section class="publication-side-section">
+            <h2>Topics</h2>
+            <div class="publication-tags">
+              {% for keyword in publication.keywords %}
+                <span>{{ keyword }}</span>
+              {% endfor %}
+            </div>
+          </section>
+        {% endif %}
+
+        <section class="publication-side-section publication-citation" id="cite">
+          <h2>Cite</h2>
+          <p id="apa-citation">{{ publication.apa }}</p>
+          <button class="publication-copy" type="button" data-copy-target="apa-citation">
+            <i class="fa-regular fa-copy" aria-hidden="true"></i>
+            Copy APA
+          </button>
+          <pre><code id="bibtex-citation">{{ publication.bibtex | escape }}</code></pre>
+          <button class="publication-copy" type="button" data-copy-target="bibtex-citation">
+            <i class="fa-regular fa-copy" aria-hidden="true"></i>
+            Copy BibTeX
+          </button>
+        </section>
+      </aside>
+    </div>
+  </article>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll("[data-copy-target]").forEach(function (button) {
+        button.addEventListener("click", function () {
+          var target = document.getElementById(button.getAttribute("data-copy-target"));
+          if (!target || !navigator.clipboard) return;
+          navigator.clipboard.writeText(target.innerText.trim()).then(function () {
+            var original = button.innerHTML;
+            button.innerHTML = '<i class="fa-solid fa-check" aria-hidden="true"></i> Copied';
+            window.setTimeout(function () {
+              button.innerHTML = original;
+            }, 1400);
+          });
+        });
+      });
+    });
+  </script>
+{% else %}
+  <div class="post">
+    <header class="post-header">
+      <h1 class="post-title">{{ page.title }}</h1>
+    </header>
+    <article>{{ content }}</article>
+  </div>
+{% endif %}

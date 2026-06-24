@@ -176,6 +176,9 @@ collections:
   projects:
     output: true
     permalink: /projects/:path/
+  publications:
+    output: true
+    permalink: /pubs/:path/
 
 announcements:
   enabled: true
@@ -222,6 +225,7 @@ exclude:
   - package.json
   - package-lock.json
   - _pages/about_einstein.md
+  - _publications/context/
   - purgecss.config.js
   - README.md
   - readme_preview/
@@ -339,6 +343,7 @@ filtered_bibtex_keywords:
     poster,
     preview,
     selected,
+    siteurl,
     slides,
     supp,
     video,

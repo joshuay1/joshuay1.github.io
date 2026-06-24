@@ -1,0 +1,570 @@
+yang2026belief:
+  slug: belief-engine
+  title: "Belief Engine: Configurable and Inspectable Stance Dynamics in Multi-Agent LLM Deliberation"
+  short_title: "Belief Engine"
+  authors:
+    - name: Joshua C. Yang
+    - name: Maurice Flechtner
+    - name: Damian Dailisan
+    - name: Michiel A. Bakker
+  author_text: "Joshua C. Yang, Maurice Flechtner, Damian Dailisan, and Michiel A. Bakker"
+  year: "2026"
+  publication_date: "2026"
+  venue: "arXiv preprint arXiv:2605.15343"
+  venue_type: "Preprint"
+  arxiv: "2605.15343"
+  source_url: "https://arxiv.org/abs/2605.15343"
+  pdf_url: "https://arxiv.org/pdf/2605.15343"
+  preview: "/assets/img/publication_preview/belief-engine.png"
+  selected: true
+  tldr: >-
+    LLM agents often drift because they do not have a stable inner core. Belief Engine gives an AI agent a traceable stance it can hold onto, while still letting it be persuaded by good evidence. The result is an agent that can stay coherent, change its mind, and show why it changed.
+  why: >-
+    Multi-agent LLM simulations can look persuasive while hiding why agents change their minds. This work makes stance change explicit, configurable, and empirically testable, so researchers can separate evidence-responsive movement from anchoring, prompt effects, retrieval artifacts, and model bias.
+  abstract: >-
+    We introduce Belief Engine, an auditable belief-update layer for multi-agent LLM deliberation. The system extracts arguments into structured memory and updates stance with configurable log-odds dynamics, making belief change more inspectable and useful for studying social simulation, disagreement, and deliberation.
+  stats:
+    - value: "2,495"
+      label: "human DEBATE trajectories replayed"
+    - value: "0.967"
+      label: "correlation between assigned and judged stance"
+    - value: "0.465"
+      label: "pooled replay RMSE"
+    - value: "15"
+      label: "round generated debates"
+  highlights:
+    - title: "Belief is explicit state"
+      text: "The system maintains proposition-level stance instead of inferring belief only from generated text."
+    - title: "Two interpretable controls"
+      text: "Evidence uptake tunes responsiveness to new arguments; prior anchoring tunes persistence of the initial position."
+    - title: "Human replay is diagnostic"
+      text: "The DEBATE replay shows that one global human-like update profile misses stable, evidence-aligned, and evidence-opposed participants."
+    - title: "Useful beyond prediction"
+      text: "The main value is an audit trail: why an agent moved, stayed stable, or diverged from the evidence stream."
+  best_for: "Researchers building LLM deliberation, civic simulation, agent memory, opinion-dynamics, or AI mediation systems where hidden stance changes would be unacceptable."
+  keywords:
+    - multi-agent LLM deliberation
+    - belief dynamics
+    - stance updating
+    - social simulation
+    - deliberation
+  apa: >-
+    Yang, J. C., Flechtner, M., Dailisan, D., & Bakker, M. A. (2026). Belief Engine: Configurable and Inspectable Stance Dynamics in Multi-Agent LLM Deliberation. arXiv preprint arXiv:2605.15343.
+  bibtex: |-
+    @misc{yang2026belief,
+      title   = {Belief Engine: Configurable and Inspectable Stance Dynamics in Multi-Agent LLM Deliberation},
+      author  = {Yang, Joshua C and Flechtner, Maurice and Dailisan, Damian and Bakker, Michiel A},
+      journal = {arXiv preprint arXiv:2605.15343},
+      year    = {2026},
+      arxiv   = {2605.15343},
+      url     = {https://arxiv.org/abs/2605.15343}
+    }
+
+yang2024llm:
+  slug: llm-voting
+  title: "LLM Voting: Human Choices and AI Collective Decision Making"
+  short_title: "LLM Voting"
+  authors:
+    - name: Joshua C. Yang
+    - name: Marcin Korecki
+    - name: Damian Dailisan
+    - name: Carina I. Hausladen
+    - name: Dirk Helbing
+  author_text: "Joshua C. Yang, Marcin Korecki, Damian Dailisan, Carina I. Hausladen, and Dirk Helbing"
+  year: "2024"
+  publication_date: "2024"
+  venue: "7th AAAI Conference on AI, Ethics, and Society"
+  venue_type: "Conference"
+  arxiv: "2402.01766"
+  source_url: "https://arxiv.org/abs/2402.01766"
+  pdf_url: "https://arxiv.org/pdf/2402.01766"
+  preview: "/assets/img/publication_preview/persona.png"
+  selected: true
+  tldr: >-
+    What happens if AI agents are asked to vote for people? This paper shows that LLM voters can look useful, but their choices can shift with ballot order, prompt style, personas, and temperature. That makes them powerful democratic tools only if their biases are measured and governed.
+  why: >-
+    As LLMs are proposed as assistants, proxies, or digital twins in collective decision making, the practical question is not whether they can cast a ballot. It is whether small prompt and interface choices quietly reshape the electorate. This paper makes that risk measurable.
+  abstract: >-
+    This paper explores how Large Language Models (LLMs) can participate in and support human collective decision making. Through experiments comparing human and LLM voting behaviors, the work investigates alignment, bias, and interpretability in AI-assisted democratic processes.
+  stats:
+    - value: "180"
+      label: "human and LLM voters per condition"
+    - value: "24"
+      label: "participatory budgeting projects"
+    - value: "4"
+      label: "voting input methods tested"
+    - value: "CHF 60k"
+      label: "budget framing"
+  highlights:
+    - title: "Presentation matters"
+      text: "Order and numeric labels changed LLM outcomes in ways that should be normatively irrelevant."
+    - title: "Personas help and distort"
+      text: "Persona prompts can improve alignment with human choices while also over-structuring or compressing diversity."
+    - title: "CoT is not a cure"
+      text: "Reflection-style prompting did not reliably improve predictive accuracy of human votes."
+    - title: "Temperature is political"
+      text: "Higher temperature increases diversity, but that diversity can trade off against alignment and coherence."
+  best_for: "Readers interested in AI voting agents, democratic digital twins, participatory budgeting, social-choice evaluation, and the governance risks of LLM-mediated collective decisions."
+  keywords:
+    - LLM voting
+    - collective decision making
+    - AI ethics
+    - democratic processes
+    - human-AI alignment
+  apa: >-
+    Yang, J. C., Korecki, M., Dailisan, D., Hausladen, C. I., & Helbing, D. (2024). LLM Voting: Human Choices and AI Collective Decision Making. 7th AAAI Conference on AI, Ethics, and Society.
+  bibtex: |-
+    @inproceedings{yang2024llm,
+      title     = {LLM Voting: Human Choices and AI Collective Decision Making},
+      author    = {Yang, Joshua C and Korecki, Marcin and Dailisan, Damian and Hausladen, Carina I and Helbing, Dirk},
+      booktitle = {7th AAAI Conference on AI, Ethics, and Society},
+      year      = {2024}
+    }
+
+helbing2023democracy:
+  slug: democracy-by-design
+  title: "Democracy by Design: Perspectives for Digitally Assisted, Participatory Upgrades of Society"
+  short_title: "Democracy by Design"
+  authors:
+    - name: Dirk Helbing
+    - name: Sachit Mahajan
+    - name: Regula Hänggli Fricker
+    - name: Andrea Musso
+    - name: Carina I. Hausladen
+    - name: Cesare Carissimo
+    - name: Dino Carpentras
+    - name: Elisabeth Stockinger
+    - name: Javier Argota Sanchez-Vaquerizo
+    - name: Joshua C. Yang
+  author_text: "Dirk Helbing, Sachit Mahajan, Regula Hänggli Fricker, Andrea Musso, Carina I. Hausladen, Cesare Carissimo, Dino Carpentras, Elisabeth Stockinger, Javier Argota Sanchez-Vaquerizo, Joshua C. Yang, and others"
+  year: "2023"
+  publication_date: "2023"
+  venue: "Journal of Computational Science"
+  venue_type: "Journal article"
+  journal: "Journal of Computational Science"
+  volume: "71"
+  pages: "102061"
+  publisher: "Elsevier"
+  preview: "/assets/img/publication_preview/ipad.png"
+  tldr: >-
+    Democracy by Design lays out a perspective on how digital systems can support more participatory, fair, and adaptive democratic institutions. It connects civic technology, algorithmic fairness, and social coordination into a broader design agenda.
+  why: >-
+    The paper is useful as a conceptual anchor for digitally assisted democracy because it treats technology as institutional infrastructure, not only as a participation interface.
+  abstract: >-
+    An interdisciplinary perspective on digital participation, algorithmic fairness, and societal upgrades through technology-enabled democratic systems.
+  keywords:
+    - digital democracy
+    - participatory systems
+    - algorithmic fairness
+    - civic technology
+    - society design
+  apa: >-
+    Helbing, D., Mahajan, S., Hänggli Fricker, R., Musso, A., Hausladen, C. I., Carissimo, C., Carpentras, D., Stockinger, E., Sanchez-Vaquerizo, J. A., Yang, J. C., et al. (2023). Democracy by Design: Perspectives for Digitally Assisted, Participatory Upgrades of Society. Journal of Computational Science, 71, 102061.
+  bibtex: |-
+    @article{helbing2023democracy,
+      title     = {Democracy by Design: Perspectives for Digitally Assisted, Participatory Upgrades of Society},
+      author    = {Helbing, Dirk and Mahajan, Sachit and Fricker, Regula Hänggli and Musso, Andrea and Hausladen, Carina I and Carissimo, Cesare and Carpentras, Dino and Stockinger, Elisabeth and Sanchez-Vaquerizo, Javier Argota and Yang, Joshua C and others},
+      journal   = {Journal of Computational Science},
+      volume    = {71},
+      pages     = {102061},
+      year      = {2023},
+      publisher = {Elsevier}
+    }
+
+korecki2024democratizing:
+  slug: democratizing-traffic-control
+  title: "Democratizing Traffic Control in Smart Cities"
+  short_title: "Democratizing Traffic Control"
+  authors:
+    - name: Marcin Korecki
+    - name: Damian Dailisan
+    - name: Joshua C. Yang
+    - name: Dirk Helbing
+  author_text: "Marcin Korecki, Damian Dailisan, Joshua C. Yang, and Dirk Helbing"
+  year: "2024"
+  publication_date: "2024"
+  venue: "Transportation Research Part C: Emerging Technologies"
+  venue_type: "Journal article"
+  journal: "Transportation Research Part C: Emerging Technologies"
+  volume: "160"
+  pages: "104511"
+  publisher: "Pergamon"
+  preview: "/assets/img/publication_preview/traffic.png"
+  tldr: >-
+    This paper connects traffic optimization with democratic decision mechanisms. It argues that smart-city infrastructure should account for public preferences instead of optimizing mobility only through centralized technical objectives.
+  why: >-
+    Traffic control is a concrete example of algorithmic governance: routing and signal choices affect people differently. The paper makes democratic control part of the optimization problem.
+  abstract: >-
+    A decentralized approach to traffic optimization that embeds democratic decision mechanisms into smart city infrastructures.
+  keywords:
+    - smart cities
+    - traffic control
+    - democratic algorithms
+    - decentralized optimization
+    - algorithmic governance
+  apa: >-
+    Korecki, M., Dailisan, D., Yang, J. C., & Helbing, D. (2024). Democratizing Traffic Control in Smart Cities. Transportation Research Part C: Emerging Technologies, 160, 104511.
+  bibtex: |-
+    @article{korecki2024democratizing,
+      title     = {Democratizing Traffic Control in Smart Cities},
+      author    = {Korecki, Marcin and Dailisan, Damian and Yang, Joshua C and Helbing, Dirk},
+      journal   = {Transportation Research Part C: Emerging Technologies},
+      volume    = {160},
+      pages     = {104511},
+      year      = {2024},
+      publisher = {Pergamon}
+    }
+
+acm2026kes:
+  slug: komitee-equal-shares
+  title: "Komitee Equal Shares: A Hybrid Algorithm for Priceable Participatory Funding"
+  short_title: "Komitee Equal Shares"
+  authors:
+    - name: Joshua C. Yang
+    - name: Noemi Scheurer
+    - name: Dirk Helbing
+  author_text: "Joshua C. Yang, Noemi Scheurer, and Dirk Helbing"
+  year: "2026"
+  publication_date: "2026"
+  venue: "Extended Abstracts of the 2026 CHI Conference on Human Factors in Computing Systems"
+  venue_type: "Conference paper"
+  conference: "CHI EA '26"
+  doi: "10.1145/3772363.3798958"
+  source_url: "https://doi.org/10.1145/3772363.3798958"
+  preview: "/assets/img/publication_preview/kes.png"
+  selected: true
+  tldr: >-
+    Komitee Equal Shares helps a citizen group fund more than just the obvious crowd favorites. It combines personal votes with small-group evaluation, then shows participants how their input helped pay for the final projects. In Winterthur, 38 citizens used it to allocate CHF 380,000 across a broader cultural portfolio.
+  why: >-
+    Many participatory budgeting systems choose between simple popularity and deliberative judgment. KES gives both signals a common budgetary language through priceability, making it possible to connect individual preferences, collectively defined impact fields, proportional allocation, and explainable receipts.
+  abstract: >-
+    Public funding processes demand fairness, learning, and outcomes that participants can understand. We introduce Komitee Equal Shares, a priceable virtual-budget allocation framework that integrates two signals: in voter mode, participants cast point votes; in evaluator mode, small groups assess proposals against collectively defined impact fields. The framework extends the Method of Equal Shares by translating both signals into virtual spending power and producing explicit "voting receipts." We deployed the framework in the 2025 Kultur Komitee in Winterthur, Switzerland (N = 38), allocating CHF 380,000. Our results show that this hybrid approach generates a more diverse portfolio than simple aggregation and that participants value the fair process over individual control. The framework offers a model where citizens act as both voters and evaluators within a single, proportional, and explainable allocation.
+  stats:
+    - value: "CHF 380k"
+      label: "allocated in Winterthur"
+    - value: "38"
+      label: "randomly selected citizens"
+    - value: "43"
+      label: "projects funded by KES"
+    - value: "94%"
+      label: "reported high satisfaction with influence"
+  highlights:
+    - title: "Two citizen roles"
+      text: "Voter mode captures personal preferences; evaluator mode asks small groups to assess projects against shared impact fields."
+    - title: "Priceability becomes design"
+      text: "A project is funded only when supporters can collectively pay for it from virtual budgets."
+    - title: "Receipts make fairness visible"
+      text: "The output records how individual and impact-field budgets contributed to each funded project."
+    - title: "More diverse portfolio"
+      text: "KES funded 43 projects, compared with 35 under individual-only greedy aggregation and 33 under group-only greedy aggregation."
+  best_for: "Practitioners and researchers working on participatory budgeting, citizen assemblies, fair allocation, civic funding, or explainable democratic algorithms."
+  keywords:
+    - participatory budgeting
+    - Method of Equal Shares
+    - algorithmic accountability
+    - deliberation
+    - digital democracy
+  apa: >-
+    Yang, J. C., Scheurer, N., & Helbing, D. (2026). Komitee Equal Shares: A Hybrid Algorithm for Priceable Participatory Funding. Extended Abstracts of the 2026 CHI Conference on Human Factors in Computing Systems.
+  bibtex: |-
+    @inproceedings{10.1145/3772363.3798958,
+      author    = {Yang, Joshua C. and Scheurer, Noemi and Helbing, Dirk},
+      title     = {Komitee Equal Shares: A Hybrid Algorithm for Priceable Participatory Funding},
+      year      = {2026},
+      isbn      = {9798400722813},
+      publisher = {Association for Computing Machinery},
+      address   = {New York, NY, USA},
+      url       = {https://doi.org/10.1145/3772363.3798958},
+      doi       = {10.1145/3772363.3798958},
+      booktitle = {Proceedings of the Extended Abstracts of the 2026 CHI Conference on Human Factors in Computing Systems},
+      articleno = {422},
+      numpages  = {7},
+      series    = {CHI EA '26}
+    }
+
+ballandies2023taxonomy:
+  slug: depin-taxonomy
+  title: "A Taxonomy for Blockchain-Based Decentralized Physical Infrastructure Networks (DePIN)"
+  short_title: "A Taxonomy for DePIN"
+  authors:
+    - name: Mark C. Ballandies
+    - name: Hongyang Wang
+    - name: Andrew Chung Chee Law
+    - name: Joshua C. Yang
+    - name: Christophe Gösken
+    - name: Michael Andrew
+  author_text: "Mark C. Ballandies, Hongyang Wang, Andrew Chung Chee Law, Joshua C. Yang, Christophe Gösken, and Michael Andrew"
+  year: "2023"
+  publication_date: "2023"
+  venue: "2023 IEEE 9th World Forum on Internet of Things"
+  venue_type: "Conference paper"
+  conference: "IEEE WF-IoT"
+  pages: "1-6"
+  publisher: "IEEE"
+  preview: "/assets/img/publication_preview/depin.png"
+  tldr: >-
+    This paper proposes a taxonomy for decentralized physical infrastructure networks that use blockchain systems to coordinate shared real-world resources.
+  why: >-
+    DePIN systems combine technical, economic, and governance design choices. A taxonomy helps researchers compare projects and reason about their infrastructure, incentives, and coordination mechanisms.
+  abstract: >-
+    This paper provides a conceptual taxonomy for decentralized infrastructure systems that leverage blockchain technologies to manage shared physical resources.
+  keywords:
+    - DePIN
+    - blockchain
+    - decentralized infrastructure
+    - Internet of Things
+    - taxonomy
+  apa: >-
+    Ballandies, M. C., Wang, H., Law, A. C. C., Yang, J. C., Gösken, C., & Andrew, M. (2023). A Taxonomy for Blockchain-Based Decentralized Physical Infrastructure Networks (DePIN). 2023 IEEE 9th World Forum on Internet of Things, 1-6.
+  bibtex: |-
+    @inproceedings{ballandies2023taxonomy,
+      title        = {A Taxonomy for Blockchain-Based Decentralized Physical Infrastructure Networks (DePIN)},
+      author       = {Ballandies, Mark C and Wang, Hongyang and Law, Andrew Chung Chee and Yang, Joshua C and Gösken, Christophe and Andrew, Michael},
+      booktitle    = {2023 IEEE 9th World Forum on Internet of Things (WF-IoT)},
+      pages        = {1--6},
+      year         = {2023},
+      organization = {IEEE}
+    }
+
+yang2020respeaking:
+  slug: respeaking-word-spotting
+  title: "Respeaking for Word-Spotting as a Collaborative Transcription Method for Oral Languages"
+  short_title: "Respeaking for Word-Spotting"
+  authors:
+    - name: Joshua C. Yang
+  author_text: "Joshua C. Yang"
+  year: "2020"
+  publication_date: "2020"
+  venue: "University of Melbourne"
+  venue_type: "Thesis"
+  institution: "University of Melbourne"
+  preview: "/assets/img/publication_preview/speech.png"
+  tldr: >-
+    This thesis studies respeaking and word spotting as a collaborative transcription method for oral languages. It focuses on making speech technology useful for language documentation workflows.
+  why: >-
+    Language documentation often faces scarce transcription resources. Respeaking offers a way to combine human collaboration with speech recognition to support transcription of oral and endangered languages.
+  abstract: >-
+    This thesis explores the use of respeaking and speech recognition to assist in documenting and transcribing oral and endangered languages.
+  keywords:
+    - respeaking
+    - word spotting
+    - collaborative transcription
+    - oral languages
+    - language documentation
+  apa: >-
+    Yang, J. C. (2020). Respeaking for Word-Spotting as a Collaborative Transcription Method for Oral Languages. University of Melbourne.
+  bibtex: |-
+    @phdthesis{yang2020respeaking,
+      title  = {Respeaking for Word-Spotting as a Collaborative Transcription Method for Oral Languages},
+      author = {Yang, Joshua C},
+      year   = {2020},
+      school = {University of Melbourne}
+    }
+
+yang2024designing:
+  slug: designing-digital-voting-systems
+  title: "Designing Digital Voting Systems for Citizens: Achieving Fairness and Legitimacy in Participatory Budgeting"
+  short_title: "Designing Digital Voting Systems"
+  authors:
+    - name: Joshua C. Yang
+    - name: Carina I. Hausladen
+    - name: Dominik Peters
+    - name: Evangelos Pournaras
+    - name: Regula Hänggli Fricker
+    - name: Dirk Helbing
+  author_text: "Joshua C. Yang, Carina I. Hausladen, Dominik Peters, Evangelos Pournaras, Regula Hänggli Fricker, and Dirk Helbing"
+  year: "2024"
+  publication_date: "2024"
+  venue: "Digital Government: Research and Practice"
+  venue_type: "Journal article"
+  journal: "Digital Government: Research and Practice"
+  volume: "5"
+  issue: "3"
+  pages: "1-30"
+  publisher: "ACM"
+  doi: "10.1145/3665332"
+  source_url: "https://dl.acm.org/doi/10.1145/3665332"
+  preview: "/assets/img/publication_preview/voting.png"
+  selected: true
+  tldr: >-
+    This paper studies how digital voting system design affects citizens' perceptions of fairness and legitimacy in participatory budgeting.
+  why: >-
+    Participatory budgeting depends on both the allocation rule and people's trust in the process. The paper links interface and voting-method choices to perceived democratic legitimacy.
+  abstract: >-
+    Participatory Budgeting (PB) has evolved into a key democratic instrument for resource allocation in cities. This study identifies how digital design choices influence citizens' perceptions of fairness and legitimacy in PB voting systems.
+  keywords:
+    - participatory budgeting
+    - digital voting
+    - fairness
+    - legitimacy
+    - civic technology
+  apa: >-
+    Yang, J. C., Hausladen, C. I., Peters, D., Pournaras, E., Hänggli Fricker, R., & Helbing, D. (2024). Designing Digital Voting Systems for Citizens: Achieving Fairness and Legitimacy in Participatory Budgeting. Digital Government: Research and Practice, 5(3), 1-30.
+  bibtex: |-
+    @article{yang2024designing,
+      title     = {Designing Digital Voting Systems for Citizens: Achieving Fairness and Legitimacy in Participatory Budgeting},
+      author    = {Yang, Joshua C and Hausladen, Carina I and Peters, Dominik and Pournaras, Evangelos and Hänggli Fricker, Regula and Helbing, Dirk},
+      journal   = {Digital Government: Research and Practice},
+      volume    = {5},
+      number    = {3},
+      pages     = {1--30},
+      year      = {2024},
+      publisher = {ACM},
+      url       = {https://dl.acm.org/doi/10.1145/3665332},
+      doi       = {10.1145/3665332}
+    }
+
+hanggli2024exploring:
+  slug: exploring-legitimacy-swiss-budget
+  title: "Exploring Legitimacy in a Municipal Budget Decision in Switzerland: Empirical Insights into Citizens' Perceptions"
+  short_title: "Exploring Legitimacy"
+  authors:
+    - name: Regula Hänggli Fricker
+    - name: Thomas Wellings
+    - name: Florin Zai
+    - name: Joshua C. Yang
+    - name: Srijoni Majumdar
+    - name: Laurent Bernhard
+    - name: Leopold Weil
+    - name: Carina I. Hausladen
+    - name: Evangelos Pournaras
+  author_text: "Regula Hänggli Fricker, Thomas Wellings, Florin Zai, Joshua C. Yang, Srijoni Majumdar, Laurent Bernhard, Leopold Weil, Carina I. Hausladen, and Evangelos Pournaras"
+  year: "2024"
+  publication_date: "2024"
+  venue: "Philosophical Transactions A"
+  venue_type: "Journal article"
+  journal: "Philosophical Transactions A"
+  volume: "382"
+  issue: "2285"
+  pages: "20240098"
+  publisher: "The Royal Society"
+  preview: "/assets/img/publication_preview/swiss.png"
+  tldr: >-
+    This empirical study examines how citizens perceive legitimacy, fairness, and transparency in a Swiss municipal budget decision.
+  why: >-
+    Democratic innovation needs evidence about how people evaluate actual allocation processes. This paper grounds legitimacy claims in citizen perceptions from a municipal decision context.
+  abstract: >-
+    An empirical study investigating how citizens in Switzerland evaluate legitimacy, fairness, and transparency in participatory budget decisions.
+  keywords:
+    - legitimacy
+    - participatory budgeting
+    - Switzerland
+    - municipal democracy
+    - citizen perceptions
+  apa: >-
+    Hänggli Fricker, R., Wellings, T., Zai, F., Yang, J. C., Majumdar, S., Bernhard, L., Weil, L., Hausladen, C. I., & Pournaras, E. (2024). Exploring Legitimacy in a Municipal Budget Decision in Switzerland: Empirical Insights into Citizens' Perceptions. Philosophical Transactions A, 382(2285), 20240098.
+  bibtex: |-
+    @article{hanggli2024exploring,
+      title     = {Exploring Legitimacy in a Municipal Budget Decision in Switzerland: Empirical Insights into Citizens' Perceptions},
+      author    = {Hänggli Fricker, Regula and Wellings, Thomas and Zai, Florin and Yang, Joshua C and Majumdar, Srijoni and Bernhard, Laurent and Weil, Leopold and Hausladen, Carina I and Pournaras, Evangelos},
+      journal   = {Philosophical Transactions A},
+      volume    = {382},
+      number    = {2285},
+      pages     = {20240098},
+      year      = {2024},
+      publisher = {The Royal Society}
+    }
+
+yang2025bridging:
+  slug: bridging-voting-deliberation
+  title: "Bridging Voting and Deliberation with Algorithms: Field Insights from vTaiwan and Kultur Komitee"
+  short_title: "Bridging Voting and Deliberation"
+  authors:
+    - name: Joshua C. Yang
+    - name: Fynn Bachmann
+  author_text: "Joshua C. Yang and Fynn Bachmann"
+  year: "2025"
+  publication_date: "2025"
+  venue: "ACM Conference on Fairness, Accountability, and Transparency"
+  venue_type: "Conference paper"
+  conference: "ACM FAccT"
+  doi: "10.1145/3715275.3732205"
+  arxiv: "2502.05017"
+  source_url: "https://doi.org/10.1145/3715275.3732205"
+  pdf_url: "https://arxiv.org/pdf/2502.05017"
+  preview: "/assets/img/publication_preview/bridging.png"
+  selected: true
+  tldr: >-
+    Voting and deliberation usually live in separate worlds: one counts preferences, the other helps people think together. This paper shows how algorithms can connect them by forming better discussion groups, making fairer funding choices, and helping people see where opinions shift.
+  why: >-
+    Digital democracy often separates discussion from decision: deliberation produces insight, voting produces closure, and the two rarely inform each other well. This paper shows how algorithms can help form groups, surface tradeoffs, and make preference shifts visible without treating participants as passive data points.
+  abstract: >-
+    Based on field experiments in Taiwan and Switzerland, this paper presents hybrid algorithmic designs that integrate deliberation and voting for digital democracy.
+  stats:
+    - value: "3"
+      label: "algorithmic bridges"
+    - value: "35"
+      label: "KK24 workshop participants"
+    - value: "50%"
+      label: "KK24 budget delegated to MES"
+    - value: "200k+"
+      label: "people engaged by vTaiwan since launch"
+  highlights:
+    - title: "Vote first, deliberate better"
+      text: "Preference-based clustering uses voting data to create homogeneous and heterogeneous groups for different deliberation dynamics."
+    - title: "Usability beats purity"
+      text: "Radial Clustering trades some mathematical optimality for balanced groups and facilitator-friendly interpretation."
+    - title: "Algorithms are negotiable"
+      text: "Human-in-the-loop MES lets participants decide how much budget is delegated to proportional aggregation."
+    - title: "Opinion maps become agenda tools"
+      text: "ReadTheRoom uses agreement, disagreement, and opinion shifts to focus deliberation on meaningful divergence."
+  best_for: "Designers of civic platforms, participatory budgeting processes, citizens' assemblies, and deliberation workflows that need voting and discussion to reinforce each other."
+  keywords:
+    - deliberation
+    - voting
+    - vTaiwan
+    - Kultur Komitee
+    - algorithmic democracy
+  apa: >-
+    Yang, J. C., & Bachmann, F. (2025). Bridging Voting and Deliberation with Algorithms: Field Insights from vTaiwan and Kultur Komitee. ACM Conference on Fairness, Accountability, and Transparency.
+  bibtex: |-
+    @inproceedings{yang2025bridging,
+      title     = {Bridging Voting and Deliberation with Algorithms: Field Insights from vTaiwan and Kultur Komitee},
+      author    = {Yang, Joshua C and Bachmann, Fynn},
+      booktitle = {ACM Conference on Fairness, Accountability, and Transparency (FAccT)},
+      year      = {2025},
+      url       = {https://arxiv.org/abs/2502.05017}
+    }
+
+pournaras2025upgrading:
+  slug: upgrading-democracies-fairer-voting
+  title: "Upgrading Democracies with Fairer Voting Methods"
+  short_title: "Upgrading Democracies"
+  authors:
+    - name: Evangelos Pournaras
+    - name: Srijoni Majumdar
+    - name: Thomas Wellings
+    - name: Joshua C. Yang
+    - name: Fatemeh B. Heravan
+    - name: Regula Hänggli Fricker
+    - name: Dirk Helbing
+  author_text: "Evangelos Pournaras, Srijoni Majumdar, Thomas Wellings, Joshua C. Yang, Fatemeh B. Heravan, Regula Hänggli Fricker, and Dirk Helbing"
+  year: "2025"
+  publication_date: "2025"
+  venue: "arXiv preprint arXiv:2505.14349"
+  venue_type: "Preprint"
+  arxiv: "2505.14349"
+  source_url: "https://arxiv.org/abs/2505.14349"
+  pdf_url: "https://arxiv.org/pdf/2505.14349"
+  preview: "/assets/img/publication_preview/veto.png"
+  tldr: >-
+    This paper analyzes how fairer voting methods can improve democratic outcomes, with attention to methods such as the Method of Equal Shares.
+  why: >-
+    Electoral and participatory systems can produce outcomes that feel unfair even when votes are counted correctly. The paper evaluates fairer aggregation methods as practical democratic upgrades.
+  abstract: >-
+    A technical and conceptual analysis of how fairer voting methods, such as the Method of Equal Shares, can improve democratic outcomes.
+  keywords:
+    - voting methods
+    - Method of Equal Shares
+    - democratic reform
+    - fairness
+    - collective choice
+  apa: >-
+    Pournaras, E., Majumdar, S., Wellings, T., Yang, J. C., Heravan, F. B., Hänggli Fricker, R., & Helbing, D. (2025). Upgrading Democracies with Fairer Voting Methods. arXiv preprint arXiv:2505.14349.
+  bibtex: |-
+    @article{pournaras2025upgrading,
+      title   = {Upgrading Democracies with Fairer Voting Methods},
+      author  = {Pournaras, Evangelos and Majumdar, Srijoni and Wellings, Thomas and Yang, Joshua C and Heravan, Fatemeh B and Fricker, Regula Hänggli and Helbing, Dirk},
+      journal = {arXiv preprint arXiv:2505.14349},
+      year    = {2025}
+    }

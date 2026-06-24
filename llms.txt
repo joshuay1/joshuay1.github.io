@@ -1,0 +1,31 @@
+---
+permalink: /llms.txt
+---
+# Joshua C. Yang
+
+Joshua C. Yang researches democratic technology, collective decision making, participatory budgeting, deliberation, voting systems, civic AI, and multi-agent LLM deliberation.
+
+## Main Pages
+
+- Website: {{ site.url }}/
+- Publications: {{ site.url }}/pubs/
+- Projects: {{ site.url }}/projects/
+- CV: {{ site.url }}/cv/
+
+## Publications
+
+- Belief Engine: Configurable and Inspectable Stance Dynamics in Multi-Agent LLM Deliberation: {{ site.url }}/pubs/belief-engine/
+  Auditable belief updating for multi-agent LLM deliberation, with structured memory, evidence uptake, prior anchoring, and human DEBATE replay validation.
+- LLM Voting: Human Choices and AI Collective Decision Making: {{ site.url }}/pubs/llm-voting/
+  Empirical comparison of GPT-4 Turbo and LLaMA-2 voting behavior against human participatory budgeting choices, including order effects, personas, chain-of-thought, and temperature.
+- Komitee Equal Shares: A Hybrid Algorithm for Priceable Participatory Funding: {{ site.url }}/pubs/komitee-equal-shares/
+  Field-tested participatory funding algorithm from Winterthur combining voter preferences, impact-field evaluation, Method of Equal Shares, priceability, and voting receipts.
+- Designing Digital Voting Systems for Citizens: Achieving Fairness and Legitimacy in Participatory Budgeting: {{ site.url }}/pubs/designing-digital-voting-systems/
+- Bridging Voting and Deliberation with Algorithms: Field Insights from vTaiwan and Kultur Komitee: {{ site.url }}/pubs/bridging-voting-deliberation/
+  Hybrid democratic innovation paper on preference-based clustering, human-in-the-loop Method of Equal Shares, ReadTheRoom opinion mapping, vTaiwan, and Kultur Komitee.
+- Upgrading Democracies with Fairer Voting Methods: {{ site.url }}/pubs/upgrading-democracies-fairer-voting/
+- Democracy by Design: Perspectives for Digitally Assisted, Participatory Upgrades of Society: {{ site.url }}/pubs/democracy-by-design/
+- Democratizing Traffic Control in Smart Cities: {{ site.url }}/pubs/democratizing-traffic-control/
+- Exploring Legitimacy in a Municipal Budget Decision in Switzerland: {{ site.url }}/pubs/exploring-legitimacy-swiss-budget/
+- A Taxonomy for Blockchain-Based Decentralized Physical Infrastructure Networks (DePIN): {{ site.url }}/pubs/depin-taxonomy/
+- Respeaking for Word-Spotting as a Collaborative Transcription Method for Oral Languages: {{ site.url }}/pubs/respeaking-word-spotting/
