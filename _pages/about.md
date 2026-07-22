@@ -22,7 +22,7 @@ latest_projects: true # includes a list of the newest projects
 teaching: true # includes a short teaching section
 ---
 
-Hello 👋🏽 I am Josh, a **postdoc researcher at ETH Zurich 🇨🇭** investigating how **AI can be designed to serve society, and democracy in particular** (yes, a pro-active take). I **finished my PhD in summer 2025** and decided this mission was far too interesting to stop.
+Hello 👋🏽 I am Josh, a **postdoc researcher at ETH Zurich 🇨🇭** and an **incoming postdoc at MIT 🇺🇸**, where I’ll join Michiel Bakker’s lab this fall. I investigate how **AI can be designed to serve society, and democracy in particular** (yes, a pro-active take). I **finished my PhD in summer 2025** and decided this mission was far too interesting to stop.
 
 Coming from Computer Science, I approach my research through the lens of **responsible and societal AI**, combining insights from Complex Systems, Computational Social Choice, and Human-AI Interaction. My research moves in two main directions. The first focuses on **Digital Democracy**, studying how methods such as agentic AI, LLMs, voting algorithms and recommender systems can support how people vote, deliberate, and make collective decisions. I also look into how LLM agent-based simulations can help study those feedback loops. The second explores **AI Pluralistic Alignment**, developing ways for AI systems to understand and represent diverse human values in support of human flourishing, rather than converging on a single viewpoint.
 
