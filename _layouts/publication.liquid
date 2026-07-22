@@ -42,7 +42,9 @@ layout: default
         <p class="publication-authors" itemprop="author">{{ publication.author_text }}</p>
         <p class="publication-venue">
           {% if publication.venue %}{{ publication.venue }}{% endif %}
-          {% if publication.year %}<span>{{ publication.year }}</span>{% endif %}
+          {% if publication.year -%}
+            <span>{{ publication.year }}</span>
+          {%- endif %}
         </p>
 
         <div class="publication-paper-access" aria-label="Paper access links">
@@ -176,11 +178,15 @@ layout: default
             {% endif %}
             {% if publication.doi %}
               <dt>DOI</dt>
-              <dd><a href="https://doi.org/{{ publication.doi }}">{{ publication.doi }}</a></dd>
+              <dd>
+                <a href="https://doi.org/{{ publication.doi }}">{{ publication.doi }}</a>
+              </dd>
             {% endif %}
             {% if publication.arxiv %}
               <dt>arXiv</dt>
-              <dd><a href="https://arxiv.org/abs/{{ publication.arxiv }}">{{ publication.arxiv }}</a></dd>
+              <dd>
+                <a href="https://arxiv.org/abs/{{ publication.arxiv }}">{{ publication.arxiv }}</a>
+              </dd>
             {% endif %}
           </dl>
         </section>
@@ -233,10 +239,10 @@ layout: default
   </article>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      document.querySelectorAll("[data-copy-target]").forEach(function (button) {
-        button.addEventListener("click", function () {
-          var target = document.getElementById(button.getAttribute("data-copy-target"));
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('[data-copy-target]').forEach(function (button) {
+        button.addEventListener('click', function () {
+          var target = document.getElementById(button.getAttribute('data-copy-target'));
           if (!target || !navigator.clipboard) return;
           navigator.clipboard.writeText(target.innerText.trim()).then(function () {
             var original = button.innerHTML;
