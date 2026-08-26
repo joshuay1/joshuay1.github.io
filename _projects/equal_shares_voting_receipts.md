@@ -13,7 +13,7 @@ The core idea is democratic legibility. Equal Shares can produce fairer budget o
 
 In March 2026, **23 participants** in **three groups** used the system to allocate **CHF 161,000** to cultural projects in Winterthur. The receipts did not replace discussion. They gave the group a shared object to reason with: simple cases became easier to understand, while close or contested cases could become the focus of deliberation.
 
-The feedback is promising. Compared with 2025, more participants in 2026 saw individual voting and group discussion as equally influential, rising from **34.4%** to **62.5%**. At the same time, participants also reported wanting group discussion to carry more weight. That combination is exactly what the interface is meant to support: clearer individual agency without flattening the value of collective judgment.
+The feedback is promising. Compared with 2025, more participants in 2026 saw individual voting and group discussion as equally influential, rising from **34.4%** to **62.5%**. At the same time, participants also reported wanting group discussion to carry more weight. That combination is exactly what the interface is meant to support: clearer individual agency without flattening the value of collective judgement.
 
 ### Interactive Voting Receipts
 

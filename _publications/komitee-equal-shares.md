@@ -36,7 +36,7 @@ Receipts do not magically make every participant understand the algorithm. The p
 
 KES produced a broader funding portfolio than greedy baselines. It also selected more low-cost, higher-variance projects than a simulated standard MES comparison, suggesting that the hybrid signal can preserve valued minority or niche projects.
 
-Participant satisfaction appeared more connected to process orientation than simply having one's own favorite projects funded. In the survey, voting concentration was a significant negative predictor of satisfaction, while success ratio was not.
+Participant satisfaction appeared more connected to process orientation than simply having one's own favourite projects funded. In the survey, voting concentration was a significant negative predictor of satisfaction, while success ratio was not.
 
 ### Limitations To Read Carefully
 

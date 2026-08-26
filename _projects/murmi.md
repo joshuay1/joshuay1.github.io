@@ -7,7 +7,7 @@ importance: -2
 category: work
 ---
 
-I developed and launched [Murmi](https://www.murmi.org/), a real-time, audio-based tool for group decision-making. Murmi listens to a live conversation and uses AI to organize what people say into a shared interpretation of the group’s priorities, agreements, tensions, and less-heard perspectives.
+I developed and launched [Murmi](https://www.murmi.org/), a real-time, audio-based tool for group decision-making. Murmi listens to a live conversation and uses AI to organise what people say into a shared interpretation of the group’s priorities, agreements, tensions, and less-heard perspectives.
 
 That interpretation is not treated as the final answer. Participants can inspect it, question it, correct it, and add what is missing. The revised understanding then becomes the starting point for the next round of conversation. This iterative loop keeps people in control of the outcome while using real-time AI sensemaking to help the group listen to itself and move towards a decision.
 

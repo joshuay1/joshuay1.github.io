@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-This fall, I’ll be joining Michiel Bakker’s lab at MIT as a postdoc! 🍂
+This autumn, I’ll be joining Michiel Bakker’s lab at MIT as a postdoc! 🍂

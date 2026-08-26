@@ -8,7 +8,7 @@ keywords: "voting methods, Method of Equal Shares, democratic reform, fairness, 
 
 ### Core Contribution
 
-This paper analyzes how fairer voting methods can improve democratic outcomes. It focuses on the ways aggregation rules can alter representation, proportionality, and perceived fairness.
+This paper analyses how fairer voting methods can improve democratic outcomes. It focuses on the ways aggregation rules can alter representation, proportionality, and perceived fairness.
 
 ### Research Use
 

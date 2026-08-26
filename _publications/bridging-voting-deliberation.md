@@ -20,7 +20,7 @@ The paper proposes three practical bridges.
 
 **Human-in-the-loop Method of Equal Shares** lets participants decide how much budget should be delegated to proportional algorithmic aggregation and how much should remain for deliberative allocation. The algorithm becomes a negotiable institution, not a black box.
 
-**ReadTheRoom** uses opinion mapping to make agreement, disagreement, and preference shifts visible. It treats visualization as deliberation infrastructure, helping facilitators focus on meaningful divergence rather than generic discussion.
+**ReadTheRoom** uses opinion mapping to make agreement, disagreement, and preference shifts visible. It treats visualisation as deliberation infrastructure, helping facilitators focus on meaningful divergence rather than generic discussion.
 
 ### Field Context
 
@@ -30,7 +30,7 @@ These are not lab-only designs. The contribution is practical: algorithms are ev
 
 ### What The Paper Finds
 
-The clustering work shows a useful tradeoff. Radial Clustering was not chosen because it maximized every formal clustering metric. It was chosen because it produced balanced, printable, facilitator-friendly group assignments. In civic settings, operational robustness can matter as much as theoretical elegance.
+The clustering work shows a useful tradeoff. Radial Clustering was not chosen because it maximised every formal clustering metric. It was chosen because it produced balanced, printable, facilitator-friendly group assignments. In civic settings, operational robustness can matter as much as theoretical elegance.
 
 The human-in-the-loop MES work shows that participants can deliberate about the role of the algorithm itself. In the Kultur Komitee process, participants allocated 50% of the budget to MES and 50% to deliberation.
 
@@ -42,6 +42,6 @@ The most important design pattern is: vote first, deliberate with the structure 
 
 ### Limitations To Read Carefully
 
-Field deployments are messy. Without randomized counterfactuals, it is hard to prove that a specific algorithm caused better inclusion, better deliberation, or better legitimacy.
+Field deployments are messy. Without randomised counterfactuals, it is hard to prove that a specific algorithm caused better inclusion, better deliberation, or better legitimacy.
 
 Preference-based grouping also has risks. Homogeneous groups can protect minority discourse, but they can also intensify factional thinking if the process lacks safeguards.

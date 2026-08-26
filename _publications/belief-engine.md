@@ -42,6 +42,6 @@ Belief Engine is useful because it turns those assumptions into explicit researc
 
 ### Limitations To Read Carefully
 
-The current representation is intentionally narrow: one scalar stance over one proposition. That makes the system inspectable, but it cannot fully capture multidimensional political positions, values, trust, strategic behavior, or sub-issue movement.
+The current representation is intentionally narrow: one scalar stance over one proposition. That makes the system inspectable, but it cannot fully capture multidimensional political positions, values, trust, strategic behaviour, or sub-issue movement.
 
 The evidence pipeline also depends on argument extraction and quality scoring. Making those steps explicit is a major improvement, but it does not make them automatically neutral.
