@@ -1,0 +1,199 @@
+/* The opening stays in the existing warm, filled-color visual language. */
+.cover-layout {
+  margin-top: 35px;
+}
+.cover h1 {
+  font-size: 92px;
+  line-height: 1.14;
+}
+.cover .lede {
+  max-width: 690px;
+  margin-top: 30px;
+}
+.lineage-slide h2 {
+  font-size: 64px;
+  letter-spacing: -2.5px;
+}
+.lineage-slide .history-lede {
+  margin-top: 22px;
+}
+.lineage-chart {
+  margin-top: 40px;
+}
+.lineage-chart svg {
+  display: block;
+  width: 100%;
+  height: 555px;
+  overflow: visible;
+}
+.lineage-uk {
+  stroke: #315397;
+  fill: #315397;
+}
+.lineage-us {
+  stroke: #d9a747;
+  fill: #d9a747;
+}
+.lineage-ch {
+  stroke: #ae4430;
+  fill: #ae4430;
+}
+.lineage-au {
+  stroke: #596642;
+  fill: #596642;
+}
+.lineage-paths path {
+  fill: none;
+}
+.lineage-milestone {
+  stroke: none;
+}
+.lineage-country-labels {
+  font: 700 30px var(--mono);
+  fill: var(--ink);
+}
+.lineage-country-labels .lineage-country-feature {
+  font: 500 23px var(--main);
+  fill: #55574b;
+}
+.lineage-reading .lineage-reading-feature {
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #55574b;
+}
+.lineage-milestone text {
+  fill: var(--ink);
+  text-anchor: middle;
+}
+.lineage-date {
+  font: 700 25px var(--mono);
+}
+.lineage-label {
+  font: 400 23px var(--main);
+}
+.lineage-reading {
+  display: none;
+}
+.decision-examples {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px 27px;
+  list-style: none;
+  padding: 0;
+  margin: 65px 0 0;
+  align-content: start;
+}
+.decision-examples li {
+  font: 600 35px/1.25 var(--mono);
+  padding: 24px 30px;
+  clip-path: polygon(0 3%, 40% 0, 100% 2%, 99% 97%, 64% 100%, 0 98%);
+}
+.decision-examples li:nth-child(3n + 1) {
+  transform: rotate(-1deg);
+}
+.decision-examples li:nth-child(3n + 2) {
+  transform: rotate(0.7deg);
+}
+.komitee-intro h2 {
+  font-size: 66px;
+}
+.komitee-intro-layout {
+  display: grid;
+  grid-template-columns: 800px 1fr;
+  gap: 45px;
+  margin-top: 38px;
+  align-items: center;
+}
+.komitee-intro-photo {
+  margin: 0;
+  min-width: 0;
+}
+.komitee-intro-photo img {
+  display: block;
+  width: 100%;
+  height: 500px;
+  object-fit: contain;
+  object-position: left;
+}
+.komitee-intro-photo figcaption {
+  margin-top: 13px;
+  font: 400 18px/1.4 var(--mono);
+}
+.komitee-intro-copy > p {
+  font-size: 33px;
+  line-height: 1.45;
+}
+.komitee-total {
+  margin-top: 35px;
+  padding: 29px;
+  transform: rotate(-0.7deg);
+}
+.komitee-total strong {
+  display: block;
+  font: 700 45px/1.25 var(--mono);
+  letter-spacing: -1.8px;
+}
+.komitee-total p {
+  font-size: 28px;
+  line-height: 1.4;
+  margin-top: 19px;
+}
+.read-view .komitee-intro-layout {
+  grid-template-columns: 1.2fr 1fr;
+}
+.read-view .komitee-intro-photo img {
+  height: auto;
+}
+@media screen and (max-width: 1200px) {
+  .read-view .lineage-chart {
+    display: none;
+  }
+  .read-view .lineage-reading {
+    display: grid;
+    gap: 30px;
+    margin-top: 40px;
+  }
+  .read-view .lineage-reading h3 {
+    font-size: 29px;
+    margin-bottom: 12px;
+  }
+  .read-view .lineage-reading p {
+    font-size: 24px;
+    line-height: 1.55;
+  }
+  .read-view .komitee-intro-layout {
+    grid-template-columns: 1fr;
+  }
+  .read-view .decision-examples {
+    gap: 18px;
+    margin-top: 40px;
+  }
+  .read-view .decision-examples li {
+    font-size: 28px;
+    padding: 20px 25px;
+  }
+}
+@media screen and (max-width: 600px) {
+  .read-view .cover h1 {
+    font-size: 49px;
+    letter-spacing: -2.5px;
+  }
+  .read-view .lineage-slide h2,
+  .read-view .komitee-intro h2 {
+    font-size: 40px;
+    letter-spacing: -1.5px;
+  }
+  .read-view .decision-examples li {
+    font-size: 23px;
+    padding: 16px 18px;
+  }
+  .read-view .komitee-intro-copy > p {
+    font-size: 26px;
+  }
+  .read-view .komitee-total strong {
+    font-size: 37px;
+  }
+  .read-view .komitee-total p {
+    font-size: 24px;
+  }
+}

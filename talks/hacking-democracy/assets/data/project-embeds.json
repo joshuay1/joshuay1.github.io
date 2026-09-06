@@ -1,0 +1,20 @@
+{
+  "checked_on": "2026-09-06",
+  "source": "https://joshuacyang.com/projects/",
+  "projects": [
+    {
+      "id": "murmi",
+      "title": "Murmi",
+      "url": "https://www.murmi.org/",
+      "anchor": "#in-action",
+      "note": "The embedded Murmi website opens at \u201cSee Murmi at work.\u201d Scroll within the page and use its Vote, Record, Clusters and Common ground carousel controls to show the real interface. This public showcase contains screenshots; it is not a populated live session. Offline view retains the workshop photograph and three-part explanation. Do not join the historical session shown in the photograph."
+    },
+    {
+      "id": "receipt",
+      "title": "Kultur Komitee voting receipts",
+      "url": "https://equalshares.kulturkomitee.win/",
+      "anchor": "#filter-bar",
+      "note": "The embedded website opens at the published 2026 personal receipts. Use EN to switch to English, scroll through receipts, or inspect the Projects and Table pages. The website controls remain inside the frame. Offline view keeps the four verified contributions for participant DNW. Use the presentation\u2019s bottom arrow to continue after interacting inside the page."
+    }
+  ]
+}

@@ -1,0 +1,206 @@
+/* Preserve the complete handout; the adjacent explanation carries its arithmetic. */
+#funding.aggregation-slide h2 {
+  font-size: 64px;
+  line-height: 1.15;
+}
+.aggregation-layout {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 48px;
+  margin-top: 26px;
+  align-items: start;
+}
+.aggregation-original {
+  margin: 0;
+}
+.aggregation-original img {
+  display: block;
+  width: 420px;
+  height: 600px;
+  object-fit: contain;
+  object-position: top left;
+}
+.aggregation-original figcaption {
+  margin-top: 11px;
+  font: 400 18px/1.4 var(--mono);
+}
+.aggregation-walkthrough {
+  min-width: 0;
+}
+.aggregation-context {
+  font-size: 25px;
+  line-height: 1.4;
+}
+.aggregation-controls {
+  display: flex;
+  gap: 10px;
+  margin: 15px 0 20px;
+}
+.aggregation-controls button {
+  font-size: 22px;
+  padding: 13px 19px;
+  min-height: 52px;
+  background: #e4d3b7;
+}
+.aggregation-controls button[aria-pressed="true"] {
+  background: var(--olive);
+  color: var(--paper);
+}
+.aggregation-panel h3 {
+  font-size: 28px;
+  line-height: 1.25;
+}
+.aggregation-explanation {
+  font-size: 23px;
+  line-height: 1.4;
+  margin-top: 13px;
+}
+.aggregation-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 0;
+  margin-top: 21px;
+  font-size: 21px;
+  font-variant-numeric: tabular-nums;
+}
+.aggregation-table th,
+.aggregation-table td {
+  border: 0;
+  padding: 8px 10px;
+  text-align: right;
+}
+.aggregation-table th:first-child {
+  text-align: left;
+}
+.aggregation-table thead {
+  font-size: 18px;
+  background: var(--gold);
+}
+.aggregation-table tbody th {
+  font-weight: 500;
+}
+.aggregation-table tbody tr:nth-child(odd) {
+  background: #e4d3b7;
+}
+.aggregation-table tbody td:last-child {
+  font-weight: 650;
+}
+.aggregation-caption {
+  font-size: 23px;
+  line-height: 1.4;
+  margin-top: 18px;
+}
+.aggregation-balances {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin-top: 41px;
+}
+.aggregation-person h4 {
+  font: 700 29px/1.3 var(--mono);
+  margin: 0 0 8px;
+}
+.aggregation-person p {
+  font-size: 24px;
+}
+.aggregation-person strong {
+  display: block;
+  font-size: 27px;
+  margin-bottom: 7px;
+}
+.aggregation-budget-bar {
+  background: var(--blush);
+  height: 70px;
+  margin: 20px 0;
+}
+.aggregation-budget-bar span {
+  display: block;
+  height: 100%;
+  background: var(--olive);
+}
+.aggregation-equation {
+  font: 600 28px/1.4 var(--mono);
+  margin-top: 32px;
+}
+.aggregation-limit-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 22px;
+  margin-top: 35px;
+}
+.aggregation-limit-comparison > div {
+  background: var(--gold);
+  padding: 25px;
+}
+.aggregation-limit-comparison > div:last-child {
+  background: var(--red);
+  color: var(--paper);
+}
+.aggregation-limit-comparison span {
+  display: block;
+  font-size: 23px;
+  margin-bottom: 14px;
+}
+.aggregation-limit-comparison strong {
+  font: 700 43px/1.3 var(--mono);
+}
+.read-view .aggregation-panel {
+  display: block !important;
+  margin-top: 40px;
+}
+.read-view .aggregation-layout {
+  grid-template-columns: minmax(250px, 32%) 1fr;
+}
+.read-view .aggregation-original img {
+  width: 100%;
+  height: auto;
+}
+@media screen and (max-width: 1200px) {
+  .read-view .aggregation-layout {
+    grid-template-columns: 1fr;
+  }
+  .read-view .aggregation-original {
+    max-width: 500px;
+  }
+}
+@media screen and (max-width: 600px) {
+  .read-view #funding.aggregation-slide h2 {
+    font-size: 38px;
+    letter-spacing: -1.5px;
+  }
+  .read-view .aggregation-context,
+  .read-view .aggregation-explanation,
+  .read-view .aggregation-caption,
+  .read-view .aggregation-equation {
+    font-size: 21px;
+  }
+  .read-view .aggregation-table {
+    font-size: 13px;
+  }
+  .read-view .aggregation-table thead {
+    font-size: 11px;
+  }
+  .read-view .aggregation-table th,
+  .read-view .aggregation-table td {
+    padding: 10px 4px;
+  }
+  .read-view .aggregation-balances,
+  .read-view .aggregation-limit-comparison {
+    grid-template-columns: 1fr;
+  }
+}
+@media print {
+  .aggregation-panel {
+    display: none !important;
+  }
+  #aggregation-result {
+    display: block !important;
+    margin-top: 24px;
+  }
+  .aggregation-print-example {
+    display: block;
+    font-size: 23px;
+    line-height: 1.45;
+    margin-top: 20px;
+  }
+}

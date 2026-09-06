@@ -1,0 +1,407 @@
+/* Research is another layer of the same warm, unruled paper language. */
+.research-slide h2 {
+  font-size: 78px;
+}
+.lineage-strands {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 58px;
+  margin-top: 24px;
+}
+.strand-year {
+  font: 800 34px/1.2 var(--mono);
+  color: var(--red);
+}
+.strand-art {
+  position: relative;
+  height: 90px;
+  margin: 18px 0 20px;
+}
+.strand-art i {
+  display: block;
+  position: absolute;
+  background: var(--blue);
+  width: 67px;
+  height: 75px;
+  clip-path: polygon(6% 0, 100% 4%, 92% 96%, 0 100%);
+}
+.group-art i:nth-child(1) {
+  left: 0;
+  top: 3px;
+  transform: rotate(-15deg);
+}
+.group-art i:nth-child(2) {
+  left: 94px;
+  top: 25px;
+  background: var(--red);
+  transform: rotate(10deg);
+}
+.group-art i:nth-child(3) {
+  left: 200px;
+  top: 0;
+  background: var(--olive);
+  transform: rotate(-9deg);
+}
+.group-art i:nth-child(4) {
+  left: 295px;
+  top: 30px;
+  background: var(--gold);
+  width: 53px;
+  height: 59px;
+}
+.procedure-art i {
+  width: 108px;
+  height: 60px;
+  top: 15px;
+}
+.procedure-art i:nth-child(2) {
+  left: 115px;
+  top: 34px;
+  background: var(--gold);
+}
+.procedure-art i:nth-child(3) {
+  left: 230px;
+  background: var(--olive);
+  transform: rotate(-5deg);
+}
+.audit-art i:first-child {
+  width: 225px;
+  height: 86px;
+  background: var(--blush);
+  top: 10px;
+  transform: rotate(4deg);
+}
+.audit-art i:nth-child(2) {
+  left: 20px;
+  top: 30px;
+  width: 160px;
+  height: 17px;
+  background: var(--ink);
+}
+.audit-art i:nth-child(3) {
+  left: 165px;
+  top: 36px;
+  background: var(--red);
+  width: 118px;
+  height: 55px;
+  clip-path: polygon(0 36%, 34% 77%, 88% 0, 100% 12%, 35% 100%, 0 56%);
+  transform: rotate(-8deg);
+}
+.lineage-strands h3 {
+  font-size: 32px;
+  line-height: 1.2;
+}
+.lineage-strands p {
+  margin-top: 18px;
+  font-size: 27px;
+  line-height: 1.4;
+}
+.strand-cites {
+  font: 400 20px/1.9 var(--mono);
+  margin-top: 25px;
+}
+.strand-cites a {
+  text-decoration: none;
+}
+.lineage-slide .concept-foot {
+  font-size: 28px;
+  bottom: 45px;
+}
+.frontier-directions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 34px;
+  margin-top: 35px;
+}
+.frontier-piece {
+  position: relative;
+  isolation: isolate;
+  padding: 28px 30px;
+}
+.frontier-piece::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--blush);
+  clip-path: polygon(0 2%, 100% 0, 98% 98%, 2% 100%);
+}
+.frontier-piece:nth-child(2)::before {
+  background: var(--gold);
+  transform: rotate(1deg);
+}
+.frontier-piece:nth-child(3)::before {
+  background: var(--olive);
+  transform: rotate(-1deg);
+}
+.frontier-piece:nth-child(3) {
+  color: var(--paper);
+}
+.frontier-piece small {
+  display: block;
+  font: 400 20px/1.4 var(--mono);
+  margin-bottom: 18px;
+}
+.frontier-piece h3 {
+  font-size: 33px;
+  line-height: 1.15;
+  min-height: 74px;
+}
+.frontier-piece p {
+  font-size: 25px;
+  line-height: 1.4;
+  margin-top: 18px;
+}
+.frontier-piece strong {
+  display: block;
+  font: 700 25px/1.35 var(--mono);
+  margin-top: 23px;
+}
+.frontier-piece a {
+  display: block;
+  margin-top: 20px;
+  font: 400 18px/1.5 var(--mono);
+  text-decoration: none;
+}
+.frontier-slide .concept-foot {
+  font-size: 25px;
+  bottom: 40px;
+}
+#five-places {
+  position: relative;
+}
+#five-places h2 {
+  font-size: 69px;
+}
+#five-places .slide-top {
+  margin-bottom: 25px;
+}
+.map-modes {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+.map-modes button {
+  min-height: 40px;
+  padding: 9px 17px;
+  font-size: 20px;
+  background: var(--blush);
+}
+.map-modes button[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--paper);
+}
+#five-places .process-map {
+  margin-top: 21px;
+}
+#five-places .process-map button {
+  padding: 17px 17px 20px;
+  font-size: 29px;
+}
+#five-places .process-map small {
+  margin-bottom: 12px;
+}
+#five-places .stage-role {
+  margin-top: 10px;
+  font-size: 20px;
+}
+#five-places .map-detail {
+  grid-template-columns: 1.04fr 1.1fr 1fr;
+  margin-top: 28px;
+  min-height: 136px;
+}
+#five-places .stage-question {
+  font-size: 29px;
+}
+#five-places .map-detail > p:not(.stage-question) {
+  font-size: 24px;
+}
+#five-places .map-loop {
+  margin-top: 15px;
+}
+#five-places .map-plus {
+  margin-top: 17px;
+  padding: 14px 25px;
+}
+.research-source {
+  right: 60px;
+  font-size: 18px;
+}
+.research-source a {
+  text-decoration: none;
+}
+.pilot-versions {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  margin: 32px 0;
+}
+.pilot-versions span {
+  background: var(--gold);
+  font: 800 42px/1.2 var(--mono);
+  padding: 16px 23px;
+  flex: 1;
+}
+.pilot-versions small {
+  display: block;
+  font: 400 23px/1.3 var(--main);
+  margin-top: 8px;
+}
+.pilot-versions b {
+  font: 800 35px var(--mono);
+}
+.small-example .small-task {
+  font-size: 29px;
+}
+.small-example .pilot-caption {
+  font: 400 20px/1.4 var(--mono);
+  margin-top: 22px;
+}
+.research-reading-stage {
+  background: var(--paper);
+  margin-top: 20px;
+}
+.research-reading-stage:nth-of-type(2n) {
+  background: #edd4b5;
+}
+.research-reading-stage summary {
+  cursor: pointer;
+  padding: 28px 32px;
+  font: 700 27px/1.4 var(--mono);
+}
+.research-reading-stage summary small {
+  display: block;
+  font: 400 17px/1.5 var(--mono);
+  margin-bottom: 12px;
+}
+.research-reading-body {
+  padding: 0 32px 32px;
+}
+.paper-reading {
+  margin: 28px 0 34px;
+}
+.paper-reading h4 {
+  font: 700 24px/1.4 var(--mono);
+  margin: 0;
+}
+.resources .paper-meta {
+  font-size: 18px;
+  margin-top: 12px;
+}
+.start-reading {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+.resources .start-reading p {
+  background: var(--paper);
+  padding: 25px;
+  font-size: 20px;
+  line-height: 1.5;
+}
+.start-reading small {
+  display: block;
+  font: 400 16px/1.5 var(--mono);
+  margin-top: 20px;
+}
+.research-reading-body a {
+  overflow-wrap: anywhere;
+}
+.read-view .lineage-strands {
+  grid-template-columns: 1fr;
+  gap: 48px;
+}
+.read-view .strand-cites {
+  margin-top: 15px;
+}
+.read-view .frontier-directions {
+  grid-template-columns: 1fr;
+}
+.read-view .frontier-piece h3 {
+  min-height: 0;
+}
+.read-view #five-places .map-detail {
+  grid-template-columns: 1fr;
+  min-height: 0;
+}
+.read-view .research-slide .concept-foot {
+  position: static;
+  margin-top: 40px;
+}
+.read-view .start-reading {
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+@media (max-width: 600px) {
+  .read-view .research-slide h2 {
+    font-size: 39px;
+  }
+  .read-view #five-places h2 {
+    font-size: 40px;
+  }
+  .read-view .strand-art {
+    transform: scale(0.77);
+    transform-origin: left center;
+  }
+  .read-view .lineage-strands h3 {
+    font-size: 28px;
+  }
+  .read-view .lineage-strands p {
+    font-size: 23px;
+  }
+  .read-view .strand-cites {
+    font-size: 16px;
+  }
+  .read-view .map-modes {
+    flex-wrap: wrap;
+  }
+  .read-view .map-modes button {
+    font-size: 16px;
+  }
+  .read-view .pilot-versions {
+    gap: 10px;
+  }
+  .read-view .pilot-versions span {
+    padding: 12px;
+    font-size: 30px;
+  }
+  .read-view .pilot-versions small {
+    font-size: 17px;
+  }
+  .read-view .pilot-versions b {
+    font-size: 25px;
+  }
+  .read-view .small-example .small-task {
+    font-size: 22px;
+  }
+  .read-view .small-example .pilot-caption {
+    font-size: 16px;
+  }
+  .read-view .research-source {
+    font-size: 16px;
+  }
+  .research-reading-stage summary {
+    font-size: 22px;
+    padding: 23px 20px;
+  }
+  .research-reading-stage summary small {
+    font-size: 15px;
+  }
+  .research-reading-body {
+    padding: 0 20px 25px;
+  }
+  .paper-reading h4 {
+    font-size: 21px;
+  }
+}
+@media print {
+  #five-places .process-map {
+    margin-top: 35px;
+  }
+  .map-modes {
+    display: none !important;
+  }
+  .frontier-piece {
+    break-inside: avoid;
+  }
+}

@@ -1,0 +1,13 @@
+.speaker-team {font-size:24px;color:var(--olive);font-weight:650}
+#about-josh .speaker-role {line-height:1.32}
+#about-josh .speaker-projects {gap:13px;margin-top:22px}
+/* Movement is reserved for explanatory diagrams and changes in demo state. */
+body #democracy-challenge .everyday-scenes figure,body .principle-slide .principle-layout h2 {animation:none!important}
+#scene-name {display:none}
+.deck-controls {justify-content:space-between}
+#kk-remit .fieldwork-reflection {display:flex;flex-direction:column;justify-content:center;gap:24px}
+#kk-remit .remit-year {font-size:21px;margin:0}
+.remit-fact span {display:block;font-size:23px;margin-bottom:7px}
+.remit-fact strong {display:table;font-size:48px;line-height:1.12;background:linear-gradient(#e0aa52,#e0aa52) left bottom / 100% 28% no-repeat}
+#kk-remit .remit-fact p {font-size:24px;margin:8px 0 0}
+@media print { .remit-fact strong {background-size:100% 28%!important} }

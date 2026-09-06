@@ -1,0 +1,376 @@
+{
+  "reviewed": "2026-09-06",
+  "papers": [
+    {
+      "id": "woolley",
+      "authors": "Woolley et al.",
+      "year": "2010",
+      "title": "Evidence for a Collective Intelligence Factor in the Performance of Human Groups",
+      "venue": "Science",
+      "status": "Peer-reviewed empirical study",
+      "url": "https://doi.org/10.1126/science.1193147",
+      "finding": "Two studies with 699 people found a shared factor in small groups\u2019 performance across tasks, associated with social sensitivity and conversational turn-taking.",
+      "limit": "These associations do not show that equal speaking time causes better decisions, or measure democratic legitimacy."
+    },
+    {
+      "id": "lorenz",
+      "authors": "Lorenz, Rauhut, Schweitzer & Helbing",
+      "year": "2011",
+      "title": "How social influence can undermine the wisdom of crowd effect",
+      "venue": "PNAS",
+      "status": "Peer-reviewed laboratory experiment",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3107299/",
+      "finding": "In numerical estimation tasks with 144 participants, seeing others\u2019 estimates reduced diversity and increased confidence without a corresponding improvement in collective accuracy.",
+      "limit": "An estimation experiment is not a general verdict against discussion; task and interaction structure matter."
+    },
+    {
+      "id": "flanigan",
+      "authors": "Flanigan, G\u00f6lz, Gupta, Hennig & Procaccia",
+      "year": "2021",
+      "title": "Fair algorithms for selecting citizens\u2019 assemblies",
+      "venue": "Nature",
+      "status": "Peer-reviewed algorithms and deployment study",
+      "url": "https://www.nature.com/articles/s41586-021-03788-6",
+      "finding": "Optimizes selection probabilities among volunteers while meeting demographic quotas; evaluates fairness on data from ten assemblies.",
+      "limit": "Fairness within the volunteer pool does not solve unequal willingness or ability to volunteer."
+    },
+    {
+      "id": "polis",
+      "authors": "Small, Bjorkegren, Erkkil\u00e4, Shaw & Megill",
+      "year": "2021",
+      "title": "Polis: Scaling Deliberation by Mapping High Dimensional Opinion Spaces",
+      "venue": "Recerca",
+      "status": "Peer-reviewed system and case study",
+      "url": "https://www.e-revistes.uji.es/index.php/recerca/article/view/5516",
+      "finding": "Describes a system that maps agreement patterns and surfaces statements supported across opinion groups, with real consultation cases.",
+      "limit": "A useful map of participants is not a representative estimate of an entire population or evidence that consensus is always desirable."
+    },
+    {
+      "id": "peters",
+      "authors": "Peters, Pierczy\u0144ski & Skowron",
+      "year": "2021",
+      "title": "Proportional Participatory Budgeting with Additive Utilities",
+      "venue": "NeurIPS",
+      "status": "Peer-reviewed mathematical paper",
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2021/hash/69f8ea31de0c00502b2ae571fbab1f95-Abstract.html",
+      "finding": "Develops proportionality axioms and allocation rules for projects with different costs and additive utilities; a foundation for the Method of Equal Shares.",
+      "limit": "A guarantee depends on its preference model and precise axiom. It does not make every outcome fair under every definition."
+    },
+    {
+      "id": "tessler",
+      "authors": "Tessler et al.",
+      "year": "2024",
+      "title": "AI can help humans find common ground in democratic deliberation",
+      "venue": "Science",
+      "status": "Peer-reviewed experiments",
+      "url": "https://doi.org/10.1126/science.adq2852",
+      "finding": "The Habermas Machine uses opinions and critiques to revise group statements. Across experiments with 5,734 participants, AI statements were preferred to those from human mediators.",
+      "limit": "Preference for a statement is not proof of factual accuracy, legitimate authority, or lasting political agreement."
+    },
+    {
+      "id": "yang-voting",
+      "authors": "Yang, Hausladen, Peters, Pournaras, H\u00e4nggli Fricker & Helbing",
+      "year": "2024",
+      "title": "Designing Digital Voting Systems for Citizens: Achieving Fairness and Legitimacy in Participatory Budgeting",
+      "venue": "Digital Government: Research and Practice",
+      "status": "Peer-reviewed empirical article",
+      "url": "https://doi.org/10.1145/3665332",
+      "finding": "Studies how voting-system design shapes citizens\u2019 perceptions of fairness and legitimacy in participatory budgeting.",
+      "limit": "Perceived fairness and actual understanding are different outcomes; evaluate them separately."
+    },
+    {
+      "id": "bisbee",
+      "authors": "Bisbee, Clinton, Dorff, Kenkel & Larson",
+      "year": "2024",
+      "title": "Synthetic Replacements for Human Survey Data? The Perils of Large Language Models",
+      "venue": "Political Analysis",
+      "status": "Peer-reviewed empirical audit",
+      "url": "https://doi.org/10.1017/pan.2024.5",
+      "finding": "Synthetic responses could match survey averages while understating variation and changing statistical relationships. Results were sensitive to prompts and collection dates.",
+      "limit": "The study tests particular models and tasks; use its evaluation questions rather than assuming identical failures for every later model."
+    },
+    {
+      "id": "skowron",
+      "authors": "Skowron",
+      "year": "2026",
+      "title": "A General Theory of Proportionality with Additive Utilities",
+      "venue": "arXiv:2602.08504",
+      "status": "Preprint \u00b7 February 2026",
+      "url": "https://arxiv.org/abs/2602.08504v1",
+      "finding": "Proposes proportional rules for scored preferences under general feasibility constraints, and proportional rankings.",
+      "limit": "A theoretical proposal, not a deployment evaluation. Constraints and the definition of proportionality must be specified."
+    },
+    {
+      "id": "park",
+      "authors": "Park et al.",
+      "year": "2026 revision",
+      "title": "LLM Agents Grounded in Self-Reports Enable General-Purpose Simulation of Individuals",
+      "venue": "arXiv:2411.10109v3",
+      "status": "Preprint \u00b7 June 2026 revision of a 2024 paper",
+      "url": "https://arxiv.org/abs/2411.10109v3",
+      "finding": "Builds agents from interviews and/or surveys of 1,052 Americans and evaluates predictions on held-out responses against people\u2019s own test\u2013retest consistency.",
+      "limit": "Predictive fidelity on studied tasks does not confer consent or political authority. The earlier title was Generative Agent Simulations of 1,000 People."
+    },
+    {
+      "id": "komitee",
+      "authors": "Yang, Scheurer & Helbing",
+      "year": "2026",
+      "title": "Komitee Equal Shares: A Hybrid Algorithm for Priceable Participatory Funding",
+      "venue": "CHI Extended Abstracts",
+      "status": "Published conference extended abstract \u00b7 field deployment",
+      "url": "https://doi.org/10.1145/3772363.3798958",
+      "finding": "Combines personal preferences with group evaluations and allocation receipts. In Winterthur in 2025, 38 citizens allocated CHF 380,000 to 43 projects.",
+      "limit": "One deployment, with 32 survey respondents. Simulated comparisons do not isolate every component\u2019s causal contribution."
+    },
+    {
+      "id": "belief",
+      "authors": "Yang, Flechtner, Dailisan & Bakker",
+      "year": "2026",
+      "title": "Belief Engine: Configurable and Inspectable Stance Dynamics in Multi-Agent LLM Deliberation",
+      "venue": "arXiv:2605.15343",
+      "status": "Preprint \u00b7 May 2026",
+      "url": "https://arxiv.org/abs/2605.15343",
+      "finding": "Maintains explicit proposition-level stances with configurable evidence uptake and prior anchoring, recording the evidence associated with updates.",
+      "limit": "Evidence scoring and update rules are modeling choices. An inspectable trace is not by itself a faithful simulation of a citizen."
+    },
+    {
+      "id": "selbst",
+      "authors": "Selbst, boyd, Friedler, Venkatasubramanian & Vertesi",
+      "year": "2019",
+      "title": "Fairness and Abstraction in Sociotechnical Systems",
+      "venue": "FAT*",
+      "status": "Peer-reviewed conceptual paper",
+      "url": "https://doi.org/10.1145/3287560.3287598",
+      "finding": "Explains how isolating a technical model from its social setting can undermine fairness goals.",
+      "limit": "A conceptual analysis of system design, not an empirical guarantee that a particular civic tool is fair."
+    },
+    {
+      "id": "generative-social-choice",
+      "authors": "Boehmer, Fish & Procaccia",
+      "year": "2025",
+      "title": "Generative Social Choice: The Next Generation",
+      "venue": "ICML",
+      "status": "Peer-reviewed mathematical and experimental paper",
+      "url": "https://proceedings.mlr.press/v267/boehmer25a.html",
+      "finding": "Selects representative statements under a text-length budget, combining social choice with LLM queries.",
+      "limit": "Representation guarantees depend on the preference model and query assumptions; this does not certify every summary as fair."
+    }
+  ],
+  "fields": [
+    {
+      "name": "Computational social choice",
+      "description": "How should we count votes, share a budget or select representatives?",
+      "papers": [
+        "peters",
+        "flanigan",
+        "skowron"
+      ]
+    },
+    {
+      "name": "Deliberative democracy",
+      "description": "How can discussion include different views and inform public decisions?",
+      "papers": [
+        "woolley",
+        "lorenz",
+        "polis",
+        "komitee"
+      ]
+    },
+    {
+      "name": "Human\u2013AI interaction",
+      "description": "How do people use, check and correct help from AI?",
+      "papers": [
+        "tessler",
+        "yang-voting",
+        "selbst",
+        "bisbee"
+      ]
+    },
+    {
+      "name": "Complexity science & collective intelligence",
+      "description": "How do interactions and networks shape what groups learn and decide?",
+      "papers": [
+        "woolley",
+        "lorenz",
+        "park",
+        "belief"
+      ]
+    }
+  ],
+  "contexts": [
+    {
+      "name": "Swiss direct democracy",
+      "process": "A federal popular initiative proposes a constitutional change; an optional referendum challenges legislation.",
+      "problem": "A voter or organizer needs to understand the text and the published procedural status.",
+      "build": "A comparison of the proposal with the status quo, or a tracker using official records.",
+      "test": "Can a reader find the relevant passage and explain what is being proposed?",
+      "sources": [
+        {
+          "title": "Popular initiatives",
+          "url": "https://www.ch.ch/en/votes-and-elections/popular-initiative/"
+        },
+        {
+          "title": "Referendums",
+          "url": "https://www.ch.ch/en/votes-and-elections/referendum/"
+        }
+      ]
+    },
+    {
+      "name": "ETH student representation",
+      "process": "Fachvereine and VSETH represent students in departmental and ETH-wide bodies; VSETH\u2019s members\u2019 council governs its own budget, elections and statutes.",
+      "problem": "A student needs to identify who can act and what has already been discussed.",
+      "build": "An agenda brief or issue record connecting a concern, evidence, the responsible body and its response.",
+      "test": "Can another student identify the responsible body and the present status?",
+      "sources": [
+        {
+          "title": "VSETH politics",
+          "url": "https://vseth.ethz.ch/politik/"
+        },
+        {
+          "title": "VSETH structure",
+          "url": "https://vseth.ethz.ch/struktur/"
+        }
+      ]
+    },
+    {
+      "name": "Citizens\u2019 assemblies and consultations",
+      "process": "Participants examine evidence, discuss alternatives and produce recommendations or consultation outputs.",
+      "problem": "An important concern can disappear when discussions are summarized.",
+      "build": "A source-linked correction or unresolved-question record.",
+      "test": "Compare the account with original contributions; count unsupported claims and missing requirements.",
+      "sources": [
+        {
+          "title": "Irish citizens\u2019 assemblies",
+          "url": "https://citizensassembly.ie/about/faq/"
+        },
+        {
+          "title": "vTaiwan",
+          "url": "https://info.vtaiwan.tw/"
+        },
+        {
+          "title": "Murmi project",
+          "url": "https://joshuacyang.com/projects/murmi/"
+        }
+      ]
+    },
+    {
+      "name": "Participatory budgeting",
+      "process": "Develop proposals, assess feasibility and allocate a limited budget using a defined procedure.",
+      "problem": "A proposer needs to meet requirements; a participant needs to understand how the allocation was produced.",
+      "build": "A feasibility checklist, comparison of rules, or readable allocation receipt.",
+      "test": "Hold ballots and costs fixed for a rule comparison; ask a participant to explain an allocation.",
+      "sources": [
+        {
+          "title": "Decide Madrid process",
+          "url": "https://decide.madrid.es/mas-informacion/dm/presupuestos"
+        },
+        {
+          "title": "Komitee Equal Shares",
+          "url": "https://joshuacyang.com/pubs/komitee-equal-shares/"
+        },
+        {
+          "title": "Public KK26 receipts",
+          "url": "https://equalshares.kulturkomitee.win/"
+        }
+      ]
+    },
+    {
+      "name": "Accountability after a decision",
+      "process": "Connect an adopted proposal to responsibility, implementation and public reporting.",
+      "problem": "A resident can see that a proposal was approved but cannot tell what happened next.",
+      "build": "A proposal-to-implementation record using existing milestones and evidence.",
+      "test": "Can a reader identify the current status, responsible body and supporting record?",
+      "sources": [
+        {
+          "title": "Decidim accountability component",
+          "url": "https://docs.decidim.org/en/develop/admin/components/accountability.html"
+        }
+      ]
+    }
+  ],
+  "history": {
+    "framing_source": "Self-Introduction.pptx, slide 3 (Motivation 1)",
+    "analogy": "Institutional rules can be inspected, borrowed and revised; political change requires legitimacy and is not automatically improvement.",
+    "sources": [
+      {
+        "id": "us-constitution",
+        "label": "US Senate",
+        "url": "https://www.senate.gov/about/origins-foundations/senate-and-constitution.htm",
+        "claim": "The 1787 constitutional compromise combined a House apportioned by population with two senators per state."
+      },
+      {
+        "id": "swiss-parliament",
+        "label": "Swiss Parliament: 1848",
+        "url": "https://www.parlament.ch/de/%C3%BCber-das-parlament/Seiten/Ablauf-Wahlen-1848.aspx",
+        "claim": "The 1848 Swiss Constitution established a bicameral federal parliament, using the United States as a model."
+      },
+      {
+        "id": "australian-system",
+        "label": "Australian Parliament",
+        "url": "https://peo.gov.au/understand-our-parliament/your-questions-on-notice/questions/what-is-the-washminster-system",
+        "claim": "Australia combines parliamentary government responsible to the elected house, drawn from Westminster, with a federal Senate inspired by the United States."
+      },
+      {
+        "id": "australian-federation",
+        "label": "Australian Constitution",
+        "url": "https://peo.gov.au/understand-our-parliament/how-parliament-works/the-australian-constitution/the-australian-constitution-in-focus",
+        "claim": "The Australian Constitution took effect with federation on 1 January 1901."
+      },
+      {
+        "id": "uk-reforms",
+        "label": "UK Parliament",
+        "url": "https://commonslibrary.parliament.uk/research-briefings/sn00675/",
+        "claim": "The Parliament Acts of 1911 and 1949 permit certain public bills to pass without Lords consent. The 1949 Act reduced the delay for eligible non-money bills from two years to one. Money bills and other categories have different provisions; the Lords did not lose every veto."
+      },
+      {
+        "id": "swiss-referendum",
+        "label": "Swiss Parliament: referendums",
+        "url": "https://www.parlament.ch/de/%C3%BCber-das-parlament/Seiten/faktenblatt-referenden.aspx",
+        "claim": "The optional federal legislative referendum dates to 1874. The mandatory constitutional referendum already existed in 1848."
+      },
+      {
+        "id": "swiss-initiative",
+        "label": "Swiss Parliament: initiatives",
+        "url": "https://www.parlament.ch/de/%C3%BCber-das-parlament/Seiten/faktenblatt-volksinitiativen.aspx",
+        "claim": "The federal popular initiative for partial constitutional revision dates to 1891. The initiative for total revision predates this, going back to 1848."
+      },
+      {
+        "id": "australian-reforms",
+        "label": "Australian Electoral Commission",
+        "url": "https://www.aec.gov.au/Elections/history-of-electoral-reform.htm",
+        "claim": "Preferential voting for the House of Representatives was introduced in 1918; compulsory voting at federal elections in 1924. Senate proportional representation was enacted in 1948 and first used in 1949, not at federation in 1901."
+      },
+      {
+        "id": "swiss-inclusion",
+        "label": "Swiss Federal Archives",
+        "url": "https://www.bar.admin.ch/en/the-swiss-state-and-its-citizens-after-1848",
+        "claim": "Political participation was historically restricted. Swiss women gained federal voting rights in 1971."
+      },
+      {
+        "id": "british-us-precedents",
+        "label": "US Senate: British and state precedents",
+        "url": "https://www.senate.gov/about/origins-foundations/senate-and-constitution.htm",
+        "claim": "The US framers drew on British institutions and state constitutions. The connection represents selected institutional precedents, not a literal fork of modern Westminster government."
+      },
+      {
+        "id": "swiss-proportional-election",
+        "label": "Swiss Parliament: proportional National Council elections",
+        "url": "https://www.parlament.ch/fr/%C3%BCber-das-parlament/Pages/Vom-Majorz-zum-Proporz.aspx",
+        "claim": "Proportional election of the National Council was approved in 1918 and first used in 1919."
+      }
+    ],
+    "diagram": "One schematic branching lineage combines selected influences and dated reforms. Dates are labels, not a proportional horizontal time scale."
+  },
+  "komitee_context": {
+    "years": [
+      2024,
+      2025,
+      2026
+    ],
+    "role": "Voting and aggregation",
+    "distributed_chf_lower_bound": 2000000,
+    "total_description": "Over CHF 2 million across Joshua\u2019s three years of involvement",
+    "source": "Joshua C. Yang, direct confirmation on 2026-09-06",
+    "supersedes": "Older repository project-page figure of CHF 1.2 million"
+  }
+}

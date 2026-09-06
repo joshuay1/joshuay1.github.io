@@ -1,0 +1,185 @@
+/* Large supplied artwork marks the topics; fieldwork remains documentary evidence. */
+.step-index {
+  text-decoration: none;
+}
+.step-intro .slide-top {
+  margin-bottom: 0;
+}
+.step-intro-layout {
+  display: grid;
+  grid-template-columns: 600px 1fr;
+  gap: 45px;
+  align-items: center;
+  margin-top: 24px;
+  height: 675px;
+}
+.step-intro h2 {
+  font-size: 83px;
+  line-height: 1.14;
+  letter-spacing: -4px;
+}
+.step-intro-copy p {
+  font-size: 33px;
+  line-height: 1.5;
+  max-width: 580px;
+  margin-top: 35px;
+}
+.topic-art {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+}
+.topic-art img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+}
+.step-intro .topic-art {
+  height: 675px;
+  min-height: 0;
+}
+#step-2 .step-intro-layout,
+#step-4 .step-intro-layout {
+  grid-template-columns: 710px 1fr;
+}
+#step-2 .step-intro-copy,
+#step-4 .step-intro-copy {
+  max-width: 610px;
+}
+.fieldwork-slide h2 {
+  min-height: 76px;
+}
+.fieldwork-slide .fieldwork-layout {
+  margin-top: 35px;
+}
+.fieldwork-slide .fieldwork-photo img {
+  height: 490px;
+}
+.fieldwork-slide .fieldwork-reflection {
+  min-height: 0;
+  align-self: center;
+}
+#process-overview .step-overview {
+  margin-top: 75px;
+  gap: 21px;
+}
+#process-overview .step-overview-piece {
+  min-height: 310px;
+  padding: 35px 25px;
+}
+#process-overview .step-overview-piece > span {
+  font-size: 80px;
+  margin-bottom: 35px;
+}
+#process-overview .step-overview-piece h3 {
+  font-size: 30px;
+  min-height: 0;
+}
+#process-overview .step-overview-note {
+  margin-top: 42px;
+}
+.ci-definition {
+  margin-top: 26px;
+  max-width: 1270px;
+  font-size: 32px;
+  line-height: 1.45;
+}
+#many-minds .ci-mechanism {
+  margin-top: 60px;
+}
+.illustrated-closing-layout {
+  display: grid;
+  grid-template-columns: 600px 1fr;
+  align-items: center;
+  gap: 25px;
+  height: 555px;
+  margin-top: 22px;
+}
+#your-intervention.illustrated-closing h2 {
+  font-size: 73px;
+  line-height: 1.13;
+  letter-spacing: -3px;
+}
+.illustrated-closing .takeaway-questions {
+  margin-top: 38px;
+  gap: 15px;
+}
+.illustrated-closing .takeaway-questions > div {
+  display: block;
+  padding: 17px 22px;
+}
+.illustrated-closing .takeaway-questions h3 {
+  font-size: 27px;
+}
+.illustrated-closing .closing-bottom {
+  margin-top: 38px;
+}
+.read-view .step-intro-layout,
+.read-view #step-2 .step-intro-layout,
+.read-view #step-4 .step-intro-layout {
+  grid-template-columns: 1fr 1fr;
+  height: auto;
+  min-height: 600px;
+}
+.read-view .step-intro h2 {
+  font-size: 62px;
+}
+.read-view .step-intro .topic-art {
+  height: 600px;
+}
+.read-view #process-overview .step-overview-piece {
+  min-height: 0;
+}
+.read-view .illustrated-closing-layout {
+  grid-template-columns: 1fr 1fr;
+  height: auto;
+}
+.read-view .illustrated-closing .topic-art {
+  height: 480px;
+}
+@media screen and (max-width: 1200px) {
+  .read-view .step-intro-layout,
+  .read-view #step-2 .step-intro-layout,
+  .read-view #step-4 .step-intro-layout,
+  .read-view .illustrated-closing-layout {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+  .read-view .step-intro-copy,
+  .read-view #step-2 .step-intro-copy,
+  .read-view #step-4 .step-intro-copy {
+    max-width: none;
+  }
+  .read-view .topic-art {
+    max-width: 900px;
+  }
+}
+@media screen and (max-width: 600px) {
+  .read-view .step-intro h2,
+  .read-view #your-intervention.illustrated-closing h2 {
+    font-size: 44px;
+    letter-spacing: -1.6px;
+  }
+  .read-view .step-intro-copy p,
+  .read-view .ci-definition {
+    font-size: 24px;
+    margin-top: 25px;
+  }
+  .read-view .step-intro .topic-art {
+    height: 430px;
+  }
+  .read-view #process-overview .step-overview {
+    margin-top: 35px;
+  }
+  .read-view .illustrated-closing .topic-art {
+    height: 280px;
+  }
+  .read-view .illustrated-closing .takeaway-questions h3 {
+    font-size: 23px;
+  }
+  .read-view .fieldwork-slide .fieldwork-photo img {
+    height: auto;
+  }
+}

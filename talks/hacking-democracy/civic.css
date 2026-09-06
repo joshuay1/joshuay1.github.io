@@ -1,0 +1,679 @@
+/* Concrete institutions and explanatory titles retain the warm paper palette. */
+.slide-top {
+  margin-bottom: 28px;
+  font-size: 22px;
+}
+.slide h2 {
+  font-size: 70px;
+  line-height: 1.13;
+  letter-spacing: -3px;
+}
+.cover h1 {
+  font-size: 91px;
+  line-height: 1.13;
+  letter-spacing: -5px;
+}
+.cover .lede {
+  font-size: 31px;
+  max-width: 740px;
+}
+.cover-layout {
+  grid-template-columns: 1.35fr 1fr;
+}
+.cover .assembly {
+  transform: scale(0.9);
+  transform-origin: center;
+}
+.context-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 26px;
+}
+.context-row {
+  display: grid;
+  grid-template-columns: 370px 1fr;
+  gap: 35px;
+  align-items: center;
+  padding: 18px 24px;
+  text-decoration: none;
+}
+.context-row:nth-child(2n) {
+  transform: rotate(-0.25deg);
+}
+.context-row h3 {
+  font-size: 26px;
+  line-height: 1.3;
+}
+.context-row p {
+  font-size: 25px;
+  line-height: 1.35;
+}
+.research-fields {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin-top: 30px;
+}
+.field-piece {
+  padding: 25px 27px;
+}
+.field-piece:nth-child(2n) {
+  transform: rotate(-0.5deg);
+}
+.field-piece h3 {
+  font-size: 28px;
+  line-height: 1.25;
+  min-height: 70px;
+}
+.field-piece p {
+  font-size: 25px;
+  line-height: 1.4;
+  margin-top: 17px;
+}
+.civic-activities {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 18px;
+  margin-top: 42px;
+}
+.activity-piece {
+  padding: 25px 22px;
+  text-decoration: none;
+}
+.activity-piece:nth-child(2n + 1) {
+  transform: rotate(-0.7deg);
+}
+.activity-piece h3 {
+  font-size: 28px;
+  line-height: 1.3;
+  min-height: 76px;
+}
+.activity-piece p {
+  font-size: 24px;
+  line-height: 1.45;
+  margin-top: 25px;
+  min-height: 150px;
+}
+.activity-piece small {
+  display: block;
+  font: 400 20px/1.45 var(--mono);
+  margin-top: 28px;
+}
+.civic-definition {
+  font-size: 28px;
+  max-width: 1300px;
+  margin-top: 44px;
+}
+.swiss-procedures {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-top: 26px;
+}
+.swiss-procedure {
+  padding: 28px 30px;
+}
+.swiss-procedure h3 {
+  font-size: 30px;
+  line-height: 1.25;
+}
+.swiss-procedure p {
+  font-size: 25px;
+  line-height: 1.4;
+  margin-top: 16px;
+}
+.swiss-procedure ol {
+  padding-left: 26px;
+  margin: 22px 0;
+}
+.swiss-procedure li {
+  font-size: 24px;
+  line-height: 1.4;
+  padding-left: 7px;
+  margin-top: 12px;
+}
+.swiss-procedure .majority-rule {
+  font: 500 22px/1.4 var(--mono);
+}
+.civic-example {
+  font-size: 25px;
+  line-height: 1.4;
+  margin-top: 28px;
+}
+.civic-slide .source {
+  font-size: 18px;
+  right: 65px;
+}
+.student-routes {
+  display: grid;
+  gap: 30px;
+  margin-top: 30px;
+}
+.student-routes h3 {
+  font-size: 26px;
+  margin-bottom: 18px;
+}
+.route-sequence {
+  display: grid;
+  grid-template-columns: 1fr 38px 1.4fr 38px 1.3fr;
+  align-items: center;
+  gap: 18px;
+}
+.route-sequence span {
+  padding: 19px 24px;
+  background: var(--blush);
+  font: 500 26px/1.35 var(--mono);
+}
+.route-sequence span:last-child {
+  background: var(--gold);
+}
+.student-routes > div:nth-child(2) .route-sequence span {
+  background: var(--blue);
+  color: var(--paper);
+}
+.route-sequence b {
+  font: 500 38px var(--mono);
+}
+.route-sequence small {
+  font: 400 21px var(--main);
+}
+.student-routes p {
+  margin-top: 16px;
+  font-size: 24px;
+}
+#student-governance .civic-example {
+  margin-top: 34px;
+}
+#many-minds .ci-mechanism {
+  margin-top: 25px;
+}
+#many-minds .ci-pieces {
+  height: 180px;
+  transform: scale(0.82);
+  transform-origin: left top;
+}
+#many-minds .ci-part h3 {
+  font-size: 28px;
+  margin-top: 12px;
+}
+#many-minds .ci-part p {
+  font-size: 25px;
+  max-width: 370px;
+  line-height: 1.4;
+}
+#many-minds .bottom-line {
+  font-size: 24px;
+  bottom: 75px;
+  max-width: 1390px;
+}
+#swiss-ai-futures .photo-layout h2 {
+  font-size: 67px;
+}
+#swiss-ai-futures .project-context {
+  font-size: 27px;
+}
+#swiss-ai-futures .build-seed {
+  font-size: 25px;
+  line-height: 1.4;
+  max-width: 650px;
+}
+#deliberative-assembly .assembly-process {
+  margin-top: 25px;
+}
+#deliberative-assembly .concept-foot {
+  font-size: 25px;
+}
+#murmi h2 {
+  font-size: 69px;
+}
+#murmi .project-context {
+  font-size: 27px;
+}
+#murmi .murmi-explanation h3 {
+  font-size: 29px;
+}
+#murmi .murmi-explanation p {
+  font-size: 26px;
+}
+#opinion-map .concept-foot {
+  font-size: 24px;
+}
+#missing-voice .bottom-line {
+  font-size: 27px;
+}
+#funding .funding-layout {
+  margin-top: 30px;
+}
+#funding .virtual-budget {
+  font-size: 28px;
+}
+#funding .funding-principle {
+  font-size: 28px;
+}
+#receipt h2 {
+  font-size: 56px;
+}
+#receipt .project-context {
+  font-size: 27px;
+}
+#receipt .receipt-insight {
+  margin: 20px 0;
+  min-height: 130px;
+}
+#receipt .source {
+  max-width: 680px;
+  font-size: 18px;
+}
+#small-tool .small-layout h2 {
+  font-size: 78px;
+  line-height: 1.14;
+  letter-spacing: -4px;
+}
+#small-tool .small-example .small-person {
+  font-size: 32px;
+}
+#small-tool .bottom-line {
+  font-size: 28px;
+}
+#agents .agent-caption {
+  font-size: 26px;
+}
+#your-intervention h2 {
+  font-size: 70px;
+}
+#your-intervention input {
+  font-size: 24px;
+}
+#your-intervention .exercise-status {
+  font-size: 26px;
+}
+.closing-projects {
+  display: grid;
+  gap: 13px;
+  margin-top: 28px;
+}
+.closing-projects > div {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 25px;
+  align-items: center;
+  padding: 18px 23px;
+}
+.closing-projects h3 {
+  font-size: 25px;
+  line-height: 1.3;
+}
+.closing-projects p {
+  font-size: 24px;
+  line-height: 1.35;
+}
+.closing .closing-bottom {
+  margin-top: 24px;
+}
+.closing .resource-callout .demo-link {
+  font-size: 22px;
+  padding: 12px 18px;
+}
+.closing .project-qr {
+  width: 100px;
+  height: 100px;
+}
+.read-view .context-row,
+.read-view .closing-projects > div {
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+.read-view .research-fields {
+  grid-template-columns: 1fr 1fr;
+}
+.read-view .civic-activities {
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+.read-view .activity-piece p,
+.read-view .activity-piece h3,
+.read-view .field-piece h3 {
+  min-height: 0;
+}
+.read-view .activity-piece small {
+  margin-top: 20px;
+}
+.read-view .swiss-procedures {
+  grid-template-columns: 1fr;
+}
+.read-view .route-sequence {
+  grid-template-columns: 1fr;
+}
+.read-view .route-sequence b {
+  transform: rotate(90deg);
+  justify-self: center;
+}
+.read-view #many-minds .ci-pieces {
+  height: 190px;
+}
+.read-view #many-minds .ci-part p {
+  margin-top: 0;
+  max-width: none;
+}
+.read-view #many-minds .bottom-line {
+  position: static;
+}
+.read-view .closing .closing-bottom {
+  margin-top: 35px;
+}
+.fieldwork-slide h2 {
+  font-size: 57px;
+  line-height: 1.18;
+  letter-spacing: -2.5px;
+  max-width: 1430px;
+  min-height: 135px;
+}
+.fieldwork-slide .slide-top {
+  margin-bottom: 22px;
+}
+.fieldwork-layout {
+  display: grid;
+  grid-template-columns: 850px 1fr;
+  gap: 35px;
+  margin-top: 20px;
+}
+.fieldwork-photo {
+  margin: 0;
+}
+.fieldwork-photo img {
+  display: block;
+  width: 100%;
+  height: 445px;
+  object-fit: cover;
+  object-position: center 62%;
+}
+.fieldwork-photo figcaption {
+  margin-top: 12px;
+  font-size: 20px;
+  line-height: 1.35;
+}
+.fieldwork-reflection {
+  padding: 29px 31px;
+  align-self: start;
+  min-height: 445px;
+  transform: rotate(-0.4deg);
+}
+.fieldwork-reflection p {
+  font-size: 27px;
+  line-height: 1.5;
+}
+.fieldwork-reflection h3 {
+  font-size: 31px;
+  line-height: 1.3;
+  letter-spacing: -0.7px;
+  margin-top: 35px;
+}
+.fieldwork-steps {
+  position: absolute;
+  left: 70px;
+  right: 70px;
+  bottom: 35px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+.fieldwork-steps a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  font: 400 19px/1.3 var(--mono);
+  text-decoration: none;
+}
+.fieldwork-steps a:not([aria-current]) {
+  background: var(--paper-dark, #e8d8b8);
+  color: var(--ink);
+}
+.fieldwork-steps [aria-current] {
+  font-weight: 700;
+  transform: rotate(-0.8deg);
+}
+.fieldwork-steps span {
+  font-size: 25px;
+}
+.step-heading {
+  text-decoration: none;
+}
+.step-heading.gold {
+  background: var(--gold);
+  color: var(--ink);
+}
+.step-heading.blush {
+  background: var(--blush);
+  color: var(--ink);
+}
+.step-heading.blue {
+  background: var(--blue);
+  color: var(--paper);
+}
+.step-heading.olive {
+  background: var(--olive);
+  color: var(--paper);
+}
+.step-heading.red {
+  background: var(--red);
+  color: var(--paper);
+}
+.step-overview {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 18px;
+  margin-top: 35px;
+}
+.step-overview-piece {
+  padding: 25px 23px;
+  text-decoration: none;
+}
+.step-overview-piece:nth-child(2n + 1) {
+  transform: rotate(-0.5deg);
+}
+.step-overview-piece > span {
+  display: block;
+  font: 700 50px/1 var(--mono);
+  margin-bottom: 25px;
+}
+.step-overview-piece h3 {
+  font-size: 28px;
+  line-height: 1.25;
+  min-height: 82px;
+}
+.step-overview-piece p {
+  font-size: 25px;
+  line-height: 1.4;
+  min-height: 130px;
+}
+.step-overview-piece small {
+  display: block;
+  margin-top: 20px;
+  font: 400 19px/1.4 var(--mono);
+}
+.step-overview-note {
+  margin-top: 33px;
+  font-size: 26px;
+}
+#many-minds h2 {
+  max-width: 1250px;
+}
+#research-directions .field-piece p {
+  font-size: 25px;
+}
+#swiss-direct-democracy h2,
+#deliberative-assembly h2,
+#funding h2 {
+  font-size: 64px;
+}
+#swiss-ai-futures .photo-layout h2 {
+  font-size: 64px;
+}
+.takeaway-intro {
+  margin-top: 24px;
+  max-width: 1300px;
+  font-size: 29px;
+  line-height: 1.4;
+}
+.takeaway-questions {
+  display: grid;
+  gap: 18px;
+  margin-top: 30px;
+}
+.takeaway-questions > div {
+  display: grid;
+  grid-template-columns: 570px 1fr;
+  align-items: center;
+  gap: 35px;
+  padding: 23px 28px;
+}
+.takeaway-questions h3 {
+  font-size: 29px;
+  line-height: 1.3;
+}
+.takeaway-questions p {
+  font-size: 27px;
+  line-height: 1.4;
+}
+.takeaway-slide .closing-bottom {
+  margin-top: 27px;
+}
+.read-view .step-overview {
+  grid-template-columns: 1fr 1fr;
+}
+.read-view .step-overview-piece h3,
+.read-view .step-overview-piece p {
+  min-height: 0;
+  margin-bottom: 20px;
+}
+.read-view .takeaway-questions > div {
+  grid-template-columns: 1fr;
+  gap: 15px;
+}
+.read-view .fieldwork-layout {
+  grid-template-columns: 1fr;
+}
+.read-view .fieldwork-slide h2 {
+  min-height: 0;
+}
+.read-view .fieldwork-photo img {
+  height: auto;
+}
+.read-view .fieldwork-reflection {
+  min-height: 0;
+}
+.read-view .fieldwork-steps {
+  position: static;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 30px;
+}
+@media (max-width: 600px) {
+  .read-view .step-overview {
+    grid-template-columns: 1fr;
+  }
+  .read-view .step-overview-piece p {
+    font-size: 23px;
+  }
+  .read-view .takeaway-intro,
+  .read-view .takeaway-questions p {
+    font-size: 23px;
+  }
+  .read-view .takeaway-questions h3 {
+    font-size: 25px;
+  }
+  .read-view .slide h2,
+  .read-view #swiss-ai-futures .photo-layout h2,
+  .read-view #murmi h2,
+  .read-view #receipt h2,
+  .read-view #small-tool .small-layout h2,
+  .read-view #your-intervention h2 {
+    font-size: 38px;
+    letter-spacing: -1.5px;
+  }
+  .read-view .cover h1 {
+    font-size: 49px;
+    letter-spacing: -2px;
+  }
+  .read-view .cover .lede {
+    font-size: 24px;
+  }
+  .read-view .research-fields,
+  .read-view .civic-activities {
+    grid-template-columns: 1fr;
+  }
+  .read-view .context-row h3,
+  .read-view .field-piece h3,
+  .read-view .activity-piece h3 {
+    font-size: 25px;
+  }
+  .read-view .context-row p,
+  .read-view .field-piece p,
+  .read-view .activity-piece p {
+    font-size: 22px;
+  }
+  .read-view .swiss-procedure {
+    padding: 24px 20px;
+  }
+  .read-view .swiss-procedure h3 {
+    font-size: 25px;
+  }
+  .read-view .swiss-procedure p,
+  .read-view .swiss-procedure li {
+    font-size: 21px;
+  }
+  .read-view .swiss-procedure .majority-rule {
+    font-size: 20px;
+  }
+  .read-view .route-sequence span {
+    font-size: 22px;
+  }
+  .read-view .civic-example,
+  .read-view .civic-definition {
+    font-size: 22px;
+  }
+  .read-view #many-minds .ci-part h3 {
+    font-size: 25px;
+  }
+  .read-view #many-minds .ci-part p {
+    font-size: 22px;
+  }
+  .read-view #many-minds .bottom-line {
+    font-size: 21px;
+  }
+  .read-view .closing-projects h3 {
+    font-size: 23px;
+  }
+  .read-view .closing-projects p {
+    font-size: 21px;
+  }
+  .read-view #your-intervention input {
+    font-size: 21px;
+  }
+  .read-view .fieldwork-reflection {
+    padding: 24px;
+  }
+  .read-view .fieldwork-reflection p {
+    font-size: 23px;
+  }
+  .read-view .fieldwork-reflection h3 {
+    font-size: 26px;
+    margin-top: 25px;
+  }
+  .read-view .fieldwork-steps {
+    grid-template-columns: 1fr;
+  }
+}
+
+.takeaway-slide .projects-qr img {
+  width: 100px;
+  height: 100px;
+}
+@media (max-width: 600px) {
+  .read-view #swiss-direct-democracy h2,
+  .read-view #deliberative-assembly h2,
+  .read-view #funding h2 {
+    font-size: 38px;
+    letter-spacing: -1.5px;
+  }
+}

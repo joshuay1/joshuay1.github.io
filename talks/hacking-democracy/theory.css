@@ -1,0 +1,972 @@
+/* Conceptual diagrams extend the approved cut-paper vocabulary. */
+.concept-slide h2 {
+  font-size: 83px;
+}
+.concept-foot {
+  position: absolute;
+  left: 70px;
+  right: 70px;
+  bottom: 74px;
+  font: 500 26px/1.4 var(--mono);
+}
+.challenge-field {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 70px;
+  margin-top: 35px;
+}
+.challenge-field h3 {
+  font-size: 30px;
+  margin-top: 20px;
+}
+.challenge-field p {
+  font-size: 26px;
+  margin-top: 10px;
+}
+.challenge-art {
+  position: relative;
+  height: 190px;
+  width: 340px;
+}
+.challenge-art i {
+  display: block;
+  position: absolute;
+  background: var(--blue);
+  width: 75px;
+  height: 90px;
+  clip-path: polygon(3% 3%, 100% 0, 91% 94%, 0 100%);
+}
+.knowledge i:nth-child(1) {
+  left: 10px;
+  top: 15px;
+  transform: rotate(-15deg);
+}
+.knowledge i:nth-child(2) {
+  left: 145px;
+  top: 0;
+  background: var(--red);
+  transform: rotate(18deg);
+}
+.knowledge i:nth-child(3) {
+  left: 265px;
+  top: 55px;
+  background: var(--gold);
+  transform: rotate(-5deg);
+}
+.knowledge i:nth-child(4) {
+  left: 105px;
+  top: 95px;
+  background: var(--olive);
+  transform: rotate(9deg);
+}
+.knowledge i:nth-child(5) {
+  left: 225px;
+  top: 150px;
+  background: var(--blush);
+  height: 30px;
+  width: 40px;
+}
+.values i {
+  width: 175px;
+  height: 100px;
+  clip-path: polygon(0 33%, 62% 33%, 62% 0, 100% 50%, 62% 100%, 62% 67%, 0 67%);
+  top: 35px;
+}
+.values i:nth-child(1) {
+  left: 0;
+  transform: rotate(-35deg);
+  background: var(--red);
+}
+.values i:nth-child(2) {
+  left: 150px;
+  transform: rotate(25deg);
+}
+.values i:nth-child(3) {
+  left: 125px;
+  top: 120px;
+  transform: rotate(85deg);
+  background: var(--olive);
+  width: 130px;
+}
+.voice i {
+  clip-path: polygon(8% 6%, 82% 0, 100% 45%, 81% 92%, 24% 100%, 0 66%);
+}
+.voice i:nth-child(1) {
+  width: 155px;
+  height: 165px;
+  background: var(--red);
+  left: 5px;
+  top: 5px;
+}
+.voice i:nth-child(2) {
+  width: 55px;
+  height: 60px;
+  left: 225px;
+  top: 7px;
+}
+.voice i:nth-child(3) {
+  width: 42px;
+  height: 50px;
+  left: 260px;
+  top: 120px;
+  background: var(--olive);
+}
+.voice i:nth-child(4) {
+  width: 30px;
+  height: 35px;
+  left: 180px;
+  top: 120px;
+  background: var(--gold);
+}
+.ci-mechanism {
+  display: grid;
+  grid-template-columns: 1fr 65px 1fr 65px 1fr;
+  gap: 12px;
+  margin-top: 35px;
+  align-items: start;
+}
+.ci-part h3 {
+  font-size: 29px;
+  margin-top: 24px;
+}
+.ci-part p {
+  font-size: 25px;
+  margin-top: 12px;
+}
+.mechanism-arrow {
+  font: 800 75px/1 var(--mono);
+  align-self: center;
+  margin-top: -55px;
+  color: var(--red);
+}
+.ci-pieces {
+  height: 200px;
+  width: 330px;
+  position: relative;
+}
+.ci-pieces i {
+  position: absolute;
+  width: 95px;
+  height: 95px;
+  display: block;
+  transition: transform 0.5s;
+  background: var(--red);
+  clip-path: polygon(0 0, 100% 3%, 95% 95%, 0 100%);
+}
+.ci-pieces i:nth-child(1) {
+  left: 10px;
+  top: 0;
+  transform: rotate(-15deg);
+}
+.ci-pieces i:nth-child(2) {
+  left: 210px;
+  top: 20px;
+  background: var(--blue);
+  transform: rotate(12deg);
+}
+.ci-pieces i:nth-child(3) {
+  left: 60px;
+  top: 110px;
+  background: var(--olive);
+  transform: rotate(-8deg);
+}
+.ci-pieces i:nth-child(4) {
+  left: 195px;
+  top: 140px;
+  background: var(--gold);
+  height: 65px;
+  transform: rotate(8deg);
+}
+.exchange i:nth-child(1) {
+  left: 35px;
+  top: 5px;
+  transform: rotate(20deg);
+}
+.exchange i:nth-child(2) {
+  left: 155px;
+  top: 0;
+  transform: rotate(-15deg);
+}
+.exchange i:nth-child(3) {
+  left: 45px;
+  top: 108px;
+  transform: rotate(-20deg);
+}
+.exchange i:nth-child(4) {
+  left: 160px;
+  top: 120px;
+  transform: rotate(10deg);
+}
+.assembled i:nth-child(1) {
+  left: 60px;
+  top: 0;
+  transform: rotate(0);
+}
+.assembled i:nth-child(2) {
+  left: 160px;
+  top: 2px;
+  transform: rotate(0);
+}
+.assembled i:nth-child(3) {
+  left: 60px;
+  top: 100px;
+  transform: rotate(0);
+}
+.assembled i:nth-child(4) {
+  left: 160px;
+  top: 104px;
+  height: 95px;
+  transform: rotate(0);
+}
+#many-minds .bottom-line {
+  font-size: 29px;
+  bottom: 86px;
+}
+.jury-layout {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 80px;
+  margin-top: 28px;
+}
+.jury-assumption {
+  font-size: 29px;
+  max-width: 530px;
+}
+.jury-assumption strong {
+  font: 800 64px/1.3 var(--mono);
+  color: var(--blue);
+}
+.jury-controls {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-top: 35px;
+}
+.jury-controls button {
+  font-size: 22px;
+  padding: 17px 20px;
+}
+.jury-controls button:first-child {
+  background: var(--blush);
+}
+.jury-controls button[aria-pressed="true"] {
+  background: var(--blue);
+  color: var(--paper);
+}
+#jury-condition {
+  font-size: 28px;
+  line-height: 1.4;
+  margin-top: 30px;
+  max-width: 530px;
+}
+.jury-chart {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+  height: 345px;
+  padding-top: 55px;
+}
+.jury-chart > div {
+  position: relative;
+  height: 250px;
+  background: #e4d6bb;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  isolation: isolate;
+}
+.jury-chart strong {
+  position: relative;
+  font: 800 49px/1.2 var(--mono);
+  color: var(--paper);
+  z-index: 1;
+  padding: 0 10px 20px;
+}
+.jury-chart span {
+  position: absolute;
+  top: -43px;
+  left: 0;
+  font: 400 24px/1.3 var(--mono);
+  white-space: nowrap;
+}
+.jury-chart i {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: block;
+  background: var(--blue);
+  clip-path: polygon(0 2%, 35% 0, 71% 2%, 100% 0, 99% 100%, 0 99%);
+  transition: height 0.5s;
+  z-index: -1;
+}
+#five-places .slide-top {
+  margin-bottom: 38px;
+}
+#five-places h2 {
+  font-size: 83px;
+}
+#five-places .process-map {
+  margin-top: 34px;
+  gap: 18px;
+}
+#five-places .process-map button {
+  padding: 24px 20px 28px;
+  font-size: 30px;
+  min-width: 0;
+}
+#five-places .process-map small {
+  margin-bottom: 18px;
+}
+.stage-role {
+  display: block;
+  font: 400 21px/1.3 var(--main);
+  margin-top: 16px;
+}
+.map-detail {
+  display: grid;
+  grid-template-columns: 1.06fr 1.28fr 0.8fr;
+  gap: 35px;
+  align-items: start;
+  margin-top: 29px;
+  min-height: 100px;
+}
+.map-detail .stage-question {
+  margin: 0;
+  font-size: 31px;
+  min-height: 0;
+}
+.map-detail > p {
+  font: 500 25px/1.45 var(--mono);
+}
+.map-detail small {
+  display: block;
+  font: 400 19px/1.3 var(--main);
+  margin-bottom: 9px;
+}
+.map-detail a {
+  text-decoration: none;
+}
+.map-plus {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  background: var(--ink);
+  color: var(--paper);
+  width: 100%;
+  padding: 19px 26px;
+  font-size: 27px;
+  transform: rotate(-0.4deg);
+  margin-top: 22px;
+}
+.map-plus b {
+  font-size: 42px;
+  color: var(--gold);
+}
+.map-plus span {
+  font: 400 24px/1.3 var(--main);
+  margin-left: auto;
+}
+.map-plus[aria-pressed="true"] {
+  background: var(--red);
+}
+#five-places .map-loop {
+  font: 400 23px/1.3 var(--mono);
+  margin-top: 26px;
+  text-align: right;
+}
+.assembly-process {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 90px;
+  align-items: center;
+  margin-top: 32px;
+}
+.assembly-table {
+  position: relative;
+  width: 450px;
+  height: 320px;
+}
+.assembly-table > span {
+  position: absolute;
+  left: 70px;
+  top: 80px;
+  width: 270px;
+  height: 150px;
+  background: var(--gold);
+  clip-path: polygon(15% 0, 88% 4%, 100% 36%, 96% 76%, 78% 100%, 9% 94%, 0 63%, 3% 21%);
+  transform: rotate(-8deg);
+}
+.assembly-table i {
+  position: absolute;
+  width: 70px;
+  height: 80px;
+  border-radius: 45% 55% 40% 50%;
+  background: var(--red);
+}
+.assembly-table i:nth-of-type(1) {
+  left: 70px;
+  top: 0;
+  transform: rotate(-15deg);
+}
+.assembly-table i:nth-of-type(2) {
+  left: 240px;
+  top: 0;
+  background: var(--blue);
+}
+.assembly-table i:nth-of-type(3) {
+  left: 355px;
+  top: 115px;
+  background: var(--olive);
+  transform: rotate(20deg);
+}
+.assembly-table i:nth-of-type(4) {
+  left: 260px;
+  top: 240px;
+  background: var(--blush);
+}
+.assembly-table i:nth-of-type(5) {
+  left: 95px;
+  top: 230px;
+  background: var(--blue);
+  transform: rotate(-20deg);
+}
+.assembly-table i:nth-of-type(6) {
+  left: 0;
+  top: 115px;
+  background: var(--olive);
+}
+.procedure-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.procedure-list li {
+  display: flex;
+  align-items: center;
+  gap: 23px;
+  font: 500 31px/1.4 var(--mono);
+  padding: 22px 0;
+}
+.procedure-list b {
+  background: var(--blush);
+  padding: 14px;
+  transform: rotate(-3deg);
+  font-size: 26px;
+}
+.procedure-list li:nth-child(2) b {
+  background: var(--gold);
+}
+.procedure-list li:nth-child(3) b {
+  background: #d4d5b5;
+}
+.polis-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 65px;
+  margin-top: 25px;
+}
+.opinion-landscape {
+  position: relative;
+  width: 600px;
+  height: 370px;
+}
+.opinion-group {
+  display: grid;
+  grid-template-columns: repeat(3, 26px);
+  gap: 12px;
+  position: absolute;
+  transform: rotate(-8deg);
+}
+.opinion-group b {
+  font: 700 29px var(--mono);
+  position: absolute;
+  top: -50px;
+  left: 15px;
+}
+.opinion-group i {
+  display: block;
+  width: 28px;
+  height: 34px;
+  background: var(--blue);
+  border-radius: 47% 53% 35% 55%;
+}
+.group-a {
+  top: 95px;
+  left: 20px;
+}
+.group-b {
+  left: 330px;
+  top: 50px;
+  transform: rotate(15deg);
+}
+.group-b i {
+  background: var(--red);
+}
+.group-c {
+  left: 235px;
+  top: 255px;
+  transform: rotate(-18deg);
+}
+.group-c i {
+  background: var(--olive);
+}
+.polis-instruction {
+  font-size: 28px;
+  line-height: 1.4;
+}
+.polis-claim {
+  background: var(--gold);
+  padding: 20px 26px;
+  margin-top: 22px;
+  transform: rotate(-0.8deg);
+}
+.polis-claim small {
+  font: 400 18px var(--mono);
+}
+.polis-claim h3 {
+  font-size: 31px;
+  margin: 14px 0 20px;
+}
+.group-support {
+  display: flex;
+  gap: 35px;
+  font: 400 25px var(--mono);
+}
+.group-support b {
+  font-weight: 800;
+}
+.polis-mechanism button {
+  font-size: 23px;
+  margin-top: 22px;
+  padding: 15px 22px;
+  background: var(--blue);
+  color: var(--paper);
+}
+.polis-note {
+  font-size: 23px;
+  margin-top: 17px;
+}
+.polis-layout + .concept-foot {
+  bottom: 75px;
+  font-size: 23px;
+}
+.recap-map a > span {
+  display: block;
+  font: 400 20px/1.4 var(--main);
+  margin-top: 22px;
+}
+.recap-map a {
+  min-height: 255px;
+}
+.recap-map strong {
+  font-size: 25px;
+}
+.recap-agent {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 22px 27px;
+  font: 400 26px/1.4 var(--mono);
+  transform: rotate(-0.5deg);
+}
+.recap-agent b {
+  color: var(--gold);
+  margin-right: 25px;
+}
+.closing-directions {
+  grid-template-columns: repeat(6, 1fr);
+  gap: 17px;
+}
+.closing-directions span {
+  font-size: 20px;
+  min-height: 160px;
+  padding: 20px 15px;
+}
+.closing-directions b {
+  font-size: 23px;
+}
+.closing-directions span:last-child {
+  background: var(--blue);
+  color: var(--paper);
+}
+.agent-caption small {
+  font-size: 20px;
+}
+.agent-caption {
+  font-size: 25px;
+}
+.funding-principle {
+  font-size: 29px;
+}
+.funding-mechanism .demo-link {
+  font-size: 19px;
+}
+.process-map button:focus-visible,
+.recap-map a:focus-visible {
+  filter: brightness(0.75);
+}
+.read-view .concept-foot {
+  position: static;
+  margin-top: 35px;
+  font-size: 24px;
+}
+.read-view .challenge-field {
+  gap: 30px;
+}
+.read-view .challenge-art {
+  transform: scale(0.8);
+  transform-origin: left center;
+}
+.read-view .ci-mechanism {
+  grid-template-columns: 1fr;
+  gap: 30px;
+}
+.read-view .ci-part {
+  display: grid;
+  grid-template-columns: 330px 1fr;
+  align-items: center;
+}
+.read-view .ci-part p {
+  grid-column: 2;
+  margin-top: -80px;
+}
+.read-view .mechanism-arrow {
+  display: none;
+}
+.read-view #many-minds .bottom-line {
+  position: static;
+}
+.read-view .jury-layout {
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+.read-view .jury-controls {
+  display: flex;
+}
+.read-view .map-detail {
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+.read-view #five-places h2 {
+  font-size: 60px;
+}
+.read-view .map-plus {
+  flex-wrap: wrap;
+}
+.read-view .map-plus span {
+  margin-left: 0;
+}
+.read-view .assembly-process,
+.read-view .polis-layout {
+  grid-template-columns: 1fr;
+  gap: 40px;
+}
+.read-view .opinion-landscape {
+  max-width: 100%;
+}
+.read-view .polis-mechanism {
+  max-width: 700px;
+}
+.read-view .theory-resources {
+  padding: 0;
+  background: none;
+}
+.read-view .recap-agent {
+  font-size: 23px;
+}
+@media (max-width: 1100px) {
+  .read-view .challenge-field {
+    grid-template-columns: 1fr;
+  }
+  .read-view .challenge-field > div {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    align-items: center;
+  }
+  .read-view .challenge-field p {
+    grid-column: 2;
+    margin-top: -100px;
+  }
+  .read-view .jury-layout {
+    grid-template-columns: 1fr;
+  }
+  .read-view .jury-chart {
+    max-width: 650px;
+  }
+  .read-view .closing-directions {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .read-view .challenge-field > div,
+  .read-view .ci-part {
+    display: block;
+  }
+  .read-view .challenge-field h3 {
+    font-size: 25px;
+  }
+  .read-view .challenge-field p,
+  .read-view .ci-part p {
+    margin-top: 12px;
+    font-size: 22px;
+  }
+  .read-view .challenge-art {
+    height: 190px;
+    margin-bottom: -20px;
+  }
+  .read-view .ci-pieces {
+    transform: scale(0.85);
+    transform-origin: left center;
+  }
+  .read-view .ci-part h3 {
+    font-size: 26px;
+  }
+  .read-view .jury-assumption {
+    font-size: 23px;
+  }
+  .read-view .jury-assumption strong {
+    font-size: 48px;
+  }
+  .read-view .jury-chart {
+    height: 280px;
+    gap: 15px;
+  }
+  .read-view .jury-chart > div {
+    height: 210px;
+  }
+  .read-view .jury-chart span {
+    font-size: 17px;
+  }
+  .read-view .jury-chart strong {
+    font-size: 31px;
+    padding: 0 7px 15px;
+  }
+  .read-view #jury-condition {
+    font-size: 23px;
+  }
+  .read-view .jury-controls button {
+    font-size: 18px;
+  }
+  .read-view #five-places h2 {
+    font-size: 42px;
+  }
+  .read-view .map-detail .stage-question {
+    font-size: 26px;
+  }
+  .read-view .map-detail > p {
+    font-size: 23px;
+  }
+  .read-view .map-plus {
+    gap: 15px;
+    font-size: 22px;
+    padding: 20px;
+  }
+  .read-view .map-plus b {
+    font-size: 35px;
+  }
+  .read-view .map-plus span {
+    font-size: 21px;
+  }
+  .read-view #five-places .map-loop {
+    font-size: 19px;
+    text-align: left;
+  }
+  .read-view .assembly-table {
+    transform: scale(0.72);
+    transform-origin: left top;
+    margin-bottom: -90px;
+  }
+  .read-view .procedure-list li {
+    font-size: 22px;
+    gap: 18px;
+    padding: 15px 0;
+  }
+  .read-view .procedure-list b {
+    font-size: 22px;
+    padding: 12px;
+  }
+  .read-view .opinion-landscape {
+    transform: scale(0.68);
+    transform-origin: left top;
+    max-width: none;
+    margin-bottom: -110px;
+  }
+  .read-view .polis-instruction {
+    font-size: 22px;
+  }
+  .read-view .polis-claim h3 {
+    font-size: 25px;
+  }
+  .read-view .group-support {
+    font-size: 19px;
+    gap: 24px;
+  }
+  .read-view .polis-note {
+    font-size: 21px;
+  }
+  .read-view .concept-foot {
+    font-size: 21px;
+  }
+  .read-view .recap-agent {
+    font-size: 21px;
+  }
+  .read-view .recap-agent b {
+    display: block;
+    margin-bottom: 12px;
+  }
+  .read-view .closing-directions {
+    grid-template-columns: 1fr 1fr;
+  }
+  .read-view .closing-directions span {
+    min-height: 140px;
+  }
+  .read-view .recap-map a > span {
+    font-size: 18px;
+  }
+}
+@media print {
+  .jury-print,
+  .polis-print {
+    position: absolute;
+    left: 70px;
+    bottom: 67px;
+    font: 400 22px/1.4 var(--mono);
+  }
+  #crowd-conditions .concept-foot {
+    bottom: 112px;
+    font-size: 23px;
+  }
+  #opinion-map .concept-foot {
+    bottom: 109px;
+  }
+  .jury-layout {
+    margin-top: 35px;
+  }
+  .jury-controls {
+    display: none !important;
+  }
+  .map-detail {
+    margin-top: 30px;
+  }
+  .map-plus {
+    display: flex !important;
+  }
+  .polis-mechanism .polis-note {
+    margin-top: 25px;
+  }
+  #opinion-map .source {
+    font-size: 18px;
+  }
+}
+
+/* Give the shared-ground mechanism and the +1 return enough breathing room. */
+.polis-instruction {
+  font-size: 25px;
+}
+.polis-claim {
+  padding: 16px 24px;
+  margin-top: 16px;
+}
+.polis-claim h3 {
+  font-size: 28px;
+  margin: 10px 0 14px;
+}
+.polis-mechanism button {
+  margin-top: 18px;
+  font-size: 22px;
+  padding: 13px 20px;
+}
+.polis-note {
+  font-size: 22px;
+  margin-top: 12px;
+}
+.opinion-landscape {
+  height: 320px;
+}
+.group-a {
+  top: 70px;
+}
+.group-b {
+  top: 35px;
+}
+.group-c {
+  top: 205px;
+}
+.opinion-group {
+  gap: 9px;
+  grid-template-columns: repeat(3, 24px);
+  z-index: 1;
+}
+.opinion-group i {
+  width: 25px;
+  height: 29px;
+}
+.opinion-landscape::before,
+.opinion-landscape::after {
+  content: "";
+  position: absolute;
+  background: var(--gold);
+  height: 35px;
+  opacity: 0;
+  transition: opacity 0.4s;
+  clip-path: polygon(0 5%, 100% 0, 98% 95%, 3% 100%);
+}
+.opinion-landscape::before {
+  left: 85px;
+  top: 123px;
+  width: 300px;
+  transform: rotate(-15deg);
+}
+.opinion-landscape::after {
+  left: 235px;
+  top: 185px;
+  width: 155px;
+  transform: rotate(-48deg);
+}
+.opinion-landscape.common::before,
+.opinion-landscape.common::after {
+  opacity: 0.75;
+}
+.recap-slide h2 {
+  font-size: 78px;
+}
+.recap-slide .recap-map {
+  margin-top: 30px;
+}
+.recap-slide .recap-map a {
+  min-height: 235px;
+  padding: 22px 20px;
+}
+.recap-slide .map-loop {
+  margin-top: 25px;
+  font-size: 26px;
+}
+.recap-slide .recap-agent {
+  margin-top: 22px;
+  padding: 18px 25px;
+  font-size: 25px;
+}
+@media (max-width: 600px) {
+  .read-view .opinion-landscape {
+    margin-bottom: -80px;
+  }
+  .read-view .polis-instruction {
+    font-size: 22px;
+  }
+  .read-view .polis-claim h3 {
+    font-size: 25px;
+  }
+  .read-view .recap-slide .recap-agent {
+    font-size: 21px;
+  }
+  .read-view .recap-slide .map-loop {
+    font-size: 21px;
+  }
+}
+
+.opinion-group {
+  grid-template-columns: repeat(4, 24px);
+}
+.opinion-group i {
+  transition: opacity 0.35s;
+}
