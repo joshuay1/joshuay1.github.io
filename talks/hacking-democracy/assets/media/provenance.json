@@ -314,6 +314,75 @@
       "source_file": "/Users/joyang/Documents/research/conferences/2609-Hacking-Democracy/images/switzerland-illustrated-map.png",
       "type": "User-supplied conceptual illustration",
       "sha256": "ad3bd7c6c237bb7757a38928ae9a2cd4b459d9f9a3fc1bbcc200011534bfa0b8"
+    },
+    {
+      "id": "concept-citizen-control",
+      "file": "concept-citizen-control.png",
+      "type": "AI-generated conceptual illustration",
+      "date": "2026-09-07",
+      "style_reference": "process-03-deliberation.png",
+      "concept_source": "Self-Introduction.pptx",
+      "sha256": "181f90a79421011cadc25e78e773aee095962201a99cdaf839fe9936fdb64b31",
+      "mode": "RGB",
+      "dimensions": [1254, 1254],
+      "alpha_extrema": null,
+      "background": "Solid white RGB; CSS multiply blends into cream slide background. The generator did not provide genuine alpha for these two assets."
+    },
+    {
+      "id": "concept-deliberative-loop",
+      "file": "concept-deliberative-loop.png",
+      "type": "AI-generated conceptual illustration",
+      "date": "2026-09-07",
+      "style_reference": "process-03-deliberation.png",
+      "concept_source": "Self-Introduction.pptx",
+      "sha256": "7abbea632566d25c7b6152f587089bd2a19cbdf281200f47bbf4ad80d7b82554",
+      "mode": "RGBA",
+      "dimensions": [1254, 1254],
+      "alpha_extrema": [0, 255]
+    },
+    {
+      "id": "concept-interface-allocation-explanation",
+      "file": "concept-interface-allocation-explanation.png",
+      "type": "AI-generated conceptual illustration",
+      "date": "2026-09-07",
+      "style_reference": "process-03-deliberation.png",
+      "concept_source": "Self-Introduction.pptx",
+      "sha256": "b9aab3aec55aaf50a053ee396a726424c7e647c68c3025efc762ebbd3525edda",
+      "mode": "RGBA",
+      "dimensions": [1254, 1254],
+      "alpha_extrema": [0, 255]
+    },
+    {
+      "id": "concept-neighbourhood-budget",
+      "file": "concept-neighbourhood-budget.png",
+      "type": "AI-generated conceptual illustration",
+      "date": "2026-09-07",
+      "style_reference": "process-03-deliberation.png",
+      "concept_source": "Self-Introduction.pptx",
+      "sha256": "5c6d253e248e45660d5fb1035e9ff17b3bf3670930eda2f43d952589bfdb571a",
+      "mode": "RGBA",
+      "dimensions": [1254, 1254],
+      "alpha_extrema": [0, 255]
+    },
+    {
+      "id": "concept-representation",
+      "file": "concept-representation.png",
+      "type": "AI-generated conceptual illustration",
+      "date": "2026-09-07",
+      "style_reference": "process-03-deliberation.png",
+      "concept_source": "Self-Introduction.pptx",
+      "sha256": "7b3ad677eeb026f829f86fc1ce3c654c1c03a9fc50f75c76eba0a6f933a2fa88",
+      "mode": "RGB",
+      "dimensions": [1254, 1254],
+      "alpha_extrema": null,
+      "background": "Solid white RGB; CSS multiply blends into cream slide background. The generator did not provide genuine alpha for these two assets."
+    },
+    {
+      "id": "aarau-allocation-comparison",
+      "file": "aarau-allocation-comparison.png",
+      "type": "Original research figure",
+      "source": "Self-Introduction.pptx slide 13, image25.png; Joshua C. Yang / Stadtidee Aarau 2023",
+      "caveat": "Right-hand map is a counterfactual comparison, not a second observed deployment."
     }
   ],
   "source_notes": {
