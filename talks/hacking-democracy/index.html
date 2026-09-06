@@ -1,0 +1,1747 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="How democratic design shapes collective decisions, with fieldwork, research and projects by Joshua C. Yang." name="description"/>
+<link rel="canonical" href="https://joshuacyang.com/talks/hacking-democracy/"/>
+<meta property="og:title" content="Building Digital Democracy in Practice"/>
+<meta property="og:description" content="An interactive presentation on collective decisions, civic participation and working tools for democracy."/>
+<meta property="og:type" content="website"/>
+<title>Building Digital Democracy in Practice · Hacking the Democracy</title>
+<link href="assets/fonts/fonts.css" rel="stylesheet"/>
+<link href="styles.css" rel="stylesheet"/>
+<link href="scenes.css" rel="stylesheet"/>
+<script defer="" src="assets/data/receipt.js"></script>
+<script defer="" src="app.js"></script>
+<link href="theory.css" rel="stylesheet"/>
+<link href="research.css" rel="stylesheet"/>
+<link href="civic.css" rel="stylesheet"/>
+<link href="history.css" rel="stylesheet"/>
+<link href="aggregation.css" rel="stylesheet"/>
+<script defer="" src="assets/data/aggregation.js"></script>
+<script defer="" src="aggregation.js"></script>
+<link href="illustrations.css" rel="stylesheet"/>
+<link href="opening.css" rel="stylesheet"/>
+<link href="embeds.css" rel="stylesheet"/>
+<script defer="" src="embeds.js"></script>
+<link href="flow.css" rel="stylesheet"/>
+<link href="motion.css" rel="stylesheet"/><script defer="" src="motion.js"></script></head>
+<body>
+<a class="skip-link" href="#deck">Skip to presentation</a>
+<main aria-label="Hacking the Democracy presentation" id="deck">
+<div class="stage-shell">
+<div class="stage">
+<section class="slide cover" data-time="0:00–0:30" data-title="Building Digital Democracy in Practice" id="together">
+<div class="slide-top"><span class="stamp">Hacking the Democracy</span><span>Joshua C. Yang</span></div>
+<div class="cover-layout">
+<div>
+<h1>Building<br/><span class="paint">Digital</span><br/><span class="paint">Democracy</span><br/>in Practice</h1>
+<p class="lede">Build tools that give people a meaningful say.</p>
+</div>
+<figure class="cover-illustration"><img alt="Three illustrated people bringing different perspectives to a shared discussion board" src="assets/media/paper-bridging-voting-deliberation.png"/></figure>
+</div>
+<aside class="notes">
+<p>
+                Introduce yourself briefly, then ask what democracy can look like through familiar shared decisions. Move from collective intelligence
+                and four research directions to the historical lineage and five-part framework.
+              </p>
+<p>Kultur Komitee grounds the process. Save the voting-rule comparison for the voting section.</p>
+<p></p>
+<p></p><p></p><p>Timing cue: leave this scene by 0:30.</p></aside>
+</section>
+<section class="slide speaker-intro illustrated-profile" data-time="0:30–1:30" data-title="Joshua C. Yang" hidden="" id="about-josh">
+<div class="slide-top"><span class="stamp">A little about me</span></div>
+<div class="speaker-intro-layout">
+<div>
+<h2>Joshua C. Yang</h2>
+<p class="speaker-role">Postdoc · ETH Zurich<br/>PhD · ETH Zurich<br/><span class="speaker-team">Computational Social Science team</span></p>
+<p class="speaker-focus">PhD thesis: Designing computational methods for digital democracy</p>
+<div class="speaker-projects"><div class="speaker-case"><span class="case-place">Aarau</span><p><b>Participatory budgeting</b><br/>Helped design the city’s first programme</p></div><div class="speaker-case"><span class="case-place">Winterthur</span><p><b>Kultur Komitee</b><br/>Process design over three years</p></div><div class="speaker-case"><span class="case-place">Taiwan</span><p><b>vTaiwan</b><br/>Active member</p></div><div class="speaker-case"><span class="case-place">Switzerland</span><p><b>Murmi</b><br/>App design for the Swiss AI Futures citizens’ assembly</p></div></div>
+</div>
+<figure><img alt="Illustrated portrait of Joshua C. Yang" src="assets/media/josh-profile-illustration-abstract.png"/></figure>
+</div>
+<aside class="notes">
+<p>
+                Introduce my ETH postdoc role and ETH PhD. My thesis topic is designing computational methods for digital democracy. These four
+                projects connect that research to practice. Biography wording supplied by Josh on 6 September 2026.
+              </p>
+<p></p>
+<p></p><p></p><p>Timing cue: leave this scene by 1:30.</p></aside>
+</section>
+<section class="slide civic-slide" data-time="1:30–2:30" data-title="What can democracy look like?" hidden="" id="democracy-challenge">
+<div class="slide-top"><span class="stamp">Collective decisions</span><span></span></div>
+<h2>What can democracy look like?</h2>
+<p class="democracy-definition">Where do you already make decisions together?</p><div class="everyday-scenes"><figure><img alt="Friends comparing food choices" src="assets/media/collective-decision-dinner.png"/><figcaption>Dinner with friends</figcaption></figure><figure><img alt="People watching a song performance and expressing preferences" src="assets/media/collective-decision-eurovision.png"/><figcaption>Eurovision voting</figcaption></figure><figure><img alt="Illustrated Switzerland with people and shared places" src="assets/media/switzerland-illustrated-map.png"/><figcaption>Public decisions</figcaption></figure></div><p class="everyday-contexts">Shared budgets · Workplace decisions · Citizens’ assemblies · Referendums</p>
+<aside class="notes">
+<p>
+                Begin with a working idea of democracy: people having a meaningful say in decisions that affect them. These everyday and civic
+                examples invite questions about participation, power and shared decisions. A group choosing dinner is not a complete democratic
+                political system; it lets us examine the same design questions on a small scale.
+              </p>
+<p>
+                Collective decisions range from choosing dinner with friends and managing a shared-house budget to elections, citizens’ assemblies and
+                public funding. Ask which settings people recognize. The examples are invitations to notice processes they already know.
+              </p>
+<p>
+                Everyday coordination is not identical to public democracy: rights, authority and accountability differ. But these settings let us
+                examine how a group shares information, deals with disagreement and chooses what to do. Use the range to widen possible project
+                contexts.
+              </p>
+<p></p>
+<p></p>
+<p></p><p></p><p>Invite two quick examples from the room: where have you made a decision with other people this week? Start with dinner or a favourite song, then move to public decisions. Eurovision and dinner illustrate aggregation and coordination, not equivalence to political democracy. Avoid explaining current Eurovision rules here. The Swiss image is a conceptual illustration, not a geographically precise map.</p><p>Timing cue: leave this scene by 2:30.</p></aside>
+</section>
+<section class="slide" data-time="2:30–3:30" data-title="How groups use what people know" hidden="" id="many-minds">
+<div class="slide-top"><span class="stamp">Collective intelligence</span><span></span></div>
+<h2>How groups use what people know</h2>
+<p class="ci-definition">A group’s knowledge is distributed. The process determines what becomes visible and usable.</p>
+<div class="ci-mechanism">
+<div class="ci-part">
+<div aria-hidden="true" class="ci-pieces"><i></i><i></i><i></i><i></i></div>
+<h3>Different knowledge</h3>
+<p>Invite experiences that others may not have.</p>
+</div>
+<span aria-hidden="true" class="mechanism-arrow">→</span>
+<div class="ci-part">
+<div aria-hidden="true" class="ci-pieces exchange"><i></i><i></i><i></i><i></i></div>
+<h3>Independent views</h3>
+<p>Collect initial views before people follow the crowd.</p>
+</div>
+<span aria-hidden="true" class="mechanism-arrow">→</span>
+<div class="ci-part">
+<div aria-hidden="true" class="ci-pieces assembled"><i></i><i></i><i></i><i></i></div>
+<h3>Structured exchange</h3>
+<p>Compare reasons, preserve disagreement and revise.</p>
+</div>
+</div>
+<p class="bottom-line">Agreement, accuracy and democratic legitimacy are different goals.</p>
+<aside class="notes">
+<p>
+                Collective intelligence asks how a group uses knowledge that no one person has alone. Democratic theory also asks who gets a say and
+                who has the right to decide.
+              </p>
+<p>
+                Imagine a neighbourhood deciding how to use a shared space. Different people know different needs. Discussion lets them compare those
+                needs and consider changes to the proposals. A decision rule then determines the outcome.
+              </p>
+<p>
+                Landemore argues that including different experiences and perspectives can improve public judgment. That is a reason to pay attention
+                to participation and discussion, not a guarantee that every group will make a better decision. Equality, legitimate authority and the
+                ability to challenge a result also matter.
+              </p>
+<p></p>
+<p>
+                These are design questions, not universal guarantees. Lorenz et al. (2011) show that social influence can reduce diversity in
+                estimation tasks; Woolley et al. (2010) associate group performance with social sensitivity and turn-taking. See the reading list.
+                Discussion may also reveal information unavailable in isolated judgments.
+              </p>
+<p></p>
+<p></p><p></p><p>Timing cue: leave this scene by 3:30.</p></aside>
+</section>
+<section class="slide civic-slide" data-time="3:30–4:30" data-title="Four research directions" hidden="" id="research-directions">
+<div class="slide-top"><span class="stamp">Research directions</span><span></span></div>
+<h2>Four research directions</h2>
+<div class="research-fields">
+<div class="field-piece gold">
+<h3>Computational social choice</h3>
+<p>How should we count votes, share a budget or select representatives?</p>
+</div>
+<div class="field-piece blush">
+<h3>Deliberative democracy</h3>
+<p>How can discussion include different views and inform public decisions?</p>
+</div>
+<div class="field-piece blue">
+<h3>Human–AI interaction</h3>
+<p>How do people use, check and correct help from AI?</p>
+</div>
+<div class="field-piece gold">
+<h3>Complexity science &amp; collective intelligence</h3>
+<p>How do interactions and networks shape what groups learn and decide?</p>
+</div>
+</div>
+<aside class="notes">
+<p>
+                These are overlapping fields, not a sequence of progress. The same budgeting tool can raise a social-choice question about allocation,
+                a design question about understanding, and an ethics question about who is included.
+              </p>
+<p>
+                Keep the field names because students can use them to find courses, researchers and papers. The questions underneath explain what each
+                field studies in ordinary language.
+              </p>
+<p>
+                Current work includes AI-assisted discussion, allocation rules with real-world constraints and ways to evaluate models of human
+                behavior. The reading guide includes primary papers and explains what each finding does and does not show. Students can choose any of
+                these research directions.
+              </p>
+<p>
+                Computational social choice studies the properties of formal decision rules. Complexity science and collective intelligence study how
+                group-level learning and behavior emerge from interactions, networks and feedback. Computational social science offers methods used
+                across these directions; it is not presented as another kind of voting-rule design.
+              </p>
+<p></p>
+<p></p>
+<p></p><p></p><p>Timing cue: leave this scene by 4:30.</p></aside>
+</section>
+<section class="slide history-slide lineage-slide" data-time="4:30–5:45" data-title="Democracy as an open-source project" hidden="" id="democracy-open-source">
+<h2>Democracy as an open-source project</h2>
+<p class="history-lede">Rules are inherited, adapted and changed along different paths.</p>
+<div class="lineage-chart">
+<svg aria-labelledby="lineage-title lineage-description" role="img" viewbox="0 0 1460 555">
+<title id="lineage-title">Selected influences and reforms in four democratic systems</title>
+<desc id="lineage-description">
+                  British institutions influenced the United States Constitution of 1787. The US federal model influenced Switzerland in 1848 and
+                  Australia in 1901. Australia also retained British parliamentary government. Each branch then shows dated reforms; spacing is
+                  schematic, not a time scale.
+                </desc>
+<g class="lineage-paths" fill="none" stroke-linecap="round" stroke-width="9">
+<path class="lineage-uk" d="M285 58 H1385"></path>
+<path class="lineage-us lineage-influence" d="M320 58 C420 58 355 192 485 192 H1385"></path>
+<path class="lineage-ch lineage-influence" d="M520 192 C620 192 535 330 660 330 H1385"></path>
+<path class="lineage-au lineage-influence" d="M540 192 C570 192 548 300 548 420 C548 458 600 475 660 475 H1385"></path>
+</g>
+<g class="lineage-country-labels">
+<text x="0" y="64">United Kingdom</text>
+<text class="lineage-country-feature" x="0" y="98">Parliamentary oversight</text>
+<text x="0" y="198">United States</text>
+<text class="lineage-country-feature" x="0" y="232">Checks &amp; balances</text>
+<text x="0" y="336">Switzerland</text>
+<text class="lineage-country-feature" x="0" y="370">Direct democracy</text>
+<text x="0" y="481">Australia</text>
+<text class="lineage-country-feature" x="0" y="515">Compulsory voting</text>
+</g>
+<g class="lineage-milestone lineage-uk" transform="translate(290 58)">
+<title>Parliamentary institutions</title>
+<circle r="15"></circle>
+</g>
+<g class="lineage-milestone lineage-uk" transform="translate(1120 58)">
+<circle r="15"></circle>
+<text class="lineage-date" y="-29">1911 / 1949</text>
+<text class="lineage-label" y="42">
+<tspan x="0">Lords’ power</tspan>
+<tspan dy="27" x="0">to block bills limited</tspan>
+</text>
+</g>
+<g class="lineage-milestone lineage-us" transform="translate(485 192)">
+<circle r="15"></circle>
+<text class="lineage-date" y="-29">1787</text>
+<text class="lineage-label" x="-10" y="42">
+<tspan x="-10">Federal</tspan>
+<tspan dy="27" x="-10">constitution</tspan>
+</text>
+</g>
+<g class="lineage-milestone lineage-us" transform="translate(1060 192)">
+<circle r="15"></circle>
+<text class="lineage-label" y="42">
+<tspan x="0">President + Congress</tspan>
+<tspan dy="27" x="0">Two senators per state</tspan>
+</text>
+</g>
+<g class="lineage-milestone lineage-ch" transform="translate(660 330)">
+<circle r="15"></circle>
+<text class="lineage-date" y="-29">1848</text>
+<text class="lineage-label" y="42">
+<tspan x="0">Two-chamber</tspan>
+<tspan dy="27" x="0">federal parliament</tspan>
+</text>
+</g>
+<g class="lineage-milestone lineage-ch" transform="translate(900 330)">
+<circle r="15"></circle>
+<text class="lineage-date" y="-29">1874</text>
+<text class="lineage-label" y="42">
+<tspan x="0">Optional law</tspan>
+<tspan dy="27" x="0">referendum</tspan>
+</text>
+</g>
+<g class="lineage-milestone lineage-ch" transform="translate(1130 330)">
+<circle r="15"></circle>
+<text class="lineage-date" y="-29">1891</text>
+<text class="lineage-label" y="42">
+<tspan x="0">Constitutional</tspan>
+<tspan dy="27" x="0">initiative</tspan>
+</text>
+</g>
+<g class="lineage-milestone lineage-ch" transform="translate(1360 330)">
+<circle r="15"></circle>
+<text class="lineage-date" y="-29">1919</text>
+<text class="lineage-label" y="42">
+<tspan x="0">Proportional</tspan>
+<tspan dy="27" x="0">National Council</tspan>
+</text>
+</g>
+<g class="lineage-milestone lineage-au" transform="translate(660 475)">
+<circle r="15"></circle>
+<text class="lineage-date" y="-29">1901</text>
+<text class="lineage-label" y="42">
+<tspan x="0">British parliament</tspan>
+<tspan dy="27" x="0">+ US federal model</tspan>
+</text>
+</g>
+<g class="lineage-milestone lineage-au" transform="translate(900 475)">
+<circle r="15"></circle>
+<text class="lineage-date" y="-29">1918</text>
+<text class="lineage-label" y="42">
+<tspan x="0">Ranked voting</tspan>
+<tspan dy="27" x="0">for the House</tspan>
+</text>
+</g>
+<g class="lineage-milestone lineage-au" transform="translate(1130 475)">
+<circle r="15"></circle>
+<text class="lineage-date" y="-29">1924</text>
+<text class="lineage-label" y="42">
+<tspan x="0">Compulsory</tspan>
+<tspan dy="27" x="0">federal voting</tspan>
+</text>
+</g>
+<g class="lineage-milestone lineage-au" transform="translate(1360 475)">
+<circle r="15"></circle>
+<text class="lineage-date" y="-29">1949</text>
+<text class="lineage-label" y="42">
+<tspan x="0">Proportional</tspan>
+<tspan dy="27" x="0">Senate</tspan>
+</text>
+</g>
+</svg>
+</div>
+<div class="lineage-reading">
+<div>
+<h3>United Kingdom</h3>
+<p class="lineage-reading-feature">Parliamentary oversight</p>
+<p>
+                  Parliamentary institutions influenced the US framers. The Parliament Acts of 1911 and 1949 later limited the Lords’ ability to block
+                  certain bills.
+                </p>
+</div>
+<div>
+<h3>United States · 1787</h3>
+<p class="lineage-reading-feature">Checks &amp; balances</p>
+<p>
+                  British and state precedents informed a federal constitution with a president and Congress. Its two-chamber federal model then
+                  influenced Switzerland and Australia.
+                </p>
+</div>
+<div>
+<h3>Switzerland · 1848</h3>
+<p class="lineage-reading-feature">Direct democracy</p>
+<p>
+                  A federal parliament drawing on the US model. Later changes: optional law referendum (1874), initiative for partial constitutional
+                  revision (1891), and the first proportional National Council election (1919).
+                </p>
+</div>
+<div>
+<h3>Australia · 1901</h3>
+<p class="lineage-reading-feature">Compulsory voting</p>
+<p>
+                  British parliamentary government combined with a US-inspired federal Senate. Later changes: House preferential voting (1918),
+                  compulsory federal voting (1924), and the first proportional Senate election (1949).
+                </p>
+</div>
+</div>
+<p class="history-source">
+              Selected influences and reforms ·
+              <a href="https://www.senate.gov/about/origins-foundations/senate-and-constitution.htm" rel="noopener" target="_blank">US Senate</a> ·
+              <a href="https://www.parlament.ch/en/%C3%BCber-das-parlament/Pages/bundesverfassung.aspx" rel="noopener" target="_blank">Swiss Parliament</a>
+              · <a href="https://www.aec.gov.au/Elections/history-of-electoral-reform.htm" rel="noopener" target="_blank">AEC</a>
+</p>
+<aside class="notes">
+<p>
+                Democracy as an open-source project is a useful analogy: institutional rules can be inspected, borrowed and revised. The branching
+                structure follows Motivation 1 in Self-Introduction.pptx. Follow the British line into the US branch, then the US branch into
+                Switzerland and Australia. Australia also drew directly on British parliamentary government, as its entry label explains.
+              </p>
+<p>
+                The short country labels pick out one feature of each branch, not an exclusive national invention. Parliamentary oversight: scrutinize
+                government and require public explanations. Checks and balances: divide authority so each branch can constrain the others. Direct
+                democracy: let citizens challenge laws and propose constitutional changes. Compulsory voting: address low participation; the 1924
+                reform aimed to increase turnout. These are design purposes, not guarantees that a system achieves them.
+              </p>
+<p>
+                Feature-label sources: UK Parliament, https://www.parliament.uk/about/how/role/scrutiny/ ; US government branches,
+                https://www.usa.gov/branches-of-government ; Swiss direct democracy, https://www.aboutswitzerland.eda.admin.ch/en/direct-democracy ;
+                Australian Electoral Commission, https://www.aec.gov.au/About_AEC/Publications/backgrounders/compulsory-voting.htm .
+              </p>
+<p>
+                These are selected institutional influences, not a complete ancestry or a literal software fork. The US framers drew on British
+                institutions and state constitutions while rejecting monarchy. Their 1787 federal compromise created a population-based House and
+                equal state representation in the Senate. The US Senate documents these precedents at
+                https://www.senate.gov/about/origins-foundations/senate-and-constitution.htm . Switzerland’s two chambers drew on the American model
+                in 1848: https://www.parlament.ch/fr/über-das-parlament/Pages/Ablauf-Wahlen-1848.aspx . Australia combined Westminster government with
+                a US-inspired federal Senate in 1901; see the Australian Parliament source in the reading guide.
+              </p>
+<p>
+                Continue along the country branches to show different paths of change. UK Parliament Acts in 1911 and 1949 limited the Lords’ power
+                over certain bills. Switzerland added the optional legislative referendum in 1874 and the initiative for partial constitutional
+                revision in 1891. Proportional National Council elections were approved in 1918 and first held in 1919. Australia introduced House
+                preferential voting in 1918 and compulsory federal voting in 1924; Senate proportional representation was legislated in 1948 and first
+                used in 1949. Dates are attached to the relevant changes. The diagram is schematic, not a shared time scale.
+              </p>
+<p>
+                The Swiss constitutional referendum and initiative for total revision already existed in 1848. The 1891 label here refers to partial
+                revision. The UK changes do not remove every Lords veto. The Swiss electoral-history source is
+                https://www.parlament.ch/fr/über-das-parlament/Pages/Vom-Majorz-zum-Proporz.aspx ; the Australian dates are documented at
+                https://www.aec.gov.au/Elections/history-of-electoral-reform.htm .
+              </p>
+<p>
+                Different paths do not imply inevitable progress or equal access to political power. These systems excluded many people; Swiss women
+                gained federal voting rights only in 1971. Ask what a changed rule allows people to do and whose voice it changes. Later, the voting
+                example will isolate one design choice; institutions have many such choices.
+              </p>
+<p></p>
+<p></p>
+<p></p><p></p><p>Timing cue: leave this scene by 5:45.</p></aside>
+</section>
+<section class="slide civic-slide" data-time="5:45–6:45" data-title="Five parts of a collective decision" hidden="" id="process-overview">
+<div class="slide-top"><span class="stamp">The process</span></div>
+<h2>Five parts of a collective decision</h2>
+<div class="step-overview">
+<a aria-label="Step 1: Framing" class="step-overview-piece" href="#step-1"><span aria-hidden="true" class="process-numeral">1</span><img alt="People define the participants and purpose at a board" src="assets/media/process-01-framing.png"/>
+<h3>Framing</h3>
+<p>Define the purpose and participants</p></a><a aria-label="Step 2: Ideas" class="step-overview-piece" href="#step-2"><span aria-hidden="true" class="process-numeral">2</span><img alt="People bring different ideas to a table" src="assets/media/process-02-ideas.png"/>
+<h3>Ideas</h3>
+<p>Bring knowledge and possibilities together</p></a><a aria-label="Step 3: Deliberation" class="step-overview-piece" href="#step-3"><span aria-hidden="true" class="process-numeral">3</span><img alt="People discuss reasons around a table" src="assets/media/process-03-deliberation.png"/>
+<h3>Deliberation</h3>
+<p>Compare reasons and perspectives</p></a><a aria-label="Step 4: Voting" class="step-overview-piece" href="#step-4"><span aria-hidden="true" class="process-numeral">4</span><img alt="People place ballots into a ballot box" src="assets/media/process-04-voting.png"/>
+<h3>Voting</h3>
+<p>Turn preferences into a decision</p></a><a aria-label="Step 5: Accountability" class="step-overview-piece" href="#step-5"><span aria-hidden="true" class="process-numeral">5</span><img alt="People review progress on a checklist" src="assets/media/process-05-accountability.png"/>
+<h3>Accountability</h3>
+<p>Explain, follow through and learn</p></a>
+</div>
+<p class="step-overview-note">A shared starting point. Adapt it to the process; revisit earlier steps.</p>
+<aside class="notes">
+<p>
+                Use the five steps as questions about a real process: what can people decide, what information is available, how they discuss it, how
+                they reach a result, and how the result is explained and followed up.
+              </p>
+<p>
+                These activities can overlap or repeat. Discussion may reveal missing information, and a proposal may return for revision. The names
+                describe tasks in a collective decision; they do not require every institution to follow an identical sequence.
+              </p>
+<p></p>
+<p></p>
+<p></p><p></p><p>Timing cue: leave this scene by 6:45.</p></aside>
+</section>
+<section class="slide komitee-intro" data-time="6:45–8:00" data-title="Kultur Komitee, Winterthur" hidden="" id="kultur-komitee">
+<div class="slide-top"><span class="stamp">Kultur Komitee · Winterthur</span></div>
+<h2>What is Kultur Komitee?</h2>
+<div class="komitee-intro-layout">
+<figure class="komitee-intro-photo">
+<img alt="Kultur Komitee participants seated in a circle, with the Winterthur programme on the screen" height="3024" src="assets/media/kk-introduction.jpg" width="4032"/>
+<figcaption>Kultur Komitee, Winterthur · a residents’ funding assembly</figcaption>
+</figure>
+<div class="komitee-intro-copy">
+<p>A residents’ assembly that funds art and cultural projects in Winterthur.</p>
+<p class="komitee-role">I’ve worked on its voting and funding process for three years.</p>
+<div class="komitee-total gold">
+<strong>Over CHF 2 million</strong>
+<p>distributed to art projects in Winterthur across those three years.</p>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>
+                Kultur Komitee is a residents’ budget assembly in Winterthur. Participants consider art and cultural proposals, discuss them, assess
+                them and decide how the available funding should be allocated.
+              </p>
+<p>
+                I have worked on its voting and aggregation across the 2024, 2025 and 2026 editions, including interfaces, allocation rules and the
+                explanation of results. Fynn Bachmann and I have worked on the calculations and aggregation. Across my three years of involvement, we
+                have distributed over CHF 2 million to art projects in Winterthur.
+              </p>
+<p>
+                We can now look closely at what this work involves. The next five sections use actual fieldwork and tools to examine the choices
+                within the process.
+              </p>
+<p>
+                Sources: Joshua C. Yang confirmed the updated three-year total of over CHF 2 million on 6 September 2026. This supersedes the older
+                CHF 1.2 million statement in the repository project page. The total spans the three-year involvement; the following published 2025
+                case figures describe a specific deployment and should not be multiplied to derive this total. Role and editions:
+                https://joshuacyang.com/projects/kultur_komitee/ . Photograph: Joshua’s supplied images/IMG_2826.JPG; no individual event date is
+                inferred from the image.
+              </p>
+<p></p>
+<p></p>
+<p></p><p></p><p>Timing cue: leave this scene by 8:00.</p></aside>
+</section>
+<section class="slide step-intro" data-step="1" data-time="8:00–8:40" data-title="Framing" hidden="" id="step-1">
+<div class="slide-top">
+<a aria-label="Step 1 of 5. Return to the process overview" class="stamp step-index gold" href="#process-overview">Step 1 of 5</a>
+</div>
+<div class="step-intro-layout">
+<div class="step-intro-copy">
+<h2>Framing</h2>
+<p>What are we deciding, and who should take part?</p>
+<div class="stage-usecases">
+<p><b>Citizen initiatives</b><span>Help people turn a concern into a clear public question.</span></p>
+<p><b>Citizens’ assemblies</b><span>Map who is affected and whose experience is missing.</span></p>
+</div>
+</div>
+<figure class="topic-art">
+<img alt="People define the participants and purpose at a board" src="assets/media/process-01-framing.png"/>
+</figure>
+</div>
+<aside class="notes">
+<p>
+                Step 1: Framing. Establish who has a say, what is being decided and what authority the group has. Introduce Kultur Komitee on the
+                following fieldwork page.
+              </p>
+<p>Ask: What can the group decide, and who takes part? Give the audience a moment to consider it, then continue to the example.</p>
+<p>Conceptual process illustration supplied by Joshua: images/process-01-framing.png. Repeated from the overview to identify this stage.</p>
+<p></p>
+<p>
+                These are possible design directions, not prescribed hackathon solutions. Start by researching the actual procedure, people and
+                constraints. Citizen initiatives: Help people turn a concern into a clear public question. Citizens’ assemblies: Map who is affected
+                and whose experience is missing.
+              </p>
+<p></p>
+<p></p><p></p><p>Timing cue: leave this scene by 8:40.</p></aside>
+</section>
+<section class="slide fieldwork-slide" data-step="1" data-time="8:40–9:20" data-title="Who decides, and what can they decide?" hidden="" id="kk-remit">
+<div class="slide-top">
+<a class="stamp step-heading gold" href="#process-overview">1 / Framing</a><span>Kultur Komitee · Winterthur</span>
+</div>
+<h2>Who decides, and what can they decide?</h2>
+<div class="fieldwork-layout">
+<figure class="fieldwork-photo">
+<img alt="Kultur Komitee, Winterthur · participants gathered for a plenary session" height="1500" src="assets/media/kk-room.webp" width="2000"/>
+<figcaption>Kultur Komitee participants gathered for a group session</figcaption>
+</figure>
+<div class="fieldwork-reflection gold">
+<p class="remit-year">Kultur Komitee · 2025</p><div class="remit-fact"><span>Who decides?</span><strong>38 residents</strong><p>Selected at random</p></div><div class="remit-fact"><span>What can they decide?</span><strong>CHF 380,000</strong><p>Funding for local culture</p></div>
+</div>
+</div>
+<nav aria-label="Five steps in the budgeting walkthrough" class="fieldwork-steps">
+<a aria-current="step" class="gold" href="#kk-remit"><span>1</span>Framing</a><a class="blush" href="#kk-proposals"><span>2</span>Ideas</a><a class="blue" href="#kk-deliberation"><span>3</span>Deliberation</a><a class="olive" href="#kk-allocation"><span>4</span>Voting</a><a class="red" href="#kk-accountability"><span>5</span>Accountability</a>
+</nav>
+<aside class="notes">
+<p>
+                Step 1: define the decision. In the published 2025 deployment, 38 randomly selected residents allocated CHF 380,000 to cultural
+                projects. These are figures from that study, not a headcount inferred from the photo.
+              </p>
+<p>
+                The participants, budget and scope are already design choices. Ask who should have a say, what the group can decide, and which
+                constraints have been set beforehand. These choices shape all the work that follows.
+              </p>
+<p>
+                Compare this with Swiss direct democracy next: an initiative proposes a change, while a referendum challenges legislation. The
+                fieldwork photos were supplied by Joshua; the deployment is documented at https://joshuacyang.com/pubs/komitee-equal-shares/ .
+              </p>
+<p></p>
+<p></p>
+<p></p><p></p><p>Timing cue: leave this scene by 9:20.</p></aside>
+</section><section class="slide principle-slide principle-red" data-time="9:20–9:50" data-title="Give people something they can change!" hidden="" id="real-influence"><div class="principle-layout"><div><h2>Give people<br/>something they<br/>can <em>change!</em></h2><p class="principle-copy">Make clear what is open to influence, who decides, and how people’s input will matter.</p></div><figure><img alt="People defining who takes part and what the group can decide" src="assets/media/process-01-framing.png"/></figure></div><aside class="notes"><p>Pause after the framing case. A participation tool needs a real connection to a decision. Research the institution: what is genuinely open, who has authority, and what commitment exists to respond? A polished consultation can still leave participants with no influence. For a project, investigate this connection before choosing a technology. This is a design principle, not a claim that every process must give participants final authority.</p><p></p><p>Timing cue: leave this scene by 9:50.</p></aside></section>
+<section class="slide step-intro" data-step="2" data-time="9:50–10:30" data-title="Ideas" hidden="" id="step-2">
+<div class="slide-top">
+<a aria-label="Step 2 of 5. Return to the process overview" class="stamp step-index blush" href="#process-overview">Step 2 of 5</a>
+</div>
+<div class="step-intro-layout">
+<div class="step-intro-copy">
+<h2>Ideas</h2>
+<p>What do people know, need or propose?</p>
+<div class="stage-usecases">
+<p><b>Participatory budgeting</b><span>Help residents develop and compare feasible proposals.</span></p>
+<p><b>Neighbourhood planning</b><span>Collect local knowledge and explore alternative designs.</span></p>
+</div>
+</div>
+<figure class="topic-art">
+<img alt="People bring different ideas to a table" src="assets/media/process-02-ideas.png"/>
+</figure>
+</div>
+<aside class="notes">
+<p>
+                Step 2: Ideas. Gather experiences, evidence, needs and possible courses of action. A formal proposal is one way to contribute; other
+                processes begin with questions, stories or shared observations. The next photograph shows the project information people worked with
+                in Kultur Komitee.
+              </p>
+<p>
+                Ask: What information do people need to compare the options? Give the audience a moment to consider it, then continue to the example.
+              </p>
+<p>Conceptual process illustration supplied by Joshua: images/process-02-ideas.png. Repeated from the overview to identify this stage.</p>
+<p></p>
+<p>
+                These are possible design directions, not prescribed hackathon solutions. Start by researching the actual procedure, people and
+                constraints. Participatory budgeting: Help residents develop and compare feasible proposals. Neighbourhood planning: Collect local
+                knowledge and explore alternative designs.
+              </p>
+<p></p>
+<p></p><p></p><p>Timing cue: leave this scene by 10:30.</p></aside>
+</section>
+<section class="slide fieldwork-slide" data-step="2" data-time="10:30–11:05" data-title="Project information for participants" hidden="" id="kk-proposals">
+<div class="slide-top">
+<a class="stamp step-heading blush" href="#process-overview">2 / Ideas</a><span>Kultur Komitee · Winterthur</span>
+</div>
+<h2>Project information for participants</h2>
+<div class="fieldwork-layout">
+<figure class="fieldwork-photo">
+<img alt="Project briefs, assessment sheets and annotations on a working table" height="1500" src="assets/media/kk-proposals.webp" width="2000"/>
+<figcaption>Project briefs, assessment sheets and annotations on a working table</figcaption>
+</figure>
+<div class="fieldwork-reflection blush">
+<p>Residents compare project descriptions, requested amounts and the criteria used to assess them.</p>
+</div>
+</div>
+<nav aria-label="Five steps in the budgeting walkthrough" class="fieldwork-steps">
+<a class="gold" href="#kk-remit"><span>1</span>Framing</a><a aria-current="step" class="blush" href="#kk-proposals"><span>2</span>Ideas</a><a class="blue" href="#kk-deliberation"><span>3</span>Deliberation</a><a class="olive" href="#kk-allocation"><span>4</span>Voting</a><a class="red" href="#kk-accountability"><span>5</span>Accountability</a>
+</nav>
+<aside class="notes">
+<p>For discussion if time allows: What information would you need before comparing two proposals?</p>
+<p>Step 2: Ideas. This example focuses on: What information makes the options clear and comparable?</p>
+<p>
+                Point to the briefs and assessment sheets. Give students a few seconds to suggest what they would need: the purpose, cost, intended
+                beneficiaries, feasibility and uncertainties. These are reflection prompts, not a claim that every field appears on every photographed
+                sheet.
+              </p>
+<p>
+                Proposal preparation includes work by applicants and organizers before the group meets. During review, residents may discover missing
+                or ambiguous information. A simple comparable brief or missing-information checklist can improve an existing process.
+              </p>
+<p>
+                Notice the ordinary materials: paper, notes and pens. Ask what currently takes time or causes misunderstanding before deciding that a
+                new platform is necessary.
+              </p>
+<p>
+                Photograph supplied by Joshua in the conference workspace. Deployment source: https://joshuacyang.com/pubs/komitee-equal-shares/ .
+              </p>
+<p></p>
+<p></p>
+<p></p><p></p><p>Timing cue: leave this scene by 11:05.</p></aside>
+</section>
+<section class="slide step-intro" data-step="3" data-time="11:05–11:45" data-title="Deliberation" hidden="" id="step-3">
+<div class="slide-top">
+<a aria-label="Step 3 of 5. Return to the process overview" class="stamp step-index blue" href="#process-overview">Step 3 of 5</a>
+</div>
+<div class="step-intro-layout">
+<div class="step-intro-copy">
+<h2>Deliberation</h2>
+<p>How can people compare reasons and perspectives?</p>
+<div class="stage-usecases">
+<p><b>Public consultations</b><span>Compare arguments and surface unresolved disagreements.</span></p>
+<p><b>Multilingual assemblies</b><span>Support translation, source checking and fair summaries.</span></p>
+</div>
+</div>
+<figure class="topic-art">
+<img alt="People discuss reasons around a table" src="assets/media/process-03-deliberation.png"/>
+</figure>
+</div>
+<aside class="notes">
+<p>
+                Step 3: Deliberation. Discussion lets people compare reasons and bring concerns into the decision. Continue to the table discussion,
+                then the other deliberation examples.
+              </p>
+<p>Ask: How do people compare reasons and raise concerns? Give the audience a moment to consider it, then continue to the example.</p>
+<p>Conceptual process illustration supplied by Joshua: images/process-03-deliberation.png. Repeated from the overview to identify this stage.</p>
+<p></p>
+<p>
+                These are possible design directions, not prescribed hackathon solutions. Start by researching the actual procedure, people and
+                constraints. Public consultations: Compare arguments and surface unresolved disagreements. Multilingual assemblies: Support
+                translation, source checking and fair summaries.
+              </p>
+<p></p>
+<p></p><p></p><p>Timing cue: leave this scene by 11:45.</p></aside>
+</section>
+<section class="slide fieldwork-slide" data-step="3" data-time="11:45–12:20" data-title="Small-group discussion and assessment" hidden="" id="kk-deliberation">
+<div class="slide-top">
+<a class="stamp step-heading blue" href="#process-overview">3 / Deliberation</a><span>Kultur Komitee · Winterthur</span>
+</div>
+<h2>Small-group discussion and assessment</h2>
+<div class="fieldwork-layout">
+<figure class="fieldwork-photo">
+<img alt="Residents discussing project material around a table" height="1500" src="assets/media/kk-discussion.webp" width="2000"/>
+<figcaption>Residents discussing project material around a table</figcaption>
+</figure>
+<div class="fieldwork-reflection blue">
+<p>Residents discuss how each proposal could contribute to the cultural goals the group has agreed on.</p>
+</div>
+</div>
+<nav aria-label="Five steps in the budgeting walkthrough" class="fieldwork-steps">
+<a class="gold" href="#kk-remit"><span>1</span>Framing</a><a class="blush" href="#kk-proposals"><span>2</span>Ideas</a><a aria-current="step" class="blue" href="#kk-deliberation"><span>3</span>Deliberation</a><a class="olive" href="#kk-allocation"><span>4</span>Voting</a><a class="red" href="#kk-accountability"><span>5</span>Accountability</a>
+</nav>
+<aside class="notes">
+<p>For discussion if time allows: How would you keep a concern from being lost when the group disagrees?</p>
+<p>Step 3: Deliberation. This example focuses on: How can people compare reasons and raise concerns?</p>
+<p>
+                Allow a short response, then distinguish sharing preferences from deliberation: participants explain reasons, ask questions and assess
+                expected contributions against shared criteria.
+              </p>
+<p>
+                Komitee combines individual preferences with these small-group evaluations. The paper documents the two roles; a photograph cannot
+                show whether every person had equal influence or whether the discussion improved the eventual decision.
+              </p>
+<p>
+                This is where distributed knowledge can enter collective judgment. Facilitation, useful evidence and a record of unresolved concerns
+                matter. Later, Murmi and the summary exercise show digital tools for related tasks.
+              </p>
+<p>
+                Photograph supplied by Joshua in the conference workspace. Deployment source: https://joshuacyang.com/pubs/komitee-equal-shares/ .
+              </p>
+<p></p>
+<p></p>
+<p></p><p></p><p>Timing cue: leave this scene by 12:20.</p></aside>
+</section>
+<section class="slide concept-slide" data-step="3" data-time="12:20–13:05" data-title="Citizens’ assemblies study an issue before making recommendations" hidden="" id="deliberative-assembly">
+<div class="slide-top">
+<a class="stamp step-heading blue" href="#process-overview">3 / Deliberation</a><span>Citizens’ assemblies · Ireland</span>
+</div>
+<h2>Citizens’ assemblies study an issue before making recommendations</h2>
+<div class="assembly-process">
+<div aria-label="Different participants seated around a shared discussion table" class="assembly-table" role="img">
+<span></span><i></i><i></i><i></i><i></i><i></i><i></i>
+</div>
+<ol class="procedure-list">
+<li><b>01</b> Select participants by lottery</li>
+<li><b>02</b> Study evidence and discuss in groups</li>
+<li><b>03</b> Make recommendations; receive a response</li>
+</ol>
+</div>
+<p class="concept-foot">Possible tools: a clear evidence summary, a record of open questions, or a page tracking the public response.</p>
+<a class="source" href="https://citizensassembly.ie/about/faq/" rel="noopener" target="_blank">Irish Citizens’ Assembly · process and responsibilities</a>
+<aside class="notes">
+<p>Step 3: Deliberation. This example focuses on: How can people compare reasons and raise concerns?</p>
+<p>
+                Irish citizens’ assemblies use a selection process intended to reflect the public, evidence sessions and facilitated discussion before
+                recommendations. Recommendations require political consideration and a response; they are not automatically binding decisions.
+              </p>
+<p>
+                Civic technology can help people find and question evidence, record unresolved questions or follow the response to recommendations.
+                Selection is also a research problem: Flanigan et al. study fairness of selection probabilities subject to demographic quotas.
+              </p>
+<p>
+                For students, an evidence pack can be a sufficient project. Pick one question that an assembly would examine, link competing claims to
+                their sources and test whether a reader can explain the remaining disagreement.
+              </p>
+<p></p>
+<p></p>
+<p></p><p></p><p>Timing cue: leave this scene by 13:05.</p></aside>
+</section>
+<section class="slide murmi-slide project-embed-slide" data-project-anchor="#in-action" data-project-url="https://www.murmi.org/" data-step="3" data-time="13:05–14:35" data-title="Murmi helps people check a discussion summary" hidden="" id="murmi">
+<div class="slide-top">
+<a class="stamp step-heading blue" href="#process-overview">3 / Deliberation</a>
+<div aria-label="Murmi view" class="project-toolbar" role="group">
+<button aria-controls="murmi-live" aria-pressed="false" data-project-view="live" type="button">Live page</button><button aria-controls="murmi-backup" aria-pressed="true" data-project-view="backup" type="button">Offline view</button><a href="https://www.murmi.org/#in-action" rel="noopener" target="_blank">Open full page ↗</a>
+</div>
+</div>
+<div class="project-live" hidden="" id="murmi-live">
+<h2>Murmi</h2>
+<div class="project-viewport">
+<p class="project-loading" role="status">Loading Murmi…</p>
+<iframe allowfullscreen="" referrerpolicy="strict-origin-when-cross-origin" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-downloads" title="Murmi — embedded project website"></iframe>
+</div>
+</div>
+<div class="project-backup" id="murmi-backup">
+<div class="murmi-layout">
+<div>
+<h2>Murmi helps people check a discussion summary</h2>
+<p class="project-context">People can review the main themes and point out what is missing.</p>
+<div aria-label="Murmi process walkthrough" class="murmi-steps interactive" role="group">
+<button aria-pressed="true" data-murmi-step="0" type="button">Contribute</button><button aria-pressed="false" data-murmi-step="1" type="button">Organize</button><button aria-pressed="false" data-murmi-step="2" type="button">Review</button>
+</div>
+<div aria-live="polite" class="murmi-explanation">
+<h3 id="murmi-step-title">People share experiences and concerns.</h3>
+<p id="murmi-step-copy">Their comments provide the material for a group summary.</p>
+</div>
+<p class="print-only murmi-print">
+                    Contribute → organize themes → participant review. People can check and correct the shared interpretation.
+                  </p>
+<p class="walkthrough-label">Workshop interface; controls illustrate the process.</p>
+<a class="demo-link interactive" href="https://www.murmi.org/" rel="noopener" target="_blank">Open Murmi ↗</a>
+</div>
+<figure class="phone-photo">
+<img alt="Murmi in use on a phone at Swiss AI Futures. The participant is reviewing a statement about AI and translation." height="1239" src="assets/media/murmi-in-use-swiss-ai-futures.jpg" width="826"/>
+<figcaption>Murmi in use at Swiss AI Futures, 2026.</figcaption>
+</figure>
+</div>
+</div>
+<aside class="notes">
+<p>
+                The embedded Murmi website opens at “See Murmi at work.” Scroll within the page and use its Vote, Record, Clusters and Common ground
+                carousel controls to show the real interface. This public showcase contains screenshots; it is not a populated live session. Offline
+                view retains the workshop photograph and three-part explanation. Do not join the historical session shown in the photograph.
+              </p>
+<p>Step 3: Deliberation. This example focuses on: How can people compare reasons and raise concerns?</p>
+<p>
+                Use the three controls to explain the procedure: participants contribute; the system organizes themes; participants review and correct
+                the shared interpretation. The photo is authentic, while these controls are a guided explanation rather than a replay of the
+                historical session.
+              </p>
+<p>
+                The central design problem is whether people recognize their views and can correct a misrepresentation. A related academic example is
+                Tessler et al.’s study of AI-mediated group statements, but that study does not establish Murmi’s effects.
+              </p>
+<p>
+                A small contribution could expose the original contributions behind one theme, collect a correction or retain a question that still
+                needs discussion. Compare the summary with its sources and ask participants what is missing.
+              </p>
+<p></p>
+<p></p>
+<p></p><p></p><p>Timing cue: leave this scene by 14:35.</p></aside>
+</section>
+<section class="slide summary-slide" data-step="3" data-time="14:35–15:50" data-title="What makes an AI summary fair?" hidden="" id="missing-voice">
+<div class="slide-top">
+<a class="stamp step-heading blue" href="#process-overview">3 / Deliberation</a><span>Illustrative discussion</span>
+</div>
+<h2>What makes an AI summary fair?</h2>
+<div class="summary-layout">
+<div class="contributions">
+<p><b>A</b> “A garden would give us a place to meet.”</p>
+<p><b>B</b> “The music event would bring people together.”</p>
+<p><b>C</b> “I would use a workshop space every week.”</p>
+<p id="access-concern"><b>D</b> “Whichever we choose, I need step-free access.”</p>
+</div>
+<div>
+<div class="summary-paper">
+<h3>Draft summary</h3>
+<p>People want more places to meet and do things together.</p>
+<p class="summary-addition" hidden="">Access matters too: the space needs to be step-free.</p>
+</div>
+<button aria-expanded="false" class="interactive reveal-concern" type="button">What was missed?</button>
+<p class="source-trace" hidden="">Source D: a condition for participation.</p>
+</div>
+</div>
+<p class="bottom-line">Generative social choice: choose statements that represent different groups.</p>
+<aside class="notes">
+<p>Step 3: Deliberation. This example focuses on: How can people compare reasons and raise concerns?</p>
+<p>
+                Compare these four invented contributions from a community discussion with the draft summary. Give the audience ten seconds to find an
+                omission, then reveal the step-free-access requirement.
+              </p>
+<p>
+                The summary captures shared interest in social activities but loses a concrete condition on participation. Frequency is not the only
+                measure of importance. A team could build a source-linked correction action or a list of requirements that must remain visible.
+              </p>
+<p>
+                This is a teaching example, not output from Murmi. Evaluate a prototype against the original contributions: which claims lack support,
+                which requirements are omitted and can someone correct the error?
+              </p>
+<p></p>
+<p>
+                Generative social choice treats summary construction as a representation problem: select a short set of generated statements that
+                covers different groups’ views. Boehmer, Fish and Procaccia, ICML 2025, study proportional representation under a text-length budget.
+                Their guarantees depend on a formal preference model and query assumptions. https://proceedings.mlr.press/v267/boehmer25a.html
+              </p>
+<p>
+                The access example illustrates an omission, not that algorithm or a proportionality guarantee. Ask separately: is the summary
+                faithful, are different groups represented, and are essential rights or access needs preserved? Participants must be able to inspect
+                and correct it.
+              </p>
+<p></p>
+<p></p><p></p><p>Timing cue: leave this scene by 15:50.</p></aside>
+</section><section class="slide principle-slide principle-blue" data-time="15:50–16:20" data-title="Make disagreement useful!" hidden="" id="useful-disagreement"><div class="principle-layout"><div><h2>Make<br/><em>disagreement</em><br/>useful!</h2><p class="principle-copy">Keep different reasons visible. Help people understand what is at stake.</p></div><figure><img alt="Three people discussing different perspectives" src="assets/media/process-03-deliberation.png"/></figure></div><aside class="notes"><p>Pause after the summary example. The purpose of a democratic tool is not to manufacture agreement. A useful outcome can be a clearer tradeoff, an unresolved concern, or a better option. Ask what would help participants understand a view they do not share. Preserve space for dissent and correction when summarizing. This is the design aspiration illustrated by the preceding case.</p><p></p><p>Timing cue: leave this scene by 16:20.</p></aside></section>
+<section class="slide step-intro" data-step="4" data-time="16:20–17:00" data-title="Voting" hidden="" id="step-4">
+<div class="slide-top">
+<a aria-label="Step 4 of 5. Return to the process overview" class="stamp step-index olive" href="#process-overview">Step 4 of 5</a>
+</div>
+<div class="step-intro-layout">
+<div class="step-intro-copy">
+<h2>Voting</h2>
+<p>How do preferences become a collective decision?</p>
+<div class="stage-usecases">
+<p><b>Referendums</b><span>Let people explore how ballot wording changes the choice.</span></p>
+<p><b>Shared budgets</b><span>Compare voting rules and which groups each outcome serves.</span></p>
+</div>
+</div>
+<figure class="topic-art">
+<img alt="People place ballots into a ballot box" src="assets/media/process-04-voting.png"/>
+</figure>
+</div>
+<aside class="notes">
+<p>
+                Step 4: Voting. A procedure combines individual and group inputs into a result. A ballot is one form of input; the Komitee example
+                also includes group assessments and a budget rule.
+              </p>
+<p>Ask: How are different views turned into a result? Give the audience a moment to consider it, then continue to the example.</p>
+<p>Conceptual process illustration supplied by Joshua: images/process-04-voting.png. Repeated from the overview to identify this stage.</p>
+<p></p>
+<p>
+                These are possible design directions, not prescribed hackathon solutions. Start by researching the actual procedure, people and
+                constraints. Referendums: Let people explore how ballot wording changes the choice. Shared budgets: Compare voting rules and which
+                groups each outcome serves.
+              </p>
+<p></p>
+<p></p><p></p><p>Timing cue: leave this scene by 17:00.</p></aside>
+</section>
+<section class="slide" data-step="4" data-time="17:00–18:45" data-title="The same votes can give different winners" hidden="" id="voting-rules">
+<div class="slide-top">
+<a class="stamp step-heading olive" href="#process-overview">4 / Voting</a><span>Illustrative group decision</span>
+</div>
+<h2>The same votes can give different winners</h2>
+<div class="vote-layout">
+<div>
+<h3>Same nine voters.</h3>
+<div class="ballot"><b>4</b><span>Garden › Music › Workshop</span></div>
+<div class="ballot"><b>3</b><span>Music › Workshop › Garden</span></div>
+<div class="ballot"><b>2</b><span>Workshop › Music › Garden</span></div>
+<div class="rule-controls interactive">
+<button aria-pressed="true" data-rule="plurality" type="button">Plurality</button><button aria-pressed="false" data-rule="borda" type="button">Borda</button>
+</div>
+<p class="rule-note">Only first choices count.</p>
+</div>
+<div class="vote-results">
+<div class="result">
+<div><span>Garden</span><span data-score="0">4 votes</span></div>
+<div class="bar red" data-bar="0" style="width: 100%"></div>
+</div>
+<div class="result">
+<div><span>Music</span><span data-score="1">3 votes</span></div>
+<div class="bar blue" data-bar="1" style="width: 75%"></div>
+</div>
+<div class="result">
+<div><span>Workshop</span><span data-score="2">2 votes</span></div>
+<div class="bar olive" data-bar="2" style="width: 50%"></div>
+</div>
+<p aria-live="polite" class="winner">Garden wins.</p>
+</div>
+</div>
+<p class="print-only print-vote">Plurality: Garden wins, 4 / 3 / 2 votes.<br/>Borda: Music wins, 8 / 12 / 7 points.</p>
+<aside class="notes">
+<p>
+                Start with this decision before introducing theory or history. Nine people rank a garden, a music event and a workshop. These are
+                invented teaching ballots. Ask the audience which project should win.
+              </p>
+<p>
+                With plurality, count only first choices: garden receives four, music three and workshop two. Ask what changes if second choices
+                count. Switch to Borda: first gets two points, second one and third zero. Music wins with twelve points, ahead of garden on eight and
+                workshop on seven.
+              </p>
+<p>
+                Nobody changed their vote. Only the aggregation rule changed. Use this to introduce the individual assessments and Equal Shares
+                example that follow. Different rules express different priorities; no rule is universally best.
+              </p>
+<p></p>
+<p></p>
+<p></p><p></p><p>Timing cue: leave this scene by 18:45.</p></aside>
+</section>
+<section class="slide fieldwork-slide" data-step="4" data-time="18:45–19:15" data-title="Individual project assessments" hidden="" id="kk-allocation">
+<div class="slide-top">
+<a class="stamp step-heading olive" href="#process-overview">4 / Voting</a><span>Kultur Komitee · Winterthur</span>
+</div>
+<h2>Individual project assessments</h2>
+<div class="fieldwork-layout">
+<figure class="fieldwork-photo">
+<img alt="Participants individually examining displayed project briefs" height="1500" src="assets/media/kk-assessment.webp" width="2000"/>
+<figcaption>Participants individually examining displayed project briefs</figcaption>
+</figure>
+<div class="fieldwork-reflection olive">
+<p>Individual votes and group assessments both contribute to the allocation.</p>
+</div>
+</div>
+<nav aria-label="Five steps in the budgeting walkthrough" class="fieldwork-steps">
+<a class="gold" href="#kk-remit"><span>1</span>Framing</a><a class="blush" href="#kk-proposals"><span>2</span>Ideas</a><a class="blue" href="#kk-deliberation"><span>3</span>Deliberation</a><a aria-current="step" class="olive" href="#kk-allocation"><span>4</span>Voting</a><a class="red" href="#kk-accountability"><span>5</span>Accountability</a>
+</nav>
+<aside class="notes">
+<p>For discussion if time allows: What should happen when popular projects leave less money for other priorities?</p>
+<p>Step 4: Voting. This example focuses on: How are different views turned into a result?</p>
+<p>
+                The photograph shows individual assessment of the displayed proposals; do not describe a specific ballot being cast or infer anyone’s
+                preference from the image. The published procedure separately establishes that participants cast individual point votes.
+              </p>
+<p>
+                Ask for one principle students would want the allocation to respect: proportional representation, shared impact, feasibility or
+                support for smaller projects. There can be tensions among these aims.
+              </p>
+<p>
+                Komitee Equal Shares combines personal preferences and shared group assessments. The next slide uses the Komitee handout to isolate
+                one part: how individual points and equal virtual budgets can produce an allocation. The handout is a simplified invented example, and
+                does not show the group assessment component.
+              </p>
+<p>
+                Photograph supplied by Joshua in the conference workspace. Deployment source: https://joshuacyang.com/pubs/komitee-equal-shares/ .
+              </p>
+<p></p>
+<p></p>
+<p></p><p></p><p>Timing cue: leave this scene by 19:15.</p></aside>
+</section>
+<section class="slide aggregation-slide" data-step="4" data-time="19:15–20:15" data-title="How votes become a funding result" hidden="" id="funding">
+<div class="slide-top">
+<a class="stamp step-heading olive" href="#process-overview">4 / Voting</a>
+</div>
+<h2>How votes become a funding result</h2>
+<div class="aggregation-layout">
+<figure class="aggregation-original">
+<a aria-label="Open the original Komitee aggregation handout PDF" href="assets/data/komitee-aggregation-handout.pdf" rel="noopener" target="_blank">
+<img alt="Komitee’s Method of Equal Shares handout: three participants’ points, equal budgets and contributions to six project proposals. An English walkthrough appears alongside." height="2178" src="assets/media/komitee-aggregation-handout.webp" width="1524"/>
+</a>
+<figcaption>
+<a href="assets/data/komitee-aggregation-handout.pdf" rel="noopener" target="_blank">Open the original handout ↗</a>
+</figcaption>
+</figure>
+<div class="aggregation-walkthrough">
+<p class="aggregation-context">Invented example · 3 people · CHF 1,000 each</p>
+<div aria-label="Explore the aggregation example" class="aggregation-controls interactive">
+<button aria-controls="aggregation-votes" aria-pressed="true" data-aggregation-view="votes" type="button">Votes</button>
+<button aria-controls="aggregation-first" aria-pressed="false" data-aggregation-view="first" type="button">First project</button>
+<button aria-controls="aggregation-limit" aria-pressed="false" data-aggregation-view="limit" type="button">Budget limit</button>
+<button aria-controls="aggregation-result" aria-pressed="false" data-aggregation-view="result" type="button">Result</button>
+</div>
+<div aria-live="polite" class="aggregation-panels">
+<div class="aggregation-panel" id="aggregation-votes">
+<h3>Each person assigns seven points</h3>
+<p class="aggregation-explanation">Up to two per project. The handout puts projects in order of total points.</p>
+<table class="aggregation-table">
+<caption class="sr-only">
+                        Votes and project costs in the handout’s funding order
+                      </caption>
+<thead>
+<tr>
+<th scope="col">Project</th>
+<th scope="col">Cost / CHF</th>
+<th scope="col">Anna</th>
+<th scope="col">Miro</th>
+<th scope="col">Jasmin</th>
+<th scope="col">Points</th>
+</tr>
+</thead>
+<tbody id="aggregation-vote-rows"></tbody>
+</table>
+<p class="aggregation-caption">Points express preferences. Budgets determine which contributions can still be made.</p>
+</div>
+<div class="aggregation-panel" hidden="" id="aggregation-first">
+<h3>Creative Club costs CHF 1,000</h3>
+<p class="aggregation-explanation">Five points → CHF 200 per point. Green shows the remaining budget.</p>
+<div class="aggregation-balances" id="aggregation-first-balances"></div>
+<p class="aggregation-equation">CHF 400 + 200 + 400 = 1,000</p>
+<p class="aggregation-caption">The project is funded. Each contribution is deducted from that person’s budget.</p>
+</div>
+<div class="aggregation-panel" hidden="" id="aggregation-limit">
+<h3>Auto Ausstellung is skipped</h3>
+<p class="aggregation-explanation">After Creative Club and Experimental Event are funded, Anna has CHF 200 left.</p>
+<div class="aggregation-limit-comparison">
+<div><span>Anna has</span><strong>CHF 200</strong></div>
+<div><span>Her two points would cost</span><strong>CHF 600</strong></div>
+</div>
+<p class="aggregation-equation">4 points · CHF 1,200 ÷ 4 = 300 per point</p>
+<p class="aggregation-caption">
+                      The handout’s rule skips this project because Anna cannot cover her contribution. No budget is deducted.
+                    </p>
+</div>
+<div class="aggregation-panel" hidden="" id="aggregation-result">
+<h3>Four projects share CHF 3,000</h3>
+<p class="aggregation-explanation">Two projects are skipped when supporters cannot cover the contributions shown.</p>
+<table class="aggregation-table aggregation-result-table">
+<caption class="sr-only">
+                        Final funding result in the handout
+                      </caption>
+<thead>
+<tr>
+<th scope="col">Project</th>
+<th scope="col">Points</th>
+<th scope="col">Funding / CHF</th>
+</tr>
+</thead>
+<tbody id="aggregation-result-rows"></tbody>
+</table>
+<p class="aggregation-caption">
+                      All three budgets are spent. Jasmin’s remaining CHF 600 funds Bilder Buch, which has two points.
+                    </p>
+<p class="aggregation-print-example print-only">
+                      Creative Club: Anna 400 + Miro 200 + Jasmin 400 = CHF 1,000. Auto Ausstellung is skipped: Anna has CHF 200 left but would need
+                      CHF 600.
+                    </p>
+</div>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>
+                Step 4: Voting. The source is the Method of Equal Shares handout used by Kultur Komitee and supplied by Joshua. Its caption explicitly
+                says this is a simplified example with invented data. Use the original graphic as the overview and the English walkthrough to explain
+                the arithmetic.
+              </p>
+<p>
+                Votes: Anna, Miro and Jasmin each assign seven points, with at most two per project, and each starts with a virtual CHF 1,000. The
+                handout orders projects by total points. Retain its printed order for ties; the sheet does not establish a general tie-breaking rule.
+              </p>
+<p>
+                First project: Creative Club costs CHF 1,000 and has five points. In this example, each point pays CHF 200. Anna’s two points
+                contribute CHF 400; Miro’s one contributes CHF 200; Jasmin’s two contribute CHF 400. Remaining budgets are CHF 600, 800 and 600.
+              </p>
+<p>
+                Budget limit: Experimental Event is next, costing CHF 800. Anna and Miro each contribute CHF 400, leaving CHF 200, 400 and 600. Auto
+                Ausstellung has four points and costs CHF 1,200: Anna would need CHF 600, Miro CHF 300 and Jasmin CHF 300. Anna cannot pay, so the
+                handout skips it and deducts nothing.
+              </p>
+<p>
+                Result: Dance Disco is funded with CHF 200 from Anna and CHF 400 from Miro. Folklore Fest is skipped because Miro and Jasmin cannot
+                cover their contributions. Bilder Buch is funded with Jasmin’s remaining CHF 600. The four funded projects cost CHF 1,000 + 800 + 600
+                + 600 = 3,000. Each person spends CHF 1,000. Ask the audience to notice how remaining budgets affect the result: the total point count
+                alone does not decide everything.
+              </p>
+<p>
+                This is a walkthrough of the handout’s simplified procedure, not a general implementation of MES or a reconstruction of a real
+                allocation. It illustrates individual points and equal budgets; the group impact assessments in Komitee Equal Shares are not
+                represented here. The 2025 deployment involved 38 citizens allocating CHF 380,000 to 43 projects; the receipt later in the talk uses
+                separate 2026 data.
+              </p>
+<p>
+                Source: images/KKW_Infokarten_Grafiken_platziert_MES.pdf, page 1, Method of Equal Shares. The complete original is bundled and linked
+                beside the rendering. Formal foundation:
+                https://proceedings.neurips.cc/paper_files/paper/2021/hash/69f8ea31de0c00502b2ae571fbab1f95-Abstract.html . Field study:
+                https://doi.org/10.1145/3772363.3798958 .
+              </p>
+<p>
+                Transition to step 5: after computing an allocation, people need to see how it was reached. This explanation and the voting receipt
+                make the calculation inspectable.
+              </p>
+<p></p>
+<p></p>
+<p></p><p></p><p>Timing cue: leave this scene by 20:15.</p></aside>
+</section>
+<section class="slide step-intro" data-step="5" data-time="20:15–20:55" data-title="Accountability" hidden="" id="step-5">
+<div class="slide-top">
+<a aria-label="Step 5 of 5. Return to the process overview" class="stamp step-index red" href="#process-overview">Step 5 of 5</a>
+</div>
+<div class="step-intro-layout">
+<div class="step-intro-copy">
+<h2>Accountability</h2>
+<p>What happens next, and what can we learn?</p>
+<div class="stage-usecases">
+<p><b>Public commitments</b><span>Track what was promised, funded and delivered.</span></p>
+<p><b>Community decisions</b><span>Help participants question a result and request a review.</span></p>
+</div>
+</div>
+<figure class="topic-art">
+<img alt="People review progress on a checklist" src="assets/media/process-05-accountability.png"/>
+</figure>
+</div>
+<aside class="notes">
+<p>
+                Step 5: Accountability. Computing a result is followed by explaining it and tracking what happens. A receipt is one example of an
+                explanation; implementation and responsibility also matter.
+              </p>
+<p>
+                Ask: Can people understand the result and see what happens next? Give the audience a moment to consider it, then continue to the
+                example.
+              </p>
+<p>Conceptual process illustration supplied by Joshua: images/process-05-accountability.png. Repeated from the overview to identify this stage.</p>
+<p></p>
+<p>
+                These are possible design directions, not prescribed hackathon solutions. Start by researching the actual procedure, people and
+                constraints. Public commitments: Track what was promised, funded and delivered. Community decisions: Help participants question a
+                result and request a review.
+              </p>
+<p></p>
+<p></p><p></p><p>Timing cue: leave this scene by 20:55.</p></aside>
+</section>
+<section class="slide fieldwork-slide" data-step="5" data-time="20:55–21:25" data-title="Presenting the funding result" hidden="" id="kk-accountability">
+<div class="slide-top">
+<a class="stamp step-heading red" href="#process-overview">5 / Accountability</a><span>Kultur Komitee · Winterthur</span>
+</div>
+<h2>Presenting the funding result</h2>
+<div class="fieldwork-layout">
+<figure class="fieldwork-photo">
+<img alt="The allocation table presented back to the room" height="1500" src="assets/media/kk-results.webp" width="2000"/>
+<figcaption>The allocation table presented back to the room</figcaption>
+</figure>
+<div class="fieldwork-reflection red">
+<p>The 2025 allocation funded 43 projects. Receipts connect contributions to the projects that received funding.</p>
+</div>
+</div>
+<nav aria-label="Five steps in the budgeting walkthrough" class="fieldwork-steps">
+<a class="gold" href="#kk-remit"><span>1</span>Framing</a><a class="blush" href="#kk-proposals"><span>2</span>Ideas</a><a class="blue" href="#kk-deliberation"><span>3</span>Deliberation</a><a class="olive" href="#kk-allocation"><span>4</span>Voting</a><a aria-current="step" class="red" href="#kk-accountability"><span>5</span>Accountability</a>
+</nav>
+<aside class="notes">
+<p>For discussion if time allows: What would you want to check if your preferred project was not funded?</p>
+<p>Step 5: Accountability. This example focuses on: Can people understand the result and see what happens next?</p>
+<p>
+                Point to the results table. A collective decision must be communicated to participants and applicants. Ask what they would want to
+                inspect: the inputs, rule, available money, explanation, or route to raise a concern.
+              </p>
+<p>
+                The photograph documents presentation of an allocation table. It does not establish that funded projects were delivered or that there
+                was a formal appeal procedure. Following implementation is a further accountability task; a progress record is a possible hackathon
+                contribution.
+              </p>
+<p>
+                We are now at step 5: explain the result and follow up. Return briefly to the other four steps to show how the project information,
+                discussion and votes led here. The next demo uses a separate published KK26 receipt from 2026.
+              </p>
+<p>
+                Photograph supplied by Joshua in the conference workspace. Deployment source: https://joshuacyang.com/pubs/komitee-equal-shares/ .
+              </p>
+<p></p>
+<p></p>
+<p></p><p></p><p>Timing cue: leave this scene by 21:25.</p></aside>
+</section>
+<section class="slide receipt-slide project-embed-slide" data-project-anchor="#filter-bar" data-project-url="https://equalshares.kulturkomitee.win/" data-step="5" data-time="21:25–22:55" data-title="A receipt shows how your share helped fund each project" hidden="" id="receipt">
+<div class="slide-top">
+<a class="stamp step-heading red" href="#process-overview">5 / Accountability</a>
+<div aria-label="Kultur Komitee voting receipts view" class="project-toolbar" role="group">
+<button aria-controls="receipt-live" aria-pressed="false" data-project-view="live" type="button">Live page</button><button aria-controls="receipt-backup" aria-pressed="true" data-project-view="backup" type="button">Offline view</button><a href="https://equalshares.kulturkomitee.win/#filter-bar" rel="noopener" target="_blank">Open full page ↗</a>
+</div>
+</div>
+<div class="project-live" hidden="" id="receipt-live">
+<h2>Kultur Komitee voting receipts</h2>
+<div class="project-viewport">
+<p class="project-loading" role="status">Loading Kultur Komitee voting receipts…</p>
+<iframe allowfullscreen="" referrerpolicy="strict-origin-when-cross-origin" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-downloads" title="Kultur Komitee voting receipts — embedded project website"></iframe>
+</div>
+</div>
+<div class="project-backup" id="receipt-backup">
+<div class="receipt-layout">
+<div>
+<h2>A receipt shows how your share helped fund each project</h2>
+<p class="project-context">Choose a project to see the contribution and the full cost.</p>
+<div aria-label="Choose a funded project" class="receipt-picker interactive" role="group"></div>
+<div aria-live="polite" class="receipt-insight">
+<h3 id="receipt-project">Förderpool Kultur</h3>
+<p id="receipt-explanation">This participant's share contributed CHF 250 to the project.</p>
+<p id="receipt-total">Project cost: CHF 4,000.</p>
+</div>
+<a class="demo-link interactive" href="https://equalshares.kulturkomitee.win/" rel="noopener" target="_blank">Open the original receipts ↗</a>
+</div>
+<div class="receipt-paper">
+<p class="receipt-brand">KULTUR KOMITEE<br/>VOTING RECEIPT</p>
+<p class="receipt-person">Participant DNW / group BLAU</p>
+<div id="receipt-items"></div>
+<div class="receipt-spent"><span>Total allocated</span><strong>CHF 7,497.00</strong></div>
+<p class="receipt-footnote">4 supported projects funded.<br/>Amounts are contributions from a virtual share.</p>
+<p class="receipt-data-note">Presentation view of published receipt data.</p>
+</div>
+</div>
+<div class="source research-source">
+<a href="https://doi.org/10.1145/3665332" rel="noopener" target="_blank">Yang et al. · Digital Government 2024</a>
+</div>
+</div>
+<aside class="notes">
+<p>
+                The embedded website opens at the published 2026 personal receipts. Use EN to switch to English, scroll through receipts, or inspect
+                the Projects and Table pages. The website controls remain inside the frame. Offline view keeps the four verified contributions for
+                participant DNW. Use the presentation’s bottom arrow to continue after interacting inside the page.
+              </p>
+<p>Step 5: Accountability. This example focuses on: Can people understand the result and see what happens next?</p>
+<p>
+                This presentation view uses the published 2026 DNW receipt. Its four contributions total CHF 7,497. Select a project to inspect the
+                participant’s contribution alongside the project’s cost. A recorded vote and an allocated amount are distinct.
+              </p>
+<p>
+                A readable receipt can support a question about the allocation. It is not by itself a complete fairness or security audit. Research on
+                digital voting interfaces asks how design affects perceived fairness, legitimacy and understanding.
+              </p>
+<p>
+                Accountability continues after allocation. Decidim’s accountability component links results to implementation progress. Another small
+                project could connect an approved proposal to its responsible body, milestones and evidence of delivery.
+              </p>
+<p></p>
+<p></p>
+<p></p><p></p><p>Timing cue: leave this scene by 22:55.</p></aside>
+</section>
+<section class="slide principle-slide principle-olive" data-time="22:55–23:40" data-title="Make decisions people can question!" hidden="" id="small-tool"><div class="principle-layout"><div><h2>Make decisions<br/>people can<br/><em>question!</em></h2><p class="principle-copy">Show the reasons. Make room for challenge, correction and follow-through.</p></div><figure><img alt="People examining decisions and following progress" src="assets/media/process-05-accountability.png"/></figure></div><aside class="notes"><p>Connect the receipt to a broader principle: people should be able to inspect how an outcome was reached, raise a problem and learn what happens next. Transparency becomes useful when someone can act on it. A focused improvement can matter; its value depends on whether it helps people do something meaningful in the process. The earlier receipt comparison remains a possible evaluation example, not the required hackathon task.</p><p></p><p>Timing cue: leave this scene by 23:40.</p></aside></section><section class="slide agent-slide" data-time="23:40–24:55" data-title="+1: Explore with AI agents" hidden="" id="ai-simulation">
+<div class="slide-top"><span class="stamp">+1 / AI agents &amp; simulation</span></div>
+<h2>Explore possible interactions</h2>
+<p class="agent-lede">What could we learn before bringing people together?</p>
+<div class="illustrated-research simulation-art"><div class="agent-directions agent-compact">
+<div>
+<h3>Deliberation agents</h3>
+<p>Rehearse a discussion. Vary the evidence, facilitation or decision rules.</p>
+</div>
+<div>
+<h3>Personas &amp; digital twins</h3>
+<p>Explore responses grounded in consenting participants’ accounts.</p>
+</div>
+<div>
+<h3>Human-controlled assistants</h3>
+<p>Help someone explore arguments, then let them edit and approve their position.</p>
+</div>
+</div><figure><img alt="An illustrated person and a wooden mannequin compare preference cards" src="assets/media/paper-llm-voting.png"/></figure></div>
+<p class="bottom-line">Use simulations to develop questions. People retain voice and decision authority.</p>
+<aside class="notes">
+<p>
+                This is an optional research direction across the five stages, not a sixth mandatory step. Deliberation agents simulate interactions;
+                personas model perspectives; a digital twin suggests a model tied to a particular person. Treat all as imperfect models.
+              </p>
+<p>
+                Park et al., LLM Agents Grounded in Self-Reports Enable General-Purpose Simulation of Individuals, arXiv:2411.10109, revised June
+                2026, tests agents grounded in interviews and surveys. Predictive performance is not consent or authority to speak for someone.
+                https://arxiv.org/abs/2411.10109
+              </p>
+<p>
+                Human-controlled assistants are a proposed building direction here. Require a person to inspect, edit, revoke and approve any
+                representation. Test simulations against held-out human observations and examine failures across groups. Bisbee et al. (2024),
+                Synthetic Replacements for Human Survey Data?, cautions that matching averages can hide distorted variation.
+              </p>
+<p></p>
+<p></p><p></p><p>Timing cue: leave this scene by 24:55.</p></aside>
+</section>
+<section class="slide emerging-projects visual-civic swiss-showcase" data-time="24:55–25:55" data-title="Shape the places we share" hidden="" id="emerging-projects"><div class="slide-top"><span class="stamp">Participation connected to institutions</span></div><h2>Shape the places we share</h2><div class="project-examples"><article><a href="https://omastadi.hel.fi/?locale=en" rel="noopener" target="_blank"><h3>OmaStadi ↗</h3></a><span class="civic-place">Helsinki</span><figure class="civic-project-art"><img alt="People allocate resources among shared projects" src="assets/media/paper-komitee-equal-shares.png"/></figure><p>Residents propose and choose local projects.</p><div class="adoption-evidence"><b>31,103 voters · €10m budget</b><small>2026 round</small></div></article><article><a href="https://velobserver.ch/" rel="noopener" target="_blank"><h3>VelObserver ↗</h3></a><span class="civic-place">Switzerland</span><figure class="civic-project-art"><img alt="Conceptual illustration of people and civic participation" src="assets/media/switzerland-illustrated-map.png"/></figure><p>Cyclists rate routes. Shared evidence makes gaps in the network visible.</p><div class="adoption-evidence"><b>Supported by Prototype Fund</b><small>Public route ratings across Swiss cities</small></div></article></div><aside class="notes"><p>OmaStadi remains the international reference Josh knows. Helsinki recorded 31,103 voters, a €10 million allocation and 54 selected proposals in 2026. https://paatokset.hel.fi/en/case/hel-2026-004390?decision=b7f23e87-e7f8-4607-9900-90776b1b6764</p><p>VelObserver is the bicycle project in the Prototype Fund Switzerland catalogue, round 2. Cyclists rate route segments; the platform aggregates subjective assessments and aims to track improvements. Its public site lists Zurich, Basel, Bern, Gossau, Aarau, Winterthur and Limmattal. The Bern view displayed 161 contributors and 9,012 ratings when checked; these are local cumulative counts, not nationwide reach. https://prototypefund.opendata.ch/en/projects/ and https://velobserver.ch/</p><p>The Swiss map is an illustration, not a route map or deployment screenshot. A useful project could connect residents’ experience to an existing planning or monitoring process. Ratings alone do not guarantee infrastructure changes.</p><p>Timing cue: leave this scene by 25:55.</p></aside></section><section class="slide emerging-projects visual-civic swiss-showcase" data-time="25:55–26:40" data-title="Make public information easier to use" hidden="" id="swiss-public-tech"><div class="slide-top"><span class="stamp">Swiss public-interest tech</span></div><h2>Make public information easier to use</h2><div class="project-examples"><article><a href="https://www.atgora.org/" rel="noopener" target="_blank"><h3>@gora ↗</h3></a><span class="civic-place">Carbon Copy · Zurich</span><figure class="civic-project-art"><img alt="Conceptual illustration of people and civic participation" src="assets/media/process-02-ideas.png"/></figure><p>Explore an issue, compare perspectives and discuss before forming a view.</p><div class="adoption-evidence"><b>Used in Swiss participation projects</b><small>Swiss Bevölkerungsrat 2025 · provider case study</small></div></article><article><a href="https://oss.zuericitygpt.ch/" rel="noopener" target="_blank"><h3>ZüriCityGPT ↗</h3></a><span class="civic-place">Independent project · Zurich</span><figure class="civic-project-art"><img alt="Conceptual illustration of people and civic participation" src="assets/media/paper-llm-voting.png"/></figure><p>Ask a question about city information and check the original source.</p><div class="adoption-evidence"><b>Publicly accessible tool</b><small>Built by Liip · not an official city service</small></div></article></div><aside class="notes"><p>Carbon Copy is the Zurich-based association behind @gora. The current product combines learning material, different perspectives, polls and discussion. Its field notes document the Swiss Bevölkerungsrat 2025, Swiss AI Futures and school projects. These are provider-reported deployments, not independent evidence of effectiveness or a large unique-user count. https://www.atgora.org/ and https://www.atgora.org/field-notes</p><p>ZüriCityGPT is the likely Zurich GPT reference. Liip’s public OSS version answers questions using Zurich website content and open-source models. It explicitly states it is not associated with the City of Zurich. This is access-to-information public tech, not a binding democratic decision mechanism. Check answers against official pages; no verified adoption figure is claimed. https://oss.zuericitygpt.ch/ and https://github.com/liip/SwissGovernmentChatbots</p><p>Only VelObserver is identified here as Prototype Fund-supported. Do not imply that @gora or ZüriCityGPT received that funding. The illustrations are conceptual, not product screenshots. Sources checked 6 September 2026.</p><p>Timing cue: leave this scene by 26:40.</p></aside></section><section class="slide closing takeaway-slide illustrated-closing" data-time="26:40–28:00" data-title="Democracy is still being built!" hidden="" id="your-intervention">
+<div class="slide-top"><span class="stamp">For your own project</span></div>
+<div class="illustrated-closing-layout">
+<div class="illustrated-closing-copy">
+<h2>Democracy is still being built!</h2>
+<p class="closing-invitation">Let’s improve how it works, one real process at a time.</p>
+<div class="takeaway-questions">
+<div class="gold">
+<h3>Find a process you care about</h3>
+</div>
+<div class="blush">
+<h3>Learn with the people involved</h3>
+</div>
+<div class="blue">
+<h3>Explore what could work better</h3>
+</div>
+</div>
+</div>
+<figure class="topic-art">
+<img alt="Two illustrated people exploring an idea together at a laptop" height="1024" src="assets/media/civic-building-a-prototype.png" width="1536"/>
+</figure>
+</div>
+<div class="closing-bottom">
+<div class="resource-callout">
+<a class="demo-link" href="?view=read#resources">Papers, project demos and process examples ↗</a>
+<p>joshuacyang.com/projects</p>
+</div>
+<a aria-label="Joshua’s projects" class="projects-qr" href="https://joshuacyang.com/projects/" rel="noopener" target="_blank"><img alt="QR code to Joshua’s projects" height="160" src="assets/media/projects-qr.svg" width="160"/><span>Joshua’s projects</span></a>
+</div>
+<aside class="notes">
+<p>
+                End with possibility: democratic institutions and everyday collective processes can change. You do not need to redesign the whole
+                system to contribute. Start from curiosity, learn with others and make something worth trying. The direction is theirs to discover; an
+                uncomplicated idea can make a meaningful contribution.
+              </p>
+<p>
+                Choose a project or process you want to understand. Find out how it works, who is involved and what is already known. Investigate the
+                context before committing to a solution.
+              </p>
+<p>
+                Talk to the people involved, read relevant research and explore previous attempts. Ask what you still need to learn and which
+                assumptions you should check.
+              </p>
+<p>
+                Use that research to consider different possibilities and decide what you want to build. The projects in this talk are examples to
+                learn from. Your direction can differ from theirs.
+              </p>
+<p>
+                Invite one or two brief reflections if there is time. The linked projects and papers can support further research. Finish by 28
+                minutes and leave two minutes for questions or variation.
+              </p>
+<p>
+                Conceptual illustration supplied by Joshua: images/civic-building-a-prototype.png. The image represents exploring and making an idea;
+                it does not prescribe a particular project or solution.
+              </p>
+<p></p>
+<p></p>
+<p></p><p>Bring the three principles together: meaningful influence, useful disagreement and decisions people can question. Invite students to research a real process, learn with those involved, and choose an improvement worth testing. The ambition is a meaningful change in what people can do, even when the tool itself is small.</p><p></p><p>Timing cue: leave this scene by 28:00.</p></aside>
+</section>
+</div>
+</div>
+<section class="reading-only resources" id="resources">
+<h2>Process examples, project demos and readings</h2>
+<p>
+          Start with an existing institution and a person’s task. These examples identify possible difficulties and prototypes; the proposed tools are
+          not claimed to be deployed by the institutions.
+        </p>
+<p>
+<a download="" href="research-guide.md">Download the research and civic-process guide (.md)</a>
+</p>
+<h3>Democracy as an open-source project: historical sources</h3>
+<details class="research-reading-stage" id="history-sources">
+<summary>Institutional borrowing and later reforms</summary>
+<div class="research-reading-body">
+<p>
+              Adapted from Joshua’s Motivation 1, slide 3 of Self-Introduction.pptx. The diagram shows selected institutional influences. “Open
+              source” is an analogy for studying and adapting rules; it does not imply equal access to political power or automatic improvement.
+            </p>
+<p>
+              The 1787 constitutional compromise combined a House apportioned by population with two senators per state.
+              <a href="https://www.senate.gov/about/origins-foundations/senate-and-constitution.htm" rel="noopener" target="_blank">US Senate</a>
+</p>
+<p>
+              The 1848 Swiss Constitution established a bicameral federal parliament, using the United States as a model.
+              <a href="https://www.parlament.ch/de/%C3%BCber-das-parlament/Seiten/Ablauf-Wahlen-1848.aspx" rel="noopener" target="_blank">Swiss Parliament: 1848</a>
+</p>
+<p>
+              Australia combines parliamentary government responsible to the elected house, drawn from Westminster, with a federal Senate inspired by
+              the United States.
+              <a href="https://peo.gov.au/understand-our-parliament/your-questions-on-notice/questions/what-is-the-washminster-system" rel="noopener" target="_blank">Australian Parliament</a>
+</p>
+<p>
+              The Australian Constitution took effect with federation on 1 January 1901.
+              <a href="https://peo.gov.au/understand-our-parliament/how-parliament-works/the-australian-constitution/the-australian-constitution-in-focus" rel="noopener" target="_blank">Australian Constitution</a>
+</p>
+<p>
+              The Parliament Acts of 1911 and 1949 permit certain public bills to pass without Lords consent. The 1949 Act reduced the delay for
+              eligible non-money bills from two years to one. Money bills and other categories have different provisions; the Lords did not lose every
+              veto. <a href="https://commonslibrary.parliament.uk/research-briefings/sn00675/" rel="noopener" target="_blank">UK Parliament</a>
+</p>
+<p>
+              The optional federal legislative referendum dates to 1874. The mandatory constitutional referendum already existed in 1848.
+              <a href="https://www.parlament.ch/de/%C3%BCber-das-parlament/Seiten/faktenblatt-referenden.aspx" rel="noopener" target="_blank">Swiss Parliament: referendums</a>
+</p>
+<p>
+              The federal popular initiative for partial constitutional revision dates to 1891. The initiative for total revision predates this, going
+              back to 1848.
+              <a href="https://www.parlament.ch/de/%C3%BCber-das-parlament/Seiten/faktenblatt-volksinitiativen.aspx" rel="noopener" target="_blank">Swiss Parliament: initiatives</a>
+</p>
+<p>
+              Preferential voting for the House of Representatives was introduced in 1918; compulsory voting at federal elections in 1924. Senate
+              proportional representation was enacted in 1948 and first used in 1949, not at federation in 1901.
+              <a href="https://www.aec.gov.au/Elections/history-of-electoral-reform.htm" rel="noopener" target="_blank">Australian Electoral Commission</a>
+</p>
+<p>
+              Political participation was historically restricted. Swiss women gained federal voting rights in 1971.
+              <a href="https://www.bar.admin.ch/en/the-swiss-state-and-its-citizens-after-1848" rel="noopener" target="_blank">Swiss Federal Archives</a>
+</p>
+<p>
+              The US framers drew on British institutions and state constitutions. The connection represents selected institutional precedents, not a
+              literal fork of modern Westminster government.
+              <a href="https://www.senate.gov/about/origins-foundations/senate-and-constitution.htm" rel="noopener" target="_blank">US Senate: British and state precedents</a>
+</p>
+<p>
+              Proportional election of the National Council was approved in 1918 and first used in 1919.
+              <a href="https://www.parlament.ch/fr/%C3%BCber-das-parlament/Pages/Vom-Majorz-zum-Proporz.aspx" rel="noopener" target="_blank">Swiss Parliament: proportional National Council elections</a>
+</p>
+</div>
+</details>
+<h3>Existing contexts and possible contributions</h3>
+<details class="research-reading-stage" id="context-0">
+<summary>Swiss direct democracy</summary>
+<div class="research-reading-body">
+<p><b>Process.</b> A federal popular initiative proposes a constitutional change; an optional referendum challenges legislation.</p>
+<p><b>A concrete difficulty.</b> A voter or organizer needs to understand the text and the published procedural status.</p>
+<p><b>Possible prototype.</b> A comparison of the proposal with the status quo, or a tracker using official records.</p>
+<p><b>Evaluation.</b> Can a reader find the relevant passage and explain what is being proposed?</p>
+<p>
+<a href="https://www.ch.ch/en/votes-and-elections/popular-initiative/" rel="noopener" target="_blank">Popular initiatives</a>
+              ·
+              <a href="https://www.ch.ch/en/votes-and-elections/referendum/" rel="noopener" target="_blank">Referendums</a>
+</p>
+</div>
+</details>
+<details class="research-reading-stage" id="context-1">
+<summary>ETH student representation</summary>
+<div class="research-reading-body">
+<p>
+<b>Process.</b> Fachvereine and VSETH represent students in departmental and ETH-wide bodies; VSETH’s members’ council governs its own
+              budget, elections and statutes.
+            </p>
+<p><b>A concrete difficulty.</b> A student needs to identify who can act and what has already been discussed.</p>
+<p><b>Possible prototype.</b> An agenda brief or issue record connecting a concern, evidence, the responsible body and its response.</p>
+<p><b>Evaluation.</b> Can another student identify the responsible body and the present status?</p>
+<p>
+<a href="https://vseth.ethz.ch/politik/" rel="noopener" target="_blank">VSETH politics</a>
+              ·
+              <a href="https://vseth.ethz.ch/struktur/" rel="noopener" target="_blank">VSETH structure</a>
+</p>
+</div>
+</details>
+<details class="research-reading-stage" id="context-2">
+<summary>Citizens’ assemblies and consultations</summary>
+<div class="research-reading-body">
+<p><b>Process.</b> Participants examine evidence, discuss alternatives and produce recommendations or consultation outputs.</p>
+<p><b>A concrete difficulty.</b> An important concern can disappear when discussions are summarized.</p>
+<p><b>Possible prototype.</b> A source-linked correction or unresolved-question record.</p>
+<p><b>Evaluation.</b> Compare the account with original contributions; count unsupported claims and missing requirements.</p>
+<p>
+<a href="https://citizensassembly.ie/about/faq/" rel="noopener" target="_blank">Irish citizens’ assemblies</a>
+              ·
+              <a href="https://info.vtaiwan.tw/" rel="noopener" target="_blank">vTaiwan</a>
+              ·
+              <a href="https://joshuacyang.com/projects/murmi/" rel="noopener" target="_blank">Murmi project</a>
+</p>
+</div>
+</details>
+<details class="research-reading-stage" id="context-3">
+<summary>Participatory budgeting</summary>
+<div class="research-reading-body">
+<p><b>Process.</b> Develop proposals, assess feasibility and allocate a limited budget using a defined procedure.</p>
+<p>
+<b>A concrete difficulty.</b> A proposer needs to meet requirements; a participant needs to understand how the allocation was produced.
+            </p>
+<p><b>Possible prototype.</b> A feasibility checklist, comparison of rules, or readable allocation receipt.</p>
+<p><b>Evaluation.</b> Hold ballots and costs fixed for a rule comparison; ask a participant to explain an allocation.</p>
+<p>
+<a href="https://decide.madrid.es/mas-informacion/dm/presupuestos" rel="noopener" target="_blank">Decide Madrid process</a>
+              ·
+              <a href="https://joshuacyang.com/pubs/komitee-equal-shares/" rel="noopener" target="_blank">Komitee Equal Shares</a>
+              ·
+              <a href="https://equalshares.kulturkomitee.win/" rel="noopener" target="_blank">Public KK26 receipts</a>
+</p>
+</div>
+</details>
+<details class="research-reading-stage" id="aggregation-source">
+<summary>Komitee handout: points, budgets and funding</summary>
+<div class="research-reading-body">
+<p>
+              The supplied Method of Equal Shares handout is a simplified example with invented data: three people each have seven points and CHF
+              1,000. The walkthrough follows the printed order and contributions. It illustrates budget exhaustion, not the full Komitee procedure or
+              real allocation data.
+            </p>
+<p>
+              Creative Club receives CHF 1,000, Experimental Event CHF 800, Dance Disco CHF 600 and Bilder Buch CHF 600. Auto Ausstellung and Folklore
+              Fest are skipped. Each person spends CHF 1,000.
+            </p>
+<p>
+<a href="assets/data/komitee-aggregation-handout.pdf" rel="noopener" target="_blank">Open the original one-page handout (PDF)</a> ·
+              <a download="" href="assets/data/aggregation.json">Download the transcribed example (JSON)</a>
+</p>
+</div>
+</details>
+<details class="research-reading-stage" id="context-4">
+<summary>Accountability after a decision</summary>
+<div class="research-reading-body">
+<p><b>Process.</b> Connect an adopted proposal to responsibility, implementation and public reporting.</p>
+<p><b>A concrete difficulty.</b> A resident can see that a proposal was approved but cannot tell what happened next.</p>
+<p><b>Possible prototype.</b> A proposal-to-implementation record using existing milestones and evidence.</p>
+<p><b>Evaluation.</b> Can a reader identify the current status, responsible body and supporting record?</p>
+<p>
+<a href="https://docs.decidim.org/en/develop/admin/components/accountability.html" rel="noopener" target="_blank">Decidim accountability component</a>
+</p>
+</div>
+</details>
+<h3>Research directions and selected papers</h3>
+<p>
+          These fields overlap. The selection is a reading guide, not a chronology or an exhaustive map. Recent topics include AI-mediated
+          deliberation, allocation with feasibility constraints and agents grounded in human self-reports.
+        </p>
+<p>
+<a href="https://doi.org/10.23943/princeton/9780691155654.003.0004" rel="noopener" target="_blank">Hélène Landemore: inclusive deliberation and cognitive diversity</a>
+          provides a political-theory starting point.
+        </p>
+<details class="research-reading-stage" id="field-0">
+<summary>Computational social choice</summary>
+<div class="research-reading-body">
+<p>Voting rules, proportional allocation and fair selection of representatives.</p>
+<div class="paper-reading">
+<h4>
+<a href="https://proceedings.neurips.cc/paper_files/paper/2021/hash/69f8ea31de0c00502b2ae571fbab1f95-Abstract.html" rel="noopener" target="_blank">Proportional Participatory Budgeting with Additive Utilities</a>
+</h4>
+<p class="paper-meta">Peters, Pierczyński &amp; Skowron · 2021 · NeurIPS<br/>Peer-reviewed mathematical paper</p>
+<p>
+                Develops proportionality axioms and allocation rules for projects with different costs and additive utilities; a foundation for the
+                Method of Equal Shares.
+              </p>
+<p>
+<b>Limit.</b> A guarantee depends on its preference model and precise axiom. It does not make every outcome fair under every
+                definition.
+              </p>
+</div>
+<div class="paper-reading">
+<h4>
+<a href="https://www.nature.com/articles/s41586-021-03788-6" rel="noopener" target="_blank">Fair algorithms for selecting citizens’ assemblies</a>
+</h4>
+<p class="paper-meta">
+                Flanigan, Gölz, Gupta, Hennig &amp; Procaccia · 2021 · Nature<br/>Peer-reviewed algorithms and deployment study
+              </p>
+<p>
+                Optimizes selection probabilities among volunteers while meeting demographic quotas; evaluates fairness on data from ten assemblies.
+              </p>
+<p><b>Limit.</b> Fairness within the volunteer pool does not solve unequal willingness or ability to volunteer.</p>
+</div>
+<div class="paper-reading">
+<h4>
+<a href="https://arxiv.org/abs/2602.08504v1" rel="noopener" target="_blank">A General Theory of Proportionality with Additive Utilities</a>
+</h4>
+<p class="paper-meta">Skowron · 2026 · arXiv:2602.08504<br/>Preprint · February 2026</p>
+<p>Proposes proportional rules for scored preferences under general feasibility constraints, and proportional rankings.</p>
+<p>
+<b>Limit.</b> A theoretical proposal, not a deployment evaluation. Constraints and the definition of proportionality must be
+                specified.
+              </p>
+</div>
+<div class="paper-reading"><h4><a href="https://proceedings.mlr.press/v267/boehmer25a.html" rel="noopener" target="_blank">Generative Social Choice: The Next Generation</a></h4><p class="paper-meta">Boehmer, Fish &amp; Procaccia · 2025 · ICML</p><p>Selects statements representing different groups under a text-length budget. Guarantees depend on formal preferences and query assumptions; a fluent summary alone does not establish fair representation.</p></div></div>
+</details>
+<details class="research-reading-stage" id="field-1">
+<summary>Deliberative democracy</summary>
+<div class="research-reading-body">
+<p>Inclusion, reason-giving, public judgment and legitimate authority.</p>
+<div class="paper-reading">
+<h4>
+<a href="https://doi.org/10.1126/science.1193147" rel="noopener" target="_blank">Evidence for a Collective Intelligence Factor in the Performance of Human Groups</a>
+</h4>
+<p class="paper-meta">Woolley et al. · 2010 · Science<br/>Peer-reviewed empirical study</p>
+<p>
+                Two studies with 699 people found a shared factor in small groups’ performance across tasks, associated with social sensitivity and
+                conversational turn-taking.
+              </p>
+<p><b>Limit.</b> These associations do not show that equal speaking time causes better decisions, or measure democratic legitimacy.</p>
+</div>
+<div class="paper-reading">
+<h4>
+<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3107299/" rel="noopener" target="_blank">How social influence can undermine the wisdom of crowd effect</a>
+</h4>
+<p class="paper-meta">Lorenz, Rauhut, Schweitzer &amp; Helbing · 2011 · PNAS<br/>Peer-reviewed laboratory experiment</p>
+<p>
+                In numerical estimation tasks with 144 participants, seeing others’ estimates reduced diversity and increased confidence without a
+                corresponding improvement in collective accuracy.
+              </p>
+<p><b>Limit.</b> An estimation experiment is not a general verdict against discussion; task and interaction structure matter.</p>
+</div>
+<div class="paper-reading">
+<h4>
+<a href="https://www.e-revistes.uji.es/index.php/recerca/article/view/5516" rel="noopener" target="_blank">Polis: Scaling Deliberation by Mapping High Dimensional Opinion Spaces</a>
+</h4>
+<p class="paper-meta">Small, Bjorkegren, Erkkilä, Shaw &amp; Megill · 2021 · Recerca<br/>Peer-reviewed system and case study</p>
+<p>
+                Describes a system that maps agreement patterns and surfaces statements supported across opinion groups, with real consultation cases.
+              </p>
+<p>
+<b>Limit.</b> A useful map of participants is not a representative estimate of an entire population or evidence that consensus is
+                always desirable.
+              </p>
+</div>
+<div class="paper-reading">
+<h4>
+<a href="https://doi.org/10.1145/3772363.3798958" rel="noopener" target="_blank">Komitee Equal Shares: A Hybrid Algorithm for Priceable Participatory Funding</a>
+</h4>
+<p class="paper-meta">
+                Yang, Scheurer &amp; Helbing · 2026 · CHI Extended Abstracts<br/>Published conference extended abstract · field deployment
+              </p>
+<p>
+                Combines personal preferences with group evaluations and allocation receipts. In Winterthur in 2025, 38 citizens allocated CHF 380,000
+                to 43 projects.
+              </p>
+<p>
+<b>Limit.</b> One deployment, with 32 survey respondents. Simulated comparisons do not isolate every component’s causal contribution.
+              </p>
+</div>
+</div>
+</details>
+<details class="research-reading-stage" id="field-2">
+<summary>Human–AI interaction</summary>
+<div class="research-reading-body">
+<p>How people use, question and correct AI assistance during participation.</p>
+<div class="paper-reading">
+<h4>
+<a href="https://doi.org/10.1126/science.adq2852" rel="noopener" target="_blank">AI can help humans find common ground in democratic deliberation</a>
+</h4>
+<p class="paper-meta">Tessler et al. · 2024 · Science<br/>Peer-reviewed experiments</p>
+<p>
+                The Habermas Machine uses opinions and critiques to revise group statements. Across experiments with 5,734 participants, AI statements
+                were preferred to those from human mediators.
+              </p>
+<p><b>Limit.</b> Preference for a statement is not proof of factual accuracy, legitimate authority, or lasting political agreement.</p>
+</div>
+<div class="paper-reading">
+<h4>
+<a href="https://doi.org/10.1145/3665332" rel="noopener" target="_blank">Designing Digital Voting Systems for Citizens: Achieving Fairness and Legitimacy in Participatory Budgeting</a>
+</h4>
+<p class="paper-meta">
+                Yang, Hausladen, Peters, Pournaras, Hänggli Fricker &amp; Helbing · 2024 · Digital Government: Research and Practice<br/>Peer-reviewed
+                empirical article
+              </p>
+<p>Studies how voting-system design shapes citizens’ perceptions of fairness and legitimacy in participatory budgeting.</p>
+<p><b>Limit.</b> Perceived fairness and actual understanding are different outcomes; evaluate them separately.</p>
+</div>
+<div class="paper-reading">
+<h4>
+<a href="https://doi.org/10.1145/3287560.3287598" rel="noopener" target="_blank">Fairness and Abstraction in Sociotechnical Systems</a>
+</h4>
+<p class="paper-meta">Selbst, boyd, Friedler, Venkatasubramanian &amp; Vertesi · 2019 · FAT*<br/>Peer-reviewed conceptual paper</p>
+<p>Explains how isolating a technical model from its social setting can undermine fairness goals.</p>
+<p><b>Limit.</b> A conceptual analysis of system design, not an empirical guarantee that a particular civic tool is fair.</p>
+</div>
+<div class="paper-reading">
+<h4>
+<a href="https://doi.org/10.1017/pan.2024.5" rel="noopener" target="_blank">Synthetic Replacements for Human Survey Data? The Perils of Large Language Models</a>
+</h4>
+<p class="paper-meta">Bisbee, Clinton, Dorff, Kenkel &amp; Larson · 2024 · Political Analysis<br/>Peer-reviewed empirical audit</p>
+<p>
+                Synthetic responses could match survey averages while understating variation and changing statistical relationships. Results were
+                sensitive to prompts and collection dates.
+              </p>
+<p>
+<b>Limit.</b> The study tests particular models and tasks; use its evaluation questions rather than assuming identical failures for
+                every later model.
+              </p>
+</div>
+</div>
+</details>
+<details class="research-reading-stage" id="field-5">
+<summary>Complexity science &amp; collective intelligence</summary>
+<div class="research-reading-body">
+<p>
+              How group learning, coordination and judgment emerge from interactions, networks and feedback. Experiments on collective intelligence
+              and social influence sit alongside models of interacting agents.
+            </p>
+<div class="paper-reading">
+<h4>
+<a href="https://doi.org/10.1126/science.1193147" rel="noopener" target="_blank">Evidence for a Collective Intelligence Factor in the Performance of Human Groups</a>
+</h4>
+<p class="paper-meta">Woolley et al. · 2010 · Science<br/>Peer-reviewed empirical study</p>
+<p>
+                Two studies with 699 people found a shared factor in small groups’ performance across tasks, associated with social sensitivity and
+                conversational turn-taking.
+              </p>
+<p><b>Limit.</b> These associations do not show that equal speaking time causes better decisions, or measure democratic legitimacy.</p>
+</div>
+<div class="paper-reading">
+<h4>
+<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3107299/" rel="noopener" target="_blank">How social influence can undermine the wisdom of crowd effect</a>
+</h4>
+<p class="paper-meta">Lorenz, Rauhut, Schweitzer &amp; Helbing · 2011 · PNAS<br/>Peer-reviewed laboratory experiment</p>
+<p>
+                In numerical estimation tasks with 144 participants, seeing others’ estimates reduced diversity and increased confidence without a
+                corresponding improvement in collective accuracy.
+              </p>
+<p><b>Limit.</b> An estimation experiment is not a general verdict against discussion; task and interaction structure matter.</p>
+</div>
+<div class="paper-reading">
+<h4>
+<a href="https://arxiv.org/abs/2411.10109v3" rel="noopener" target="_blank">LLM Agents Grounded in Self-Reports Enable General-Purpose Simulation of Individuals</a>
+</h4>
+<p class="paper-meta">Park et al. · 2026 revision · arXiv:2411.10109v3<br/>Preprint · June 2026 revision of a 2024 paper</p>
+<p>
+                Builds agents from interviews and/or surveys of 1,052 Americans and evaluates predictions on held-out responses against people’s own
+                test–retest consistency.
+              </p>
+<p>
+<b>Limit.</b> Predictive fidelity on studied tasks does not confer consent or political authority. The earlier title was Generative
+                Agent Simulations of 1,000 People.
+              </p>
+</div>
+<div class="paper-reading">
+<h4>
+<a href="https://arxiv.org/abs/2605.15343" rel="noopener" target="_blank">Belief Engine: Configurable and Inspectable Stance Dynamics in Multi-Agent LLM Deliberation</a>
+</h4>
+<p class="paper-meta">Yang, Flechtner, Dailisan &amp; Bakker · 2026 · arXiv:2605.15343<br/>Preprint · May 2026</p>
+<p>
+                Maintains explicit proposition-level stances with configurable evidence uptake and prior anchoring, recording the evidence associated
+                with updates.
+              </p>
+<p>
+<b>Limit.</b> Evidence scoring and update rules are modeling choices. An inspectable trace is not by itself a faithful simulation of a
+                citizen.
+              </p>
+</div>
+</div>
+</details>
+<h3>Project demos</h3>
+<ul>
+<li>
+<a href="https://www.murmi.org/" rel="noopener" target="_blank">Murmi</a>
+</li>
+<li>
+<a href="https://equalshares.kulturkomitee.win/" rel="noopener" target="_blank">KK26 voting receipts</a>
+</li>
+<li>
+<a href="https://equalshares.kulturkomitee.win/outcomes.html" rel="noopener" target="_blank">KK26 funding outcomes</a>
+</li>
+<li>
+<a href="https://joshuacyang.com/pubs/belief-engine/" rel="noopener" target="_blank">Belief Engine</a>
+</li>
+<li>
+<a href="https://joshuacyang.com/projects/" rel="noopener" target="_blank">Joshua’s projects</a>
+</li>
+</ul>
+<p>
+          Murmi and voting receipts open as embedded public pages. Offline view keeps local explanations and photos. The voting, opinion-group and
+          summary exercises are labeled illustrations. Sources and further reading below support the four research directions.
+        </p>
+<p><a href="?view=present#together">Return to presentation</a></p>
+</section>
+</main>
+<nav aria-label="Presentation controls" class="deck-controls">
+<div class="page-controls">
+<button aria-label="Previous scene" data-action="previous" type="button">←</button><span aria-live="polite" id="position">01 / 27</span><button aria-label="Next scene" data-action="next" type="button">→</button>
+</div>
+<span id="scene-name">Digital democracy and civic technology</span>
+<div class="view-controls">
+<button data-action="overview" type="button">Scenes</button><button aria-label="Toggle full screen" data-action="fullscreen" type="button">Full screen</button>
+</div>
+</nav>
+<dialog id="overview">
+<h2>Choose a scene</h2>
+<div class="scene-list"></div>
+<button data-action="close-overview" type="button">Back to the talk</button>
+</dialog>
+<div aria-live="polite" class="sr-only" id="announcer"></div>
+</body>
+</html>
