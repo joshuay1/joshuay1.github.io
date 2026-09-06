@@ -69,7 +69,7 @@
         setView(entry);
         load(entry);
         anchor(entry);
-      }),
+      })
     );
     entry.frame.addEventListener("load", () => {
       if (!entry.started) return;
@@ -94,7 +94,7 @@
       });
       if (isReading()) sync();
     },
-    { rootMargin: "800px 0px" },
+    { rootMargin: "800px 0px" }
   );
   entries.forEach((entry) => nearby.observe(entry.slide));
   window.addEventListener("offline", () => {

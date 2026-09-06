@@ -14,31 +14,28 @@ The bio follows https://joshuacyang.com/ as checked on 6 September 2026: incomin
 
 Original fieldwork, conceptual illustrations, voting data and research sources remain bundled. The new portrait is copied unchanged from the website repository’s assets/img/pic_josh.jpg. A spoken rehearsal is still needed to calibrate delivery.
 
-
 ## September 6 revision: stages and AI research
+
 28 scenes / 28 minutes plus 2 minutes buffer. ETH introduction follows Josh’s supplied biography. Each stage offers two possible use cases. The projected Polis example is removed. Fair summaries introduce [generative social choice](https://proceedings.mlr.press/v267/boehmer25a.html). A separate +1 section covers AI agents, personas, digital twins and [Belief Engine](https://arxiv.org/abs/2605.15343); simulations inform research while people retain decision authority.
 
-
 ## Emerging projects and illustration update
+
 29 scenes, 28 minutes plus buffer. The penultimate scene pairs Talk to the City, Habermas Machine and Alignment Assemblies with their public-input, group-statement and AI-governance problems. Project links and limitations are in slide notes. Five supplied illustrations now appear in the introduction, deliberation, voting, agent simulation and Belief Engine sections. Transparent paper-set assets are copied without modification; provenance is recorded.
 
-
 ## Current showcase: civic tech in use
+
 The penultimate slide now covers OmaStadi, Rahvaalgatus and FixMyStreet, replacing the earlier three AI projects. See [evidence and limitations](civic-tech-in-use.md). Current adoption is the selection criterion; these are established tools, not newly launched products.
 
-
 ## Latest slide revision
-28 scenes, 28 minutes plus buffer. The dedicated Belief Engine slide is removed; the paper remains optional reading. The civic-tech slide uses three conceptual illustrations with brief captions and dated adoption figures.
 
+28 scenes, 28 minutes plus buffer. The dedicated Belief Engine slide is removed; the paper remains optional reading. The civic-tech slide uses three conceptual illustrations with brief captions and dated adoption figures.
 
 The five-step overview now uses the supplied transparent process illustrations in an open sequence, with matching art on each chapter opening. Step links and descriptions remain accessible.
 
-
 ## Core principles
+
 30 scenes / 28 minutes plus buffer. Three illustrated pauses connect the examples to meaningful influence, useful disagreement, and decisions people can question. The closing invites improving one real process with the people involved.
 
-
 Latest visual refinement: dinner, Eurovision and Swiss public-decision illustrations open the discussion with an audience question. Three takeaway headlines and the closing use selective exclamation marks. Brief entrance effects respect reduced-motion settings and are excluded from print.
-
 
 Latest: 31 slides, 28 minutes plus buffer. OmaStadi remains; VelObserver, Carbon Copy’s @gora and ZüriCityGPT replace the previous non-Swiss examples across two illustrated slides. Adoption and institutional status are distinguished in the notes.

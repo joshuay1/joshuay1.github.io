@@ -5,10 +5,7 @@
       "id": "swiss-workshop-3",
       "source_page": "https://www.linkedin.com/posts/joshuacyyang_swissaifutures-swissaifuture-taswiss-activity-7493675552155803651-0BFj",
       "source_url": "https://media.licdn.com/dms/image/v2/D4E22AQFWtqzxoiEKXQ/feedshare-shrink_800/B4EZ_7iL8xKwAc-/0/1786631472947?e=2147483647&v=beta&t=C4SnyldXUgz4B224Vv5LybSUCNNm_4waMCFeCCJD_oc",
-      "dimensions": [
-        800,
-        600
-      ],
+      "dimensions": [800, 600],
       "meaning": "Swiss AI Futures workshop room with participants at tables and a facilitator at a projected screen",
       "caveats": "Recommended workshop photo. Post identifies the series as Zurich and Lausanne workshops; individual city not verified.",
       "type": "authentic public event photograph",
@@ -20,10 +17,7 @@
       "id": "swiss-workshop-5",
       "source_page": "https://www.linkedin.com/posts/joshuacyyang_swissaifutures-swissaifuture-taswiss-activity-7493675552155803651-0BFj",
       "source_url": "https://media.licdn.com/dms/image/v2/D4E22AQHIKMPCC3HH8g/feedshare-image-high-res/B4EZ_7iLe5IkAU-/0/1786631469342?e=2147483647&v=beta&t=c7DkNVgzoY2BLaTllN2A4fkXu29kmSpDyWVhekuX4s4",
-      "dimensions": [
-        826,
-        1239
-      ],
+      "dimensions": [826, 1239],
       "meaning": "Murmi running on a participant phone during Swiss AI Futures, showing an AI at Work statement and voting controls",
       "caveats": "Recommended authentic product-in-use photo. Published image contains a participant first name and session code; do not use the code to inspect or join the session. No claim that the photographed UI is the current version.",
       "type": "authentic public event photograph",
@@ -35,10 +29,7 @@
       "id": "murmi-public-host-form",
       "source_page": "https://www.murmi.org/",
       "source_url": "https://www.murmi.org/",
-      "dimensions": [
-        1280,
-        720
-      ],
+      "dimensions": [1280, 720],
       "meaning": "Genuine browser capture of the empty public Host a session form",
       "caveats": "Captured 2026-09-06 at 1280\u00d7720. Host form opened; no name/topic entered, no form submission, no remote session created. This shows setup, not a live deliberation.",
       "sha256": "ea0810a1eea5caa27c95776e16103ce8089ef949439b3cb42f2e0b6bfc644f5c",
@@ -48,10 +39,7 @@
       "id": "kk-remit",
       "file": "kk-room.webp",
       "source_file": "images/P3011669.jpg",
-      "dimensions": [
-        2000,
-        1500
-      ],
+      "dimensions": [2000, 1500],
       "meaning": "Kultur Komitee, Winterthur \u00b7 participants gathered for a plenary session",
       "type": "user-provided fieldwork photograph",
       "credit": "Kultur Komitee fieldwork photographs supplied by Joshua C. Yang; photographer not specified",
@@ -63,10 +51,7 @@
       "id": "kk-proposals",
       "file": "kk-proposals.webp",
       "source_file": "images/P3011662.jpg",
-      "dimensions": [
-        2000,
-        1500
-      ],
+      "dimensions": [2000, 1500],
       "meaning": "Project briefs, assessment sheets and annotations on a working table",
       "type": "user-provided fieldwork photograph",
       "credit": "Kultur Komitee fieldwork photographs supplied by Joshua C. Yang; photographer not specified",
@@ -78,10 +63,7 @@
       "id": "kk-deliberation",
       "file": "kk-discussion.webp",
       "source_file": "images/P3011630.jpg",
-      "dimensions": [
-        2000,
-        1500
-      ],
+      "dimensions": [2000, 1500],
       "meaning": "Residents discussing project material around a table",
       "type": "user-provided fieldwork photograph",
       "credit": "Kultur Komitee fieldwork photographs supplied by Joshua C. Yang; photographer not specified",
@@ -93,10 +75,7 @@
       "id": "kk-allocation",
       "file": "kk-assessment.webp",
       "source_file": "images/P3011696.jpg",
-      "dimensions": [
-        2000,
-        1500
-      ],
+      "dimensions": [2000, 1500],
       "meaning": "Participants individually examining displayed project briefs",
       "type": "user-provided fieldwork photograph",
       "credit": "Kultur Komitee fieldwork photographs supplied by Joshua C. Yang; photographer not specified",
@@ -108,10 +87,7 @@
       "id": "kk-accountability",
       "file": "kk-results.webp",
       "source_file": "images/P3011708.jpg",
-      "dimensions": [
-        2000,
-        1500
-      ],
+      "dimensions": [2000, 1500],
       "meaning": "The allocation table presented back to the room",
       "type": "user-provided fieldwork photograph",
       "credit": "Kultur Komitee fieldwork photographs supplied by Joshua C. Yang; photographer not specified",
@@ -124,10 +100,7 @@
       "file": "komitee-aggregation-handout.webp",
       "source_file": "images/KKW_Infokarten_Grafiken_platziert_MES.pdf",
       "source_page": 1,
-      "dimensions": [
-        1524,
-        2178
-      ],
+      "dimensions": [1524, 2178],
       "source_sha256": "76daa803214ba38e62eb7ce7b751049032eb83e29ea47a5e1583b177ff7ecfdb",
       "sha256": "ffcec39b07833e4c375192ebc636d5c207c57f49159cefacccf8811a36080d6e",
       "type": "Full-page rendering of a user-provided explanatory handout",
@@ -139,10 +112,7 @@
       "id": "civic-discussion-style-reference",
       "file": "civic-discussion-style-reference.png",
       "source_file": "images/civic-discussion-style-reference.png",
-      "dimensions": [
-        1536,
-        1024
-      ],
+      "dimensions": [1536, 1024],
       "source_sha256": "dcd28d454ea091e9bc18491792d4743e17ba8c95dc628c7c66aaa24ed42ffb06",
       "sha256": "dcd28d454ea091e9bc18491792d4743e17ba8c95dc628c7c66aaa24ed42ffb06",
       "type": "User-provided conceptual illustration",
@@ -154,10 +124,7 @@
       "id": "civic-reading-proposals",
       "file": "civic-reading-proposals.png",
       "source_file": "images/civic-reading-proposals.png",
-      "dimensions": [
-        1024,
-        1536
-      ],
+      "dimensions": [1024, 1536],
       "source_sha256": "6a54a6745dbdc8d355a43c363a42dbe3514c8da4c250bd5a81b2eb72ff9afd23",
       "sha256": "6a54a6745dbdc8d355a43c363a42dbe3514c8da4c250bd5a81b2eb72ff9afd23",
       "type": "User-provided conceptual illustration",
@@ -169,10 +136,7 @@
       "id": "civic-discussion",
       "file": "civic-discussion.png",
       "source_file": "images/civic-discussion.png",
-      "dimensions": [
-        1536,
-        1024
-      ],
+      "dimensions": [1536, 1024],
       "source_sha256": "cce74c626e1b9b6712858605c4ca556d15b179f2566bcfd61f522adc8d9e549f",
       "sha256": "cce74c626e1b9b6712858605c4ca556d15b179f2566bcfd61f522adc8d9e549f",
       "type": "User-provided conceptual illustration",
@@ -184,10 +148,7 @@
       "id": "civic-casting-a-ballot",
       "file": "civic-casting-a-ballot.png",
       "source_file": "images/civic-casting-a-ballot.png",
-      "dimensions": [
-        1024,
-        1536
-      ],
+      "dimensions": [1024, 1536],
       "source_sha256": "801aa269ed0b28f810f0d2a0a542b794c3d31779bdc6ed1f93693a104ccb33a2",
       "sha256": "801aa269ed0b28f810f0d2a0a542b794c3d31779bdc6ed1f93693a104ccb33a2",
       "type": "User-provided conceptual illustration",
@@ -199,10 +160,7 @@
       "id": "civic-inspecting-a-receipt",
       "file": "civic-inspecting-a-receipt.png",
       "source_file": "images/civic-inspecting-a-receipt.png",
-      "dimensions": [
-        1254,
-        1254
-      ],
+      "dimensions": [1254, 1254],
       "source_sha256": "af2dc401e45b458f07077e316476c070b0d6f0516b9d6765e088a7d0b847eb21",
       "sha256": "af2dc401e45b458f07077e316476c070b0d6f0516b9d6765e088a7d0b847eb21",
       "type": "User-provided conceptual illustration",
@@ -214,10 +172,7 @@
       "id": "civic-building-a-prototype",
       "file": "civic-building-a-prototype.png",
       "source_file": "images/civic-building-a-prototype.png",
-      "dimensions": [
-        1536,
-        1024
-      ],
+      "dimensions": [1536, 1024],
       "source_sha256": "5d80dfb25757f41e407d0c5bd1edb2ef52748a384531abe1821cacfb5e2e0e1b",
       "sha256": "5d80dfb25757f41e407d0c5bd1edb2ef52748a384531abe1821cacfb5e2e0e1b",
       "type": "User-provided conceptual illustration",
@@ -229,10 +184,7 @@
       "id": "kultur-komitee-introduction",
       "file": "kk-introduction.jpg",
       "source_file": "images/IMG_2826.JPG",
-      "dimensions": [
-        4032,
-        3024
-      ],
+      "dimensions": [4032, 3024],
       "sha256": "59cebd6448a2e9be32d4458a617d71dc6de0f84236ac34f3ba5822c7ba8b7d0d",
       "source_sha256": "59cebd6448a2e9be32d4458a617d71dc6de0f84236ac34f3ba5822c7ba8b7d0d",
       "type": "User-provided fieldwork photograph",
@@ -245,10 +197,7 @@
       "file": "josh-portrait.jpg",
       "source_file": "/Users/joyang/Projects/josh-page/assets/img/pic_josh.jpg",
       "source_page": "https://joshuacyang.com/",
-      "dimensions": [
-        3110,
-        3100
-      ],
+      "dimensions": [3110, 3100],
       "type": "Public author portrait",
       "credit": "Joshua C. Yang website; photographer not specified",
       "processing": "Copied byte for byte; displayed with object-fit: cover.",

@@ -166,8 +166,6 @@ How people use, question and correct AI assistance during participation.
 
 - [Yang, Hausladen, Peters, Pournaras, Hänggli Fricker & Helbing (2024). Designing Digital Voting Systems for Citizens: Achieving Fairness and Legitimacy in Participatory Budgeting](https://doi.org/10.1145/3665332). _Digital Government: Research and Practice_. **Peer-reviewed empirical article.** Studies how voting-system design shapes citizens’ perceptions of fairness and legitimacy in participatory budgeting. **Limit:** Perceived fairness and actual understanding are different outcomes; evaluate them separately.
 
-
-
 ### Complexity science & collective intelligence
 
 - [Woolley et al. (2010). Evidence for a Collective Intelligence Factor in the Performance of Human Groups](https://doi.org/10.1126/science.1193147). _Science_. **Peer-reviewed empirical study.** Two studies with 699 people found a shared factor in small groups’ performance across tasks, associated with social sensitivity and conversational turn-taking. **Limit:** These associations do not show that equal speaking time causes better decisions, or measure democratic legitimacy.
@@ -226,18 +224,18 @@ How digital tools fit institutions, workflows and public accountability.
 
 A short introduction to Joshua follows the title. Everyday decisions lead to collective intelligence and four research fields. The historical lineage and five-part framework follow. Kultur Komitee is introduced on slide 8. The framework is Framing, Ideas, Deliberation, Voting and Accountability. Swiss AI Futures and the initiative/referendum comparison are not projected. The aggregation example uses the supplied handout; the live dashboard is not embedded. Murmi and voting receipts remain embedded.
 
-
 ## September 6 revision: stages and AI research
+
 28 scenes / 28 minutes plus 2 minutes buffer. ETH introduction follows Josh’s supplied biography. Each stage offers two possible use cases. The projected Polis example is removed. Fair summaries introduce [generative social choice](https://proceedings.mlr.press/v267/boehmer25a.html). A separate +1 section covers AI agents, personas, digital twins and [Belief Engine](https://arxiv.org/abs/2605.15343); simulations inform research while people retain decision authority.
 
-
 ## Emerging projects and illustration update
+
 29 scenes, 28 minutes plus buffer. The penultimate scene pairs Talk to the City, Habermas Machine and Alignment Assemblies with their public-input, group-statement and AI-governance problems. Project links and limitations are in slide notes. Five supplied illustrations now appear in the introduction, deliberation, voting, agent simulation and Belief Engine sections. Transparent paper-set assets are copied without modification; provenance is recorded.
 
-
 ## Current showcase: civic tech in use
+
 The penultimate slide now covers OmaStadi, Rahvaalgatus and FixMyStreet, replacing the earlier three AI projects. See [evidence and limitations](civic-tech-in-use.md). Current adoption is the selection criterion; these are established tools, not newly launched products.
 
-
 ## Latest slide revision
+
 28 scenes, 28 minutes plus buffer. The dedicated Belief Engine slide is removed; the paper remains optional reading. The civic-tech slide uses three conceptual illustrations with brief captions and dated adoption figures.

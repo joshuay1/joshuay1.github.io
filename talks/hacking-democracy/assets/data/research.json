@@ -160,41 +160,22 @@
     {
       "name": "Computational social choice",
       "description": "How should we count votes, share a budget or select representatives?",
-      "papers": [
-        "peters",
-        "flanigan",
-        "skowron"
-      ]
+      "papers": ["peters", "flanigan", "skowron"]
     },
     {
       "name": "Deliberative democracy",
       "description": "How can discussion include different views and inform public decisions?",
-      "papers": [
-        "woolley",
-        "lorenz",
-        "polis",
-        "komitee"
-      ]
+      "papers": ["woolley", "lorenz", "polis", "komitee"]
     },
     {
       "name": "Human\u2013AI interaction",
       "description": "How do people use, check and correct help from AI?",
-      "papers": [
-        "tessler",
-        "yang-voting",
-        "selbst",
-        "bisbee"
-      ]
+      "papers": ["tessler", "yang-voting", "selbst", "bisbee"]
     },
     {
       "name": "Complexity science & collective intelligence",
       "description": "How do interactions and networks shape what groups learn and decide?",
-      "papers": [
-        "woolley",
-        "lorenz",
-        "park",
-        "belief"
-      ]
+      "papers": ["woolley", "lorenz", "park", "belief"]
     }
   ],
   "contexts": [
@@ -362,11 +343,7 @@
     "diagram": "One schematic branching lineage combines selected influences and dated reforms. Dates are labels, not a proportional horizontal time scale."
   },
   "komitee_context": {
-    "years": [
-      2024,
-      2025,
-      2026
-    ],
+    "years": [2024, 2025, 2026],
     "role": "Voting and aggregation",
     "distributed_chf_lower_bound": 2000000,
     "total_description": "Over CHF 2 million across Joshua\u2019s three years of involvement",
