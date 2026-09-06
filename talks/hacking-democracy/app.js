@@ -2,7 +2,7 @@
   "use strict";
   const slides = [...document.querySelectorAll(".slide")];
   const params = new URLSearchParams(location.search);
-  let reading = params.get("view") === "read";
+  let reading = params.get("view") === "read" || (!params.has("view") && matchMedia("(max-width: 900px)").matches);
   const initialHash = location.hash.slice(1) === "begin" ? "your-intervention" : location.hash.slice(1);
   let index = Math.max(
     0,
@@ -44,6 +44,7 @@
   function setReading(value) {
     reading = value;
     document.body.classList.toggle("read-view", reading);
+    document.querySelector("[data-action=overview]").textContent = reading ? "Contents" : "Scenes";
     const url = new URL(location.href);
     url.searchParams.set("view", reading ? "read" : "present");
     history.replaceState(null, "", url);
