@@ -260,3 +260,35 @@ img[src$="concept-representation.png"] {
     linear-gradient(to bottom, transparent, #000 3%, #000 97%, transparent);
   mask-composite: intersect;
 }
+
+.budget-playground h2 { font-size: 66px; line-height: 1.03; }
+.funding-play-layout { display: grid; grid-template-columns: 0.9fr 1.45fr; gap: 65px; margin-top: 30px; }
+.funding-play-controls label { display: block; font-size: 25px; }
+#funding-budget-value { display: block; font: 800 62px/1.25 var(--main); }
+#funding-budget { width: 100%; accent-color: var(--red); height: 38px; cursor: ew-resize; }
+.funding-range { display: flex; justify-content: space-between; font: 18px var(--mono); }
+#funding-assumption { font-size: 23px; line-height: 1.35; margin: 24px 0; }
+.funding-people { display: flex; gap: 18px; }
+.funding-people b, .funding-people span { display: block; font-size: 22px; }
+.funding-people span { font-size: 17px; margin-top: 8px; }
+#funding-summary { font-size: 25px; font-weight: 750; line-height: 1.3; }
+#funding-reset { font: 600 19px var(--main); background: var(--gold); color: var(--ink); padding: 10px 15px; border: 0; cursor: pointer; }
+.funding-full { display: inline-block; font-size: 18px; margin-top: 12px; color: var(--red); }
+.funding-projects { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px 22px; }
+.funding-project { background: #e3d8c2; color: var(--ink); position: relative; padding: 16px 20px 16px 53px; transition: background-color 200ms, transform 200ms; }
+.funding-project[data-funded="true"] { background: var(--project-color); }
+.funding-project:nth-child(3n+1)[data-funded="true"] { transform: rotate(-1deg); }
+.funding-project:nth-child(3n+2)[data-funded="true"] { transform: rotate(1deg); }
+.funding-project h3 { font-size: 26px; margin: 0; line-height: 1.15; }
+.funding-project-order { position: absolute; left: 15px; top: 12px; font-size: 33px; font-weight: 800; }
+.funding-cost { font-size: 20px; margin: 8px 0; }
+.funding-state { font-size: 19px; }
+.funding-change { font-size: 23px; line-height: 1.3; margin: 20px 0 0; min-height: 60px; }
+@media (prefers-reduced-motion: reduce) { .funding-project { transition: none; } }
+@media (max-width: 900px) {
+  .read-view .budget-playground h2 { font-size: 34px; }
+  .read-view .funding-play-layout { grid-template-columns: 1fr; gap: 30px; }
+  .read-view #funding-budget-value { font-size: 44px; }
+  .read-view .funding-projects { grid-template-columns: 1fr; }
+  .read-view .funding-people { flex-wrap: wrap; }
+}

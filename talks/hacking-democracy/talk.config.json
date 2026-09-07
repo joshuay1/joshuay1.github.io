@@ -1,8 +1,30 @@
 {
-  "expectedSlides": 35,
+  "expectedSlides": 36,
   "publicUrl": "https://joshuacyang.com/talks/hacking-democracy/",
   "interactions": [
-    { "slide": "voting-rules", "click": "[data-rule=\"borda\"]", "expect": { "selector": ".winner", "includes": "Music" } },
-    { "slide": "receipt", "click": "[data-receipt-choice=\"3\"]", "expect": { "selector": "#receipt-explanation", "includes": "4,723.19" } }
+    {
+      "slide": "voting-rules",
+      "click": "[data-rule=\"borda\"]",
+      "expect": {
+        "selector": ".winner",
+        "includes": "Music"
+      }
+    },
+    {
+      "slide": "receipt",
+      "click": "[data-receipt-choice=\"3\"]",
+      "expect": {
+        "selector": "#receipt-explanation",
+        "includes": "4,723.19"
+      }
+    },
+    {
+      "slide": "funding-playground",
+      "click": "#funding-reset",
+      "expect": {
+        "selector": "#funding-summary",
+        "includes": "4 of 6"
+      }
+    }
   ]
 }

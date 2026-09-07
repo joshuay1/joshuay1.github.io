@@ -25,6 +25,7 @@
     <link href="aggregation.css" rel="stylesheet" />
     <script defer="" src="assets/data/aggregation.js"></script>
     <script defer="" src="aggregation.js"></script>
+    <script defer="" src="budget-playground.js"></script>
     <link href="illustrations.css" rel="stylesheet" />
     <link href="opening.css" rel="stylesheet" />
     <link href="embeds.css" rel="stylesheet" />
@@ -1445,7 +1446,7 @@
           <section
             class="slide aggregation-slide"
             data-step="5"
-            data-time="21:55–22:55"
+            data-time="21:55–22:15"
             data-title="How votes become a funding result"
             hidden=""
             id="funding"
@@ -1594,6 +1595,29 @@
               <p></p>
               <p></p>
               <p></p>
+              <p>Timing cue: leave this scene by 22:15.</p>
+            </aside>
+          </section>
+          <section class="slide budget-playground interactive" data-step="5" data-time="22:15–22:55" data-title="Change the budget. Follow the consequences." hidden="" id="funding-playground">
+            <div class="slide-top"><a class="stamp step-heading red" href="#process-overview">5 / Accountability</a><span>Simplified handout example</span></div>
+            <h2>Change the budget.<br />Follow the consequences.</h2>
+            <div class="funding-play-layout">
+              <div class="funding-play-controls">
+                <label for="funding-budget">Shared budget</label>
+                <output id="funding-budget-value" for="funding-budget">CHF 3,000</output>
+                <input id="funding-budget" type="range" min="1800" max="9000" step="300" value="3000" aria-describedby="funding-assumption" />
+                <div class="funding-range"><span>CHF 1,800</span><span>CHF 9,000</span></div>
+                <p id="funding-assumption">Same votes. Equal starting budgets.<br />Projects considered in the handout’s order.</p>
+                <div id="funding-people" class="funding-people"></div>
+                <p id="funding-summary" aria-live="polite" aria-atomic="true"></p>
+                <button id="funding-reset" type="button">Reset to handout</button> <a class="funding-full" href="https://joshuacyang.com/kk25/?totalBudget=1520000" target="_blank" rel="noopener">Full KK25 explorer ↗</a>
+              </div>
+              <div><div id="funding-projects" class="funding-projects"></div><p id="funding-change" class="funding-change" aria-live="polite">Drag the slider. Which projects gain or lose funding?</p></div>
+            </div>
+            <aside class="notes">
+              <p>Invite someone to predict the outcome before moving the slider. Try CHF 3,000, then CHF 4,200: a larger budget can change which projects are selected, not simply add one. Ask who benefits, who loses funding and how you would explain that change.</p>
+              <p>This uses the six invented projects and points printed in the Komitee handout. Split the total budget equally among three people. In printed project order, divide each project’s cost in proportion to its points; fund it only if every contributor can afford their share from their remaining balance. Skip otherwise. This is the handout’s simplified procedure, not a general MES implementation, and it omits impact-field group votes.</p>
+              <p>The purpose is to make assumptions and consequences inspectable. Changing this illustration does not change an actual funding decision. The full KK25 allocation explorer is linked beneath the slider.</p>
               <p>Timing cue: leave this scene by 22:55.</p>
             </aside>
           </section>
@@ -1928,9 +1952,10 @@
               <li><a href="#kk-allocation"><div class="agency-scene"><span aria-hidden="true" class="agency-number">4</span><img src="assets/media/process-04-voting.png" alt="People take part in a collective vote" /></div><p>I can participate in a <strong>consequential collective decision.</strong></p></a></li>
               <li><a href="#receipt"><div class="agency-scene"><span aria-hidden="true" class="agency-number">5</span><img src="assets/media/process-05-accountability.png" alt="People review what happened after a decision" /></div><p>I can <strong>trace what happened afterward.</strong></p></a></li>
             </ol>
-            <p class="bottom-line agency-explore"><strong>Adjust the rules. See what changes.</strong> <a href="https://joshuacyang.com/kk25/?totalBudget=1520000" target="_blank" rel="noopener">Try the KK25 sliders ↗</a></p>
+            <p class="bottom-line agency-explore"><strong>Adjust the rules. See what changes.</strong> <a href="#funding-playground">Play with the budget ↗</a></p>
             <aside class="notes">
               <p>Connect agency to interactive exploration: people should be able to adjust a parameter, compare the resulting allocation, and understand the trade-off before taking a position. The KK25 explorer lets them vary the budget and the balance between impact-field group votes and individual votes. Ask which projects enter or leave the funded set, and whose priorities gain influence.</p>
+              <p>Full KK25 explorer: <a href="https://joshuacyang.com/kk25/?totalBudget=1520000" target="_blank" rel="noopener">Open the original sliders</a>.</p>
               <p>This is an exploration of calculated allocations using the existing votes, not a change to the actual funding decision or a prediction of every downstream consequence. The five capabilities remain the broader design aspirations. During verification on 7 September 2026, changing the group-to-individual balance from 50:50 to 100:0 changed the selected-project count from 43 to 39. Use the values displayed in the demo; the supplied totalBudget URL parameter did not match its displayed CHF 380,000 budget on initial load.</p>
               <p>Return to the design principles from a citizen’s perspective. These are five capabilities to design for, using Josh’s wording. Ask whether a person can contribute, understand how their contribution is interpreted, revise or express conditional support, influence a consequential decision, and trace its outcome.</p>
               <p>These are aspirations for the whole process, not a claim that every project shown implements all five. Conditional support means being able to express the conditions under which a proposal becomes acceptable. Consequential means contributions have a defined connection to a real decision. Traceability continues after the vote into implementation and opportunities to question the result.</p>
