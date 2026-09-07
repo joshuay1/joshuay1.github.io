@@ -246,3 +246,10 @@ img[src$="concept-representation.png"] {
   .read-view .agency-number { font-size: 65px; top: 0; left: 0; }
   .read-view .agency-promises p { font-size: 23px; margin: 0; }
 }
+
+.agency-explore { display: flex; align-items: baseline; justify-content: space-between; gap: 25px; font-size: 29px; }
+.agency-explore a { color: var(--red); font-size: 25px; text-underline-offset: 5px; }
+@media (max-width: 900px) {
+  .read-view .agency-explore { display: block; font-size: 23px; }
+  .read-view .agency-explore a { display: block; margin-top: 15px; font-size: 20px; }
+}
