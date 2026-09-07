@@ -208,3 +208,41 @@ img[src$="concept-representation.png"] {
   .read-view .participation-examples p { font-size: 20px; }
   .read-view .participation-examples figcaption > span { font-size: 15px; }
 }
+
+/* Agency is expressed through citizens' capabilities, with figures at different heights. */
+.agency-promises {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 28px;
+  padding: 0;
+  margin: 38px 0 0;
+}
+.agency-promises li:nth-child(even) { padding-top: 55px; }
+.agency-promises a { display: block; color: var(--ink); text-decoration: none; }
+.agency-promises a:focus-visible { outline: 4px solid var(--red); outline-offset: 8px; }
+.agency-scene { height: 260px; position: relative; }
+.agency-scene img { position: relative; width: 100%; height: 100%; object-fit: contain; }
+.agency-number {
+  position: absolute;
+  left: -6px;
+  top: -25px;
+  font: 800 118px/1 var(--main);
+  color: var(--gold);
+  transform: rotate(-9deg);
+}
+.agency-promises li:nth-child(even) .agency-number { color: #bd7662; transform: rotate(9deg); }
+.agency-promises li:last-child .agency-number { color: #9b9b65; }
+.agency-promises p { font: 500 31px/1.3 var(--main); margin: 20px 0 0; }
+.agency-promises strong {
+  font-weight: 800;
+  background: linear-gradient(#e0aa52, #e0aa52) left bottom / 100% 22% no-repeat;
+}
+@media (max-width: 900px) {
+  .read-view .agency-promises { grid-template-columns: 1fr; gap: 28px; }
+  .read-view .agency-promises li:nth-child(even) { padding-top: 0; }
+  .read-view .agency-promises a { display: grid; grid-template-columns: 105px 1fr; gap: 18px; align-items: center; }
+  .read-view .agency-scene { height: 150px; }
+  .read-view .agency-number { font-size: 65px; top: 0; left: 0; }
+  .read-view .agency-promises p { font-size: 23px; margin: 0; }
+}

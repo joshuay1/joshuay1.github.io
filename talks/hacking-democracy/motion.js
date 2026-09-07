@@ -45,6 +45,12 @@
         );
       });
     }
+    if (slide.id === "citizen-agency") {
+      // Connect each capability in speaking order, while keeping all five visible.
+      slide.querySelectorAll(".agency-promises strong").forEach((promise, i) => {
+        play(promise, [{ backgroundSize: "0% 22%" }, { backgroundSize: "100% 22%" }], 500, i * 450);
+      });
+    }
     if (slide.id === "kk-remit") {
       // Emphasize the two design choices in the question, in speaking order.
       slide.querySelectorAll(".remit-fact strong").forEach((fact, i) => {
