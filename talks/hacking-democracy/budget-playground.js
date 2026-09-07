@@ -28,28 +28,22 @@
     grid.append(tile);
     return tile;
   });
-  const people = data.people.map(name => {
-    const person = document.createElement('div');
-    person.innerHTML = '<b></b><span></span>';
-    person.querySelector('b').textContent = name;
-    document.querySelector('#funding-people').append(person);
-    return person;
-  });
   let previous;
   function update() {
     const total = Number(slider.value);
     const result = calculate(total);
     document.querySelector('#funding-budget-value').textContent = money(total);
     slider.setAttribute('aria-valuetext', money(total));
+    const progress = (total - Number(slider.min)) / (Number(slider.max) - Number(slider.min));
+    slider.style.setProperty('--funding-progress', (progress * 100) + '%');
     result.projects.forEach((p, i) => {
       tiles[i].dataset.funded = String(p.funded);
       tiles[i].querySelector('.funding-state').textContent = p.funded ? '✓ Funded' : 'Not funded';
     });
-    result.balances.forEach((balance, i) => people[i].querySelector('span').textContent = money(balance) + ' left');
     document.querySelector('#funding-summary').textContent = `${result.projects.filter(p => p.funded).length} of 6 projects funded · ${money(result.spent)} spent`;
     const changed = result.projects.filter((p,i) => previous && p.funded !== previous.projects[i].funded);
     if (changed.length) document.querySelector('#funding-change').textContent = changed.map(p => `${p.name}: ${p.funded ? 'now funded' : 'loses funding'}`).join(' · ');
-    else if (previous) document.querySelector('#funding-change').textContent = 'Same funded set; remaining balances change.';
+    else if (previous) document.querySelector('#funding-change').textContent = 'Same projects funded at this budget.';
     previous = result;
   }
   slider.addEventListener('input', update);

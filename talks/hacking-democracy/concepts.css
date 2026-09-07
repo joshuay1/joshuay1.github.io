@@ -292,3 +292,36 @@ img[src$="concept-representation.png"] {
   .read-view .funding-projects { grid-template-columns: 1fr; }
   .read-view .funding-people { flex-wrap: wrap; }
 }
+
+/* A generous drag target with a solid track and clear position. */
+#funding-budget {
+  appearance: none;
+  -webkit-appearance: none;
+  display: block;
+  box-sizing: border-box;
+  height: 64px;
+  margin: 18px 0 10px;
+  padding: 0;
+  background: transparent;
+  cursor: ew-resize;
+}
+#funding-budget::-webkit-slider-runnable-track {
+  height: 22px;
+  border-radius: 11px;
+  background: linear-gradient(to right, var(--red) 0 var(--funding-progress), #d6c5a5 var(--funding-progress) 100%);
+}
+#funding-budget::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 48px;
+  height: 48px;
+  margin-top: -13px;
+  border: 5px solid var(--paper);
+  border-radius: 50%;
+  background: var(--red);
+  box-shadow: 0 0 0 3px var(--red);
+}
+#funding-budget::-moz-range-track { height: 22px; border-radius: 11px; background: #d6c5a5; }
+#funding-budget::-moz-range-progress { height: 22px; border-radius: 11px; background: var(--red); }
+#funding-budget::-moz-range-thumb { width: 38px; height: 38px; border: 5px solid var(--paper); border-radius: 50%; background: var(--red); box-shadow: 0 0 0 3px var(--red); }
+#funding-budget:focus-visible { outline: 3px solid var(--ink); outline-offset: 5px; border-radius: 12px; }
