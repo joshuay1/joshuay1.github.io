@@ -2,7 +2,7 @@
 
 Hacking Democracy / ETH Zurich, September 7, 2026 · Joshua C. Yang.
 
-The current presentation has 35 slides, planned for 30:00 in a 30-minute slot. This is the source for `https://joshuacyang.com/talks/hacking-democracy/`, featured on the homepage.
+The current presentation has 36 slides, planned for 30:00 in a 30-minute slot. This is the source for `https://joshuacyang.com/talks/hacking-democracy/`, featured on the homepage.
 
 ## Work on this talk
 
@@ -34,3 +34,5 @@ The five process steps are Framing, Ideas, Deliberation, Voting and Accountabili
 The speaker biography follows Josh’s supplied ETH affiliation. His stated total of over CHF 2 million concerns three years of involvement; dated deployment figures are separate. Keep these distinctions when editing.
 
 For the complete reusable pipeline, see [presentation-workflow.md](../../docs/presentation-workflow.md).
+
+- `budget-playground.js`: offline budget sensitivity demo using the simplified six-project handout; this is not the full KK25 allocation algorithm.
