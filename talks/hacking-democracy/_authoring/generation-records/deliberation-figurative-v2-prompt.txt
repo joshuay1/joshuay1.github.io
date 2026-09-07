@@ -1,0 +1,11 @@
+Use case: style-transfer
+Asset type: conceptual illustration for a presentation about civic deliberation.
+Input image 1: edit target and composition reference — the previously generated illustration of five adults deliberating around a shared table. It is an illustration, not an actual photograph. Preserve the essential arrangement, the five people, the central speaker's gesture, the listening postures and the shared proposal cards.
+
+Repaint this scene as a stylized mid-century figurative painting with the elegance of vintage fashion illustration and naïve modernism. Preserve the essential composition and subjects, but simplify everything radically. Use elongated bodies, extremely long necks and limbs, slightly awkward proportions, oversized clothing and hats, and sparse, partially obscured facial features. Flatten the perspective into large interlocking matte shapes with almost no modeling or realistic depth.
+
+Use a restrained palette of muted olive, tobacco brown, cream, dark bottle green, burnt orange, dusty beige, and charcoal. Define forms with thin, loose, imperfect dark contours. Keep surfaces mostly flat and matte, with subtle dry-brush variation, worn gouache texture, and occasional visible brush marks.
+
+Make the composition sparse and sophisticated, with large areas of empty space and only a few small still-life details. Reduce the proposal cards to a few simple paper shapes with nonverbal marks. Faces should feel anonymous and understated rather than expressive or realistic. The overall mood should be elegant, intimate, slightly melancholic, strange, and theatrical. Vintage editorial fashion painting, naïve figurative modernism, flattened perspective, exaggerated silhouette, restrained color, handmade surface.
+
+The elongated silhouettes and unusually long slender necks must be unmistakable; the figure proportions, muted color scheme and surface treatment should follow this new direction throughout. Maintain a landscape 3:2 canvas. No text, letters, numbers, logos or watermarks. No photorealism, no detailed faces, no smooth gradients, no glossy digital finish, no decorative clutter.

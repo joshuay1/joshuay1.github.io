@@ -1,0 +1,10 @@
+Use case: illustration-story
+Asset type: standalone conceptual illustration for a university presentation about digital democracy and civic technology; first sample establishing a consistent illustration family.
+Primary request: A small group of citizens deliberating together around a shared table, examining proposal cards and exchanging ideas. An evocative editorial illustration about collective intelligence and public deliberation. Show five distinct simplified adult figures with natural varied postures; some listening, one gesturing toward the proposal cards. Their interaction and the shared materials are the focus. This is a conceptual illustration, not a depiction of an actual event.
+Style/medium: Mid-century modern editorial illustration, flat cut-paper shapes and restrained screen-print texture. Bold irregular geometric silhouettes, simple human profiles, balanced asymmetry, economical details, a sophisticated printed-poster sensibility. Use the same visual language for people, table and objects.
+Composition/framing: Landscape 3:2 aspect ratio, one cohesive scene centered with comfortable generous margins, clear silhouettes readable when placed beside slide text, sparse background. No frame or full slide design.
+Scene/backdrop: Flat warm cream paper background, no room detail.
+Color palette: Warm cream #f2e6ce background; charcoal #292b25, brick red #aa3f2c, cobalt blue #315397, olive #596442, mustard gold #d9a747, muted peach #dfb59d. Use only this restricted palette; broad areas of cream and sparing strong-color accents.
+Materials/textures: Matte flat ink fields with very subtle fine paper grain; slight organic irregularity at edges; no dimensional paper shadows.
+Text: None. Proposal cards use only a few simple nonverbal colored shapes.
+Constraints: No letters, words, numbers, captions, logos or watermarks. No gradients, 3D rendering, photorealism, glossy lighting, drop shadows, corporate stock illustration, elaborate faces or exaggerated rubber limbs. Keep every figure distinct and visually separate, with plausible simple arms and hands.

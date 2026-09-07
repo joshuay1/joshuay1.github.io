@@ -1,0 +1,153 @@
+:root {
+  --paper: #f2e6ce;
+  --ink: #303329;
+  --accent: #ad4436;
+  --scale: 1;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: Inter, sans-serif;
+  overflow: hidden;
+}
+.stage {
+  width: 1600px;
+  height: 900px;
+  position: absolute;
+  left: 50%;
+  top: calc(50% - 28px);
+  transform: translate(-50%, -50%) scale(var(--scale));
+}
+.slide {
+  width: 1600px;
+  height: 900px;
+  padding: 70px;
+  background: var(--paper);
+}
+[hidden],
+.notes {
+  display: none;
+}
+h1,
+h2 {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 80px;
+  line-height: 1.1;
+  max-width: 1250px;
+}
+p {
+  font-size: 34px;
+  line-height: 1.5;
+}
+em {
+  color: var(--accent);
+  font-style: normal;
+}
+.event {
+  font-size: 24px;
+}
+nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+  background: var(--paper);
+}
+button {
+  font: inherit;
+  border: 0;
+  background: #e6d5b5;
+  color: var(--ink);
+  padding: 12px;
+  cursor: pointer;
+  min-height: 44px;
+}
+.home {
+  display: none;
+  color: var(--ink);
+}
+dialog {
+  border: 0;
+  background: var(--paper);
+  max-width: 90vw;
+  max-height: 85vh;
+}
+dialog h2 {
+  font-size: 30px;
+}
+#scenes {
+  display: grid;
+  gap: 8px;
+}
+.read-view {
+  overflow: auto;
+  padding-bottom: 70px;
+}
+.read-view .stage {
+  position: static;
+  width: auto;
+  height: auto;
+  transform: none;
+}
+.read-view .slide {
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  padding: 40px 6vw;
+}
+.read-view h1,
+.read-view h2 {
+  font-size: clamp(36px, 7vw, 64px);
+  overflow-wrap: anywhere;
+}
+.read-view p {
+  font-size: 23px;
+}
+.read-view .home {
+  display: block;
+}
+.read-view .paging {
+  display: none;
+}
+.read-view img {
+  max-width: 100%;
+  height: auto;
+}
+img {
+  object-fit: contain;
+  max-width: 100%;
+}
+@page {
+  size: 1600px 900px;
+  margin: 0;
+}
+@media print {
+  body {
+    overflow: visible;
+  }
+  .stage {
+    position: static;
+    transform: none;
+    height: auto;
+  }
+  .slide,
+  .slide[hidden] {
+    display: block !important;
+    break-after: page;
+  }
+  .slide:last-child {
+    break-after: auto;
+  }
+  nav,
+  dialog,
+  .notes {
+    display: none !important;
+  }
+}

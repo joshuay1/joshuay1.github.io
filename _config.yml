@@ -210,6 +210,9 @@ kramdown:
 # Includes & excludes
 include: ["_pages"]
 exclude:
+  - scripts/
+  - docs/
+  - .talk-build/
   - bin/
   - CONTRIBUTING.md
   - CUSTOMIZE.md

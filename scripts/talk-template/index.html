@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>TALK_TITLE</title>
+    <link rel="stylesheet" href="assets/fonts/fonts.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <main class="stage">
+      <section class="slide" id="opening" data-title="TALK_TITLE" data-time="0:00–0:30">
+        <p class="event">Joshua C. Yang</p>
+        <h1>TALK_TITLE</h1>
+        <p>Write the question this talk will explore.</p>
+        <aside class="notes"><p>Add speaker notes here. They appear in the rehearsal export, not on the slide.</p></aside>
+      </section>
+      <section class="slide" id="context" data-title="The context" data-time="0:30–1:30" hidden>
+        <h2>The context</h2>
+        <p>Replace this starter with a concrete problem, example or figure.</p>
+        <aside class="notes"><p>Record the source and explain what the figure does and does not establish.</p></aside>
+      </section>
+    </main>
+    <nav>
+      <a class="home" href="https://joshuacyang.com/">← Josh’s page</a>
+      <div class="paging">
+        <button id="previous" aria-label="Previous slide">←</button> <span id="position"></span> <button id="next" aria-label="Next slide">→</button>
+      </div>
+      <button id="contents">Contents</button>
+    </nav>
+    <dialog id="overview">
+      <h2>Contents</h2>
+      <div id="scenes"></div>
+      <button id="close">Close</button>
+    </dialog>
+  </body>
+</html>

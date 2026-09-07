@@ -5,5 +5,11 @@
   },
   "dependencies": {
     "puppeteer": "^24.38.0"
+  },
+  "scripts": {
+    "talk:new": "node scripts/talk.mjs new",
+    "talk:serve": "node scripts/talk.mjs serve",
+    "talk:check": "node scripts/talk.mjs check",
+    "talk:export": "node scripts/talk.mjs export"
   }
 }

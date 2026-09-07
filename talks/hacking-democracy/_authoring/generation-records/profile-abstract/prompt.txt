@@ -1,0 +1,13 @@
+Use case: style-transfer.
+Primary request: Repaint the portrait in input image 1 to be MUCH MORE ABSTRACT and radically simplified, closer to the people in input image 2. The user explicitly wants less accurate detail. Do not preserve the realistic facial modeling of image 1.
+
+Input image 1: edit target, the current illustrated portrait of the user. Keep its basic dark-haired, moustached subject, long-necked bust, calm mood, and olive sweater.
+Input image 2: the authoritative style reference. Match its spare naive figurative modernism, elongated proportions, nearly anonymous faces and broad matte painted shapes. Do not copy its setting or other people.
+
+One single square standalone profile illustration. A small elongated angular head tilted very slightly, on an extremely long thin neck, above broad oversized asymmetric bottle-green sweater shoulders. Maintain the recognizable shorthand of thick wavy dark hair and a moustache, but the likeness is secondary to the abstract design.
+
+Radical economy of form: hair is ONE solid charcoal shape with only four or five broad irregular scallops suggesting waves, zero individual strands, curls, highlights or scribbled hair texture. Face is two or three large flat warm ochre and tobacco planes; no realistic shading or anatomical modeling. Features are only tiny loose marks: one short dash per eye, a simple angular nose line or plane, a small dark moustache shape and one restrained mouth mark. No eye whites, irises, eyelashes, detailed eyebrows, detailed ears, skin pores or individual beard hairs. Omit stubble texture; at most one simple flat chin shape. Sweater is one large matte dark olive/bottle-green shape with only one or two imperfect contour seams; no fabric weave, knit pattern or wrinkles. Keep the flat silhouette unmistakably handmade.
+
+Vintage mid-century fashion painting and naive modernism, sophisticated and slightly strange. Restrained olive, bottle green, charcoal, muted tobacco brown and dusty ochre. Subtle worn gouache variation within shapes, sparse dry brush marks, thin loose imperfect dark outlines. Much less surface texture than the existing portrait. Elegant, quiet, contemplative. No photorealism, no detailed portrait rendering, no smooth gradients, no glossy vector finish or cute cartoon features.
+
+Complete isolated bust floating on genuine transparent alpha, with empty margin all around the hair and both shoulders, the sweater terminating in a simple intentional curved lower edge. No rectangular backdrop, room, objects, shadows, text, circle, border, or paper outside the figure. Background must be truly transparent; do not paint a checkerboard. If an opaque preview backdrop is technically required, use completely uniform pure white #FFFFFF with no texture.

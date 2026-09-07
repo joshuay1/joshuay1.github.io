@@ -1,0 +1,5 @@
+Applied separately to citizen-control.png and representation.png using the built-in image tool. Input is the generated illustration; preserve the original and save a new version.
+
+Change ONLY the background of this illustration: replace every grey and white checkerboard square with completely uniform solid PURE WHITE RGB #FFFFFF. Fill all background gaps between people and props with that same pure white. The result MUST have a plain white background: absolutely NO checkerboard pattern anywhere. Do NOT attempt a transparent background. Preserve all people, objects, arrangement, colours, gouache texture and proportions exactly. Flat pure white, no shadows.
+
+Integration: use CSS mix-blend-mode:multiply on these two final RGB assets against the cream slide background. Inspect the rendered slide and PDF. This is not alpha transparency.

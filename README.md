@@ -1,3 +1,7 @@
+# Josh’s personal site
+
+Presentation authoring now lives in [talks/](talks/README.md). See the [complete presentation workflow](docs/presentation-workflow.md) for creating, checking, exporting and publishing talks.
+
 # al-folio
 
 <div align="center">

@@ -15,3 +15,6 @@ _site.zip
 _site 2.zip
 _pages/life-by-year.md
 _publications/context/
+
+.talk-build/
+node_modules
