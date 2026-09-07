@@ -253,3 +253,10 @@ img[src$="concept-representation.png"] {
   .read-view .agency-explore { display: block; font-size: 23px; }
   .read-view .agency-explore a { display: block; margin-top: 15px; font-size: 20px; }
 }
+
+.simulation-art .agent-model-art {
+  height: 440px;
+  mask-image: linear-gradient(to right, transparent, #000 3%, #000 97%, transparent),
+    linear-gradient(to bottom, transparent, #000 3%, #000 97%, transparent);
+  mask-composite: intersect;
+}
