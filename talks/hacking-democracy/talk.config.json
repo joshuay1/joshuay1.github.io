@@ -1,5 +1,5 @@
 {
-  "expectedSlides": 33,
+  "expectedSlides": 34,
   "publicUrl": "https://joshuacyang.com/talks/hacking-democracy/",
   "interactions": [
     { "slide": "voting-rules", "click": "[data-rule=\"borda\"]", "expect": { "selector": ".winner", "includes": "Music" } },

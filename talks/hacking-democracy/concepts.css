@@ -178,3 +178,33 @@ img[src$="concept-citizen-control.png"],
 img[src$="concept-representation.png"] {
   mix-blend-mode: multiply;
 }
+
+/* Three distinct contributions to digital participation, before the theory. */
+.participation-examples {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 40px;
+  margin-top: 26px;
+}
+.participation-examples figure { margin: 0; }
+.participation-examples img {
+  width: 100%;
+  height: 330px;
+  object-fit: contain;
+}
+.participation-examples .crowdsourcing-art {
+  mask-image: linear-gradient(to right, transparent, #000 3%, #000 97%, transparent),
+    linear-gradient(to bottom, transparent, #000 3%, #000 97%, transparent);
+  mask-composite: intersect;
+}
+.participation-examples h3 { font-size: 33px; line-height: 1.15; margin: 14px 0; }
+.participation-examples p { font-size: 27px; line-height: 1.3; margin: 0 0 18px; }
+.participation-examples figcaption > span { font: 19px/1.3 var(--mono); color: var(--olive); }
+.participation-context .bottom-line { margin-top: 36px; }
+@media (max-width: 900px) {
+  .read-view .participation-examples { grid-template-columns: 1fr; gap: 32px; }
+  .read-view .participation-examples img { height: auto; max-height: 290px; }
+  .read-view .participation-examples h3 { font-size: 26px; }
+  .read-view .participation-examples p { font-size: 20px; }
+  .read-view .participation-examples figcaption > span { font-size: 15px; }
+}
