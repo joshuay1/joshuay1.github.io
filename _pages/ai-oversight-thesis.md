@@ -62,4 +62,4 @@ Email **[joshyang@mit.edu](mailto:joshyang@mit.edu?cc=bakker%40mit.edu&subject=A
 **You don’t need to be looking for a thesis.** If you want to contribute to the project and work towards papers together, I’d be happy to hear from you too.
 
 <p class="thesis-context-date">Updated 14 September 2026.</p>
-<p class="thesis-back-link"><a href="{{ '/' | relative_url }}">← Back to Josh’s homepage</a></p>
+<p class="thesis-back-link"><a href="https://www.joshuacyang.com/">← Back to Josh’s homepage</a></p>
