@@ -23,6 +23,10 @@ We want to build tools that help people investigate agent behaviour, find missin
 
 This is already a practical problem. [METR’s investigation of an agent incident](https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/) describes how hard it was to check large volumes of AI-generated analysis. Anthropic’s September 2026 [commitment to embedded evaluators](https://darioamodei.com/post/we-must-pace-the-frontier) makes the question especially timely: even with access, how does a small team keep up?
 
+## Connecting to Pacing the Frontier
+
+[Pacing the Frontier](https://www.pacingthefrontier.com/) calls for an international effort to develop technical and governance tools for deliberately pacing automated AI development. Our project aims to contribute to that goal through **practical, independent AI oversight**: tools that help reviewers verify safety claims, investigate incidents and assess whether developers are following their commitments. Reliable evidence is essential if coordination across labs and countries is to be meaningful.
+
 ## Why Apertus and Switzerland?
 
 [Apertus](https://www.apertus-ai.org/) is the open language-model effort from ETH Zurich, EPFL and CSCS. It gives us a concrete setting for studying model evaluation and development workflows.
@@ -44,6 +48,10 @@ You would build a working system and test it against sensible baselines. We care
 **Engineering:** build tools, run LLM experiments and analyse agent behaviour. Depending on the project, this could involve working with model checkpoints in Python, PyTorch or Hugging Face, running GPU jobs with Slurm, or building evaluation pipelines and searching agent traces. We can shape the work around your experience and what you’d like to learn.
 
 **Research collaboration:** bring experience in **AI safety, security or governance** to help shape what we audit, how we judge the evidence and how these tools could support independent oversight in practice. You don’t need hands-on LLM or GPU experience for this. We could develop research questions, design studies and work towards papers together.
+
+## Funding this international collaboration
+
+**We are actively seeking funding to support this international research collaboration on AI oversight and safety.** We welcome conversations with funders who want to help develop and test tools for independent evaluation and verification, connecting research at MIT with collaborators in Switzerland and beyond.
 
 ## Interested? Get in touch
 
