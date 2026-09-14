@@ -1,0 +1,245 @@
+// Paper, ink and type from Building Digital Democracy in Practice.
+:root {
+  --global-bg-color: #f2e6ce;
+  --global-text-color: #292b25;
+  --global-text-color-light: #65604f;
+  --global-heading-color: #aa3f2c;
+  --global-theme-color: #aa3f2c;
+  --global-link-color: #176b68;
+  --global-hover-color: #aa3f2c;
+  --global-nav-link-color: #aa3f2c;
+  --global-divider-color: #b8ad94;
+  --global-card-bg-color: #faf3e3;
+  --civic-outline: #292b25;
+  --civic-gold: #d9a747;
+  --civic-teal: #377e78;
+}
+
+html[data-theme="dark"] {
+  --global-bg-color: #252720;
+  --global-text-color: #f2e6ce;
+  --global-text-color-light: #c3bba8;
+  --global-heading-color: #eea18b;
+  --global-theme-color: #eea18b;
+  --global-link-color: #89c9c1;
+  --global-hover-color: #efc36a;
+  --global-nav-link-color: #eea18b;
+  --global-divider-color: #656653;
+  --global-card-bg-color: #31342b;
+  --civic-outline: #d5cbb5;
+  --civic-gold: #907035;
+  --civic-teal: #326e69;
+}
+
+html,
+body {
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  line-height: 1.7;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Fraunces", Georgia, "Times New Roman", serif;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+
+a {
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--global-link-color);
+  outline-offset: 5px;
+}
+
+.navbar {
+  opacity: 1;
+  border-bottom-color: var(--civic-outline);
+}
+
+.navbar .nav-link {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.875rem;
+}
+
+.navbar .nav-item.active > .nav-link {
+  text-decoration: underline;
+  text-underline-offset: 0.45em;
+}
+
+.about-page {
+  .post-header {
+    border-bottom: 2px solid var(--civic-outline);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .post-title {
+    font-size: clamp(2.25rem, 7vw, 3.5rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+
+    span {
+      color: inherit;
+    }
+  }
+
+  .desc {
+    font-size: 0.9375rem;
+    margin-bottom: 0;
+  }
+
+  .profile img {
+    border: 2px solid var(--civic-outline);
+    border-radius: 2px !important;
+    box-shadow: 5px 5px 0 var(--civic-gold) !important;
+  }
+
+  article > h2 {
+    font-size: 1.5rem;
+    margin: 3rem 0 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--civic-outline);
+  }
+}
+
+// A second, identically shaped slab beneath the panel gives flat game-like depth.
+.thesis-callout,
+.thesis-intro,
+.democracy-talk-feature {
+  --slab-x: 7px;
+  --slab-y: 7px;
+  --slab-color: var(--civic-gold);
+  border: 2px solid var(--civic-outline);
+  border-radius: 3px;
+  background: var(--global-card-bg-color);
+  box-shadow:
+    var(--slab-x) var(--slab-y) 0 0 var(--slab-color),
+    var(--slab-x) var(--slab-y) 0 2px var(--civic-outline);
+  transition:
+    transform 180ms ease-out,
+    box-shadow 180ms ease-out;
+
+  a {
+    text-decoration: underline;
+  }
+
+  &:focus-within {
+    transform: translate(-2px, -2px);
+    --slab-x: 9px;
+    --slab-y: 9px;
+  }
+}
+
+.democracy-talk-feature {
+  --slab-x: -7px;
+  --slab-color: var(--civic-teal);
+  margin: 2.5rem 0 3rem 10px;
+
+  &:focus-within {
+    transform: translate(2px, -2px);
+    --slab-x: -9px;
+  }
+}
+
+.democracy-talk-link {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  color: var(--global-text-color);
+  text-decoration: none !important;
+
+  img {
+    width: 28%;
+    height: 200px;
+    object-fit: contain;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    margin: 0.6rem 0 0.85rem;
+  }
+
+  > div {
+    min-width: 0;
+  }
+
+  p {
+    font-weight: 400;
+  }
+}
+
+.democracy-talk-kicker {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.democracy-talk-cta {
+  color: var(--global-link-color);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .thesis-callout:hover,
+  .thesis-intro:hover,
+  .democracy-talk-feature:hover {
+    transform: translate(-2px, -2px);
+    --slab-x: 9px;
+    --slab-y: 9px;
+  }
+
+  .democracy-talk-feature:hover {
+    transform: translate(2px, -2px);
+    --slab-x: -9px;
+  }
+}
+
+@media (max-width: 575px) {
+  .democracy-talk-link {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.15rem;
+    gap: 0.75rem;
+
+    img {
+      width: 160px;
+      height: 130px;
+    }
+
+    h2 {
+      font-size: 1.25rem;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thesis-callout,
+  .thesis-intro,
+  .democracy-talk-feature {
+    transition: none;
+    transform: none !important;
+    --slab-x: 7px !important;
+    --slab-y: 7px !important;
+  }
+
+  .democracy-talk-feature {
+    --slab-x: -7px !important;
+  }
+}

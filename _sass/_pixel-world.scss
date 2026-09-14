@@ -1,0 +1,45 @@
+// A quiet shared environment: paper, a faint grid, and room in the margins.
+.pixel-world {
+  --global-bg-color: #fafaf7;
+  --world-grid: rgba(89, 99, 78, 0.035);
+  background-color: var(--global-bg-color);
+  background-image: linear-gradient(var(--world-grid) 1px, transparent 1px), linear-gradient(90deg, var(--world-grid) 1px, transparent 1px);
+  background-size: 40px 40px;
+
+  .navbar {
+    border-bottom: 1px solid var(--global-divider-color);
+    box-shadow: none;
+  }
+
+  footer {
+    background: var(--global-bg-color);
+  }
+
+  .post-header {
+    border-bottom: 1px solid var(--global-divider-color);
+  }
+  article > h2 {
+    border-top-color: var(--global-divider-color);
+  }
+
+  .profile img {
+    border: 1px solid var(--global-divider-color);
+    box-shadow: none !important;
+  }
+
+  .thesis-callout,
+  .democracy-talk-feature {
+    background: var(--global-card-bg-color);
+  }
+}
+
+html[data-theme="dark"] .pixel-world {
+  --global-bg-color: #252720;
+  --world-grid: rgba(215, 219, 193, 0.035);
+}
+
+@media print {
+  .pixel-world {
+    background: white;
+  }
+}

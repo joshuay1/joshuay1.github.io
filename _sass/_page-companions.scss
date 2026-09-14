@@ -1,0 +1,46 @@
+// Ambient characters use the page's empty space without changing its layout.
+.page-companions {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  overflow: hidden;
+  contain: strict;
+}
+
+.page-companions-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+
+.page-companions-preference {
+  text-align: right;
+  margin-top: 0.5rem;
+}
+
+.page-companions-toggle {
+  min-height: 44px;
+  padding: 0.35rem 0;
+  border: 0;
+  background: transparent;
+  color: var(--global-text-color-light);
+  font: inherit;
+  font-size: 0.8125rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+@media print {
+  .page-companions,
+  .page-companions-preference {
+    display: none;
+  }
+}

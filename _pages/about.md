@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: Incoming postdoc at MIT / <a href='mailto:joshyang@mit.edu'>joshyang@mit.edu</a> / AI, democracy & collective intelligence.
+subtitle: Postdoc at MIT / <a href='mailto:joshyang@mit.edu'>joshyang@mit.edu</a> / AI, democracy & collective intelligence.
 
 profile:
   align: right
@@ -22,9 +22,9 @@ latest_projects: true # includes a list of the newest projects
 teaching: true # includes a short teaching section
 ---
 
-Hello 👋🏽 I am Josh, an **incoming postdoctoral researcher at MIT 🇺🇸**, where I’ll join [Michiel Bakker](https://miba.dev/)’s group this autumn. I investigate how **AI can be designed to serve society, and democracy in particular**, with a focus on AI-agent behaviour and oversight. I completed my PhD at **ETH Zurich 🇨🇭** in summer 2025 in the [Computational Social Science Lab](https://coss.ethz.ch/), supervised by Dirk Helbing.
+Hello 👋🏽 I am Josh, a **postdoctoral researcher at MIT 🇺🇸** in [Michiel Bakker](https://miba.dev/)’s group. I investigate how **AI can be designed to serve society, and democracy in particular**, with a focus on **AI oversight and AI safety**. I completed my PhD at **ETH Zurich 🇨🇭** in summer 2025 in the [Computational Social Science Lab](https://coss.ethz.ch/), supervised by Dirk Helbing.
 
-With a background in Computer Science, I combine insights from Complex Systems, Computational Social Choice, and Human-AI Interaction. My work has two main directions: **Digital Democracy**, using AI and voting algorithms to support collective decision-making; and **AI Pluralistic Alignment**, helping AI systems understand and represent diverse human values. Across both, I study how AI agents behave and how they can be effectively overseen, including through LLM agent-based simulations. I am also an affiliated researcher at the [Collective Intelligence Project](https://www.cip.org/).
+With a background in Computer Science, I combine insights from Complex Systems, Computational Social Choice, and Human-AI Interaction. My work has two main directions: **Digital Democracy**, using AI and voting algorithms to support collective decision-making; and **AI Pluralistic Alignment**, helping AI systems understand and represent diverse human values. Across both, I study how AI agents behave and interact, and how we can evaluate their safety and oversee them effectively, including through LLM agent-based simulations. I am also an affiliated researcher at the [Collective Intelligence Project](https://www.cip.org/).
 
 <aside class="thesis-callout" aria-labelledby="thesis-opportunity-title" markdown="1">
 <h2 id="thesis-opportunity-title">Work with us on AI oversight with Apertus</h2>
