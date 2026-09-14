@@ -22,7 +22,7 @@ latest_projects: true # includes a list of the newest projects
 teaching: true # includes a short teaching section
 ---
 
-Hello 👋🏽 I am Josh, a **postdoctoral researcher at MIT 🇺🇸** in [Michiel Bakker](https://miba.dev/)’s group. I work on **AI oversight and AI safety**, with a focus on **public input in AI alignment and democratic oversight**: how people can help shape AI’s goals and hold increasingly capable systems accountable.
+Hello 👋🏽 I am Josh, a **postdoctoral researcher at MIT 🇺🇸** in [Michiel Bakker](https://miba.dev/)’s group. I work on **AI safety**, with a focus on **public input in AI alignment and democratic oversight**: how people can help shape AI’s goals and hold increasingly capable systems accountable.
 
 This builds on my **PhD research in digital democracy** at **ETH Zurich 🇨🇭**, where I studied how AI and voting algorithms can support collective decision-making. I carried out this research in the [Computational Social Science Lab](https://coss.ethz.ch/), supervised by Dirk Helbing. I now bring that focus on public participation and diverse human values to AI alignment and democratic oversight. My postdoctoral work extends this research to AI-agent behaviour and interaction, and to tools for evaluating safety and supporting independent oversight.
 
