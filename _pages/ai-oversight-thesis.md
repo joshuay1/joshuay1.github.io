@@ -43,13 +43,7 @@ You would build a working system and test it against sensible baselines. We care
 
 ## How you could contribute
 
-**Engineering:** help build and test the systems, as a student or collaborator interested in hands-on work. You should be comfortable with:
-
-- **Python, PyTorch and Hugging Face**, including loading model checkpoints, running inference and building evaluation pipelines.
-- **Linux, GPUs and cluster workflows**, including submitting and debugging Slurm jobs, managing environments and dealing with GPU memory limits.
-- **Reproducible experiments**, including Git, logging, experiment tracking and analysing results across models or configurations.
-
-Experience with agent frameworks, large trace datasets, distributed inference or fine-tuning would also be useful.
+**Engineering:** build tools, run LLM experiments and analyse agent behaviour. Depending on the project, this could involve working with model checkpoints in Python, PyTorch or Hugging Face, running GPU jobs with Slurm, or building evaluation pipelines and searching agent traces. We can shape the work around your experience and what you’d like to learn.
 
 **Research collaboration:** bring experience in **AI safety, security or governance** to help shape what we audit, how we judge the evidence and how these tools could support independent oversight in practice. You don’t need hands-on LLM or GPU experience for this. We could develop research questions, design studies and work towards papers together.
 

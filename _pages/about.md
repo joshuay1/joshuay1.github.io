@@ -29,7 +29,7 @@ With a background in Computer Science, I combine insights from Complex Systems, 
 <aside class="thesis-callout" aria-labelledby="thesis-opportunity-title" markdown="1">
 <h2 id="thesis-opportunity-title">Work with us on AI oversight with Apertus</h2>
 
-Join me and **Prof. Michiel Bakker at MIT** to work on independent AI oversight. We’re looking for **LLM and GPU engineers**, especially students at **ETH Zurich or EPFL**, and **research collaborators in AI safety, security and governance**. This could be a master’s thesis or a research collaboration.
+Join me and **Prof. Michiel Bakker at MIT** to work on independent AI oversight. There’s room to **build tools and run experiments** or explore questions in **AI safety, security and governance**. We welcome students, especially at **ETH Zurich or EPFL**, and research collaborators. This could be a master’s thesis or a research project together.
 
 [See the project and get in touch →]({{ '/ai-oversight-thesis/' | relative_url }})
 
