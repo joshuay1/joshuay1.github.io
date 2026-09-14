@@ -13,8 +13,6 @@ nav: false
 
 I’m looking for students and collaborators to work with me and **Prof. Michiel Bakker at MIT** on AI oversight, starting with **Apertus**. This could be your master’s thesis, or a research project we build and publish papers on together.
 
-<a class="thesis-button" href="mailto:joshyang@mit.edu?cc=bakker%40mit.edu&amp;subject=AI%20oversight%20with%20Apertus">Let’s talk about the project</a>
-
 </div>
 
 ## What’s the idea?

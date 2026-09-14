@@ -29,19 +29,6 @@
   margin-bottom: 0.85rem;
 }
 
-.thesis-button {
-  display: inline-block;
-  padding: 0.6rem 0.9rem;
-  border: 1px solid currentColor;
-  border-radius: 4px;
-  font-weight: 600;
-
-  &:focus-visible {
-    outline: 2px solid var(--global-theme-color);
-    outline-offset: 4px;
-  }
-}
-
 .thesis-context-date,
 .thesis-back-link {
   font-size: 0.9rem;
