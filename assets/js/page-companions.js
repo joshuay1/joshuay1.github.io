@@ -511,7 +511,7 @@
       }
       for (const neighbor of world.nodes[id].edges) {
         const nextCost = cost.get(id) + distance(world.nodes[id], world.nodes[neighbor]);
-        if (nextCost >= (cost.get(neighbor) ?? Infinity)) continue;
+        if (nextCost >= (cost.has(neighbor) ? cost.get(neighbor) : Infinity)) continue;
         cost.set(neighbor, nextCost);
         previous.set(neighbor, id);
         pending.add(neighbor);
@@ -545,7 +545,8 @@
       narrow = innerWidth < 900;
     const spriteHeight = narrow ? 32 : 40,
       half = Math.ceil(spriteHeight * 0.4);
-    const nav = document.querySelector(".navbar")?.getBoundingClientRect().bottom || 56;
+    const navbar = document.querySelector(".navbar");
+    const nav = navbar ? navbar.getBoundingClientRect().bottom : 56;
     const obstacles = [
       ...page.querySelectorAll("p,h1,h2,h3,h4,table,.profile,.thesis-callout,.democracy-talk-feature,.card,.publications .row,.contact-icons,button"),
     ]
@@ -701,7 +702,7 @@
       agent.walking = false;
       agent.blocked += dt;
       if (agent.blocked > 1.5) {
-        if (encounter?.participants.includes(agent.index)) finishEncounter();
+        if (encounter && encounter.participants.includes(agent.index)) finishEncounter();
         agent.path = distance(agent, agent.node) > 1 ? [agent.node] : [];
         agent.rest = 0.8;
         agent.blocked = 0;
@@ -823,7 +824,7 @@
       }
     } else if (age > nextMeeting) startEncounter();
     for (const agent of agents.filter((a) => a.active)) {
-      if (agent.path.length || encounter?.participants.includes(agent.index)) continue;
+      if (agent.path.length || (encounter && encounter.participants.includes(agent.index))) continue;
       agent.rest -= dt;
       if (agent.rest <= 0) {
         chooseWalk(agent);
@@ -840,9 +841,9 @@
   function schedule() {
     if (frame !== null) cancelAnimationFrame(frame);
     frame = null;
-    toggle.hidden = motion.matches || !world?.nodes.length;
+    toggle.hidden = motion.matches || !(world && world.nodes.length);
     toggle.textContent = paused ? "Resume page companions" : "Pause page companions";
-    if (world?.nodes.length && !paused && !motion.matches && !document.hidden) {
+    if (world && world.nodes.length && !paused && !motion.matches && !document.hidden) {
       lastTime = performance.now();
       frame = requestAnimationFrame(tick);
     }
@@ -871,6 +872,6 @@
   addEventListener("resize", queueRebuild);
   if ("ResizeObserver" in window) new ResizeObserver(queueRebuild).observe(page);
   new MutationObserver(queueRebuild).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
-  document.fonts?.ready.then(queueRebuild);
+  if (document.fonts) document.fonts.ready.then(queueRebuild);
   rebuild();
 })();
