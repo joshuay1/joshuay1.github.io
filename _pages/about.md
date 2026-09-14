@@ -26,6 +26,15 @@ Hello 👋🏽 I am Josh, an **incoming postdoctoral researcher at MIT 🇺🇸*
 
 With a background in Computer Science, I combine insights from Complex Systems, Computational Social Choice, and Human-AI Interaction. My work has two main directions: **Digital Democracy**, using AI and voting algorithms to support collective decision-making; and **AI Pluralistic Alignment**, helping AI systems understand and represent diverse human values. Across both, I study how AI agents behave and how they can be effectively overseen, including through LLM agent-based simulations. I am also an affiliated researcher at the [Collective Intelligence Project](https://www.cip.org/).
 
+<aside class="thesis-callout" aria-labelledby="thesis-opportunity-title" markdown="1">
+<h2 id="thesis-opportunity-title">Work with us on AI oversight with Apertus</h2>
+
+Join me and **Prof. Michiel Bakker at MIT** to work on independent AI oversight. We’re looking for **LLM and GPU engineers**, especially students at **ETH Zurich or EPFL**, and **research collaborators in AI safety, security and governance**. This could be a master’s thesis or a research collaboration.
+
+[See the project and get in touch →]({{ '/ai-oversight-thesis/' | relative_url }})
+
+</aside>
+
 I bring this work into practice by advising governments and organisations on digital participation. I also developed and launched [Murmi](https://www.murmi.org/), a real-time, audio-based tool for iterative collective sensemaking that helps groups surface shared priorities, tensions, and overlooked perspectives as conversations unfold. In Switzerland, I have worked with the city of Aarau on the [StadtIdee](https://www.stadtidee.aarau.ch/abstimmung.html/2114) Participatory Budgeting programme and with [Kultur Komitee](https://kulturkomitee.win/) Winterthur on its annual citizen assembly for arts and cultural funding. I am also the process designer for [vTaiwan](https://info.vtaiwan.tw/), part of Taiwan’s 🇹🇼 civic tech [g0v](https://g0v.tw/intl/en/) community, where we explore AI and digital tools for public deliberation and consensus-building.
 
 <!-- I see democracy not as a fixed system but as a living, evolving social technology that we must keep improving through experimentation, design, and collective learning. I believe that technology and AI should serve democracy, not the other way around. My work is driven by the idea that we can build systems that translate human diversity into fair and intelligible collective outcomes, rather than reducing it to a single “optimal” answer. I believe in agency — that people, algorithms, and societies can learn to make better decisions together. For me, democracy is not just an institution but an ongoing collective intelligence project, where the goal isn’t perfect agreement but shared understanding and participation. -->

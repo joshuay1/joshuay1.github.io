@@ -1,0 +1,85 @@
+// Recruitment content uses the site's existing light/dark theme tokens.
+.thesis-callout,
+.thesis-intro {
+  border: 1px solid var(--global-divider-color);
+  border-left: 4px solid var(--global-theme-color);
+  border-radius: 4px;
+  padding: 1.15rem 1.4rem;
+  margin: 1.5rem 0 2rem;
+  background: var(--global-card-bg-color);
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.thesis-callout {
+  clear: both;
+
+  h2 {
+    font-size: 1.25rem;
+    margin: 0 0 0.65rem;
+  }
+}
+
+.thesis-eyebrow {
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.85rem;
+}
+
+.thesis-button {
+  display: inline-block;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  font-weight: 600;
+
+  &:focus-visible {
+    outline: 2px solid var(--global-theme-color);
+    outline-offset: 4px;
+  }
+}
+
+.thesis-context-date,
+.thesis-back-link {
+  font-size: 0.9rem;
+}
+
+.thesis-back-link {
+  margin-top: 2rem;
+}
+
+// The legacy dark palette retains light-theme heading/link values. Scope the
+// contrast correction to the recruitment page and its homepage callout.
+html[data-theme="dark"] {
+  .post:has(.thesis-intro) {
+    h1,
+    h2,
+    h3 {
+      color: var(--global-text-color);
+    }
+
+    article a {
+      color: #9bceb0;
+    }
+  }
+
+  .thesis-callout {
+    h2 {
+      color: var(--global-text-color);
+    }
+
+    a {
+      color: #9bceb0;
+    }
+  }
+}
+
+@media (max-width: 575px) {
+  .thesis-callout,
+  .thesis-intro {
+    padding: 1rem;
+  }
+}
