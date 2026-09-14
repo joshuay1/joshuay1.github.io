@@ -989,8 +989,19 @@
     rebuildTimer = setTimeout(rebuild, 150);
   };
   addEventListener("resize", queueRebuild);
-  if ("ResizeObserver" in window) new ResizeObserver(queueRebuild).observe(page);
+  addEventListener("load", queueRebuild);
+  if ("ResizeObserver" in window) {
+    new ResizeObserver(queueRebuild).observe(page);
+    // Font loading can move this ledge without changing the total page height.
+    const header = page.querySelector(".post-header");
+    if (header) new ResizeObserver(rebuild).observe(header);
+  }
   new MutationObserver(queueRebuild).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
-  if (document.fonts) document.fonts.ready.then(queueRebuild);
+  // The existing navigation script adjusts body padding after page load.
+  new MutationObserver(queueRebuild).observe(document.body, { attributes: true, attributeFilter: ["style", "class"] });
+  if (document.fonts) {
+    document.fonts.ready.then(queueRebuild);
+    document.fonts.addEventListener("loadingdone", queueRebuild);
+  }
   rebuild();
 })();
