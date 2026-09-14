@@ -43,6 +43,8 @@
   ];
   const spriteCache = new Map();
   function personSprite(index, facing, pose, blink) {
+    // Keep the face visible, including when a companion walks up the page.
+    if (facing === "north") facing = "south";
     const id = `${index}-${facing}-${pose}-${blink}`;
     if (spriteCache.has(id)) return spriteCache.get(id);
     const sprite = document.createElement("canvas");
@@ -205,7 +207,7 @@
       // Eyes sit within the face, rather than against its outer contour.
       // Two faces use taller manga eyes; Josh and the cap use simple black eyes.
       const expressive = a.style === "long" || a.style === "short";
-      const eyeXs = facing === "east" ? [19] : facing === "west" ? [10] : [10, 19];
+      const eyeXs = [10, 19];
       for (const eye of eyeXs) {
         const x = eye + shift;
         if (blink) {
@@ -394,9 +396,8 @@
   let age = 0,
     nextMeeting = 12,
     encounter = null,
-    paused = false,
-    journey = 0,
-    meetings = 0;
+    paused = false;
+  let bubbles = [];
   const agents = Array.from({ length: appearances.length }, (_, index) => ({
     index,
     x: 0,
@@ -409,6 +410,7 @@
     walking: false,
     rest: 0.7 + index * 0.8,
     blocked: 0,
+    thinkingUntil: 0,
   }));
   const distance = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
   const docRect = (element) => {
@@ -520,13 +522,6 @@
     return null;
   }
 
-  function assign(agent, target) {
-    const path = route(agent.node, target);
-    if (path === null) return false;
-    agent.path = path;
-    return true;
-  }
-
   function settleAt(agent, node) {
     if (!node) {
       agent.active = false;
@@ -548,10 +543,20 @@
     const navbar = document.querySelector(".navbar");
     const nav = navbar ? navbar.getBoundingClientRect().bottom : 56;
     const obstacles = [
-      ...page.querySelectorAll("p,h1,h2,h3,h4,table,.profile,.thesis-callout,.democracy-talk-feature,.card,.publications .row,.contact-icons,button"),
+      ...page.querySelectorAll(
+        "p,h1,h2,h3,h4,hr,table,.profile,.thesis-callout,.democracy-talk-feature,.card,.publications .row,.contact-icons,button"
+      ),
     ]
       .filter((el) => el.getClientRects().length)
       .map(docRect);
+    // Borders are obstacles too: a canvas sprite must not straddle a divider.
+    const header = page.querySelector(".post-header");
+    const headerRect = header ? docRect(header) : null;
+    if (header) {
+      const r = headerRect;
+      const thickness = parseFloat(getComputedStyle(header).borderBottomWidth);
+      if (thickness) obstacles.push({ left: r.left, right: r.right, top: r.bottom - thickness, bottom: r.bottom });
+    }
     const landmarks = [...page.querySelectorAll(".post-header,.profile,.thesis-callout,.democracy-talk-feature,article > h2,.social")]
       .filter((el) => el.getClientRects().length)
       .map(docRect);
@@ -571,8 +576,12 @@
       ),
     ];
     const landmarkYs = landmarks.flatMap((r) => [Math.round(r.top - 2), Math.round(r.bottom + spriteHeight + 4)]);
+    const subtitle = page.querySelector(".post-header .desc");
+    const headerContentBottom = subtitle ? docRect(subtitle).bottom : 0;
+    const laneY = headerRect ? Math.floor(headerRect.bottom - 3) : null;
     const ys = [
       ...new Set([
+        ...(narrow && laneY ? [laneY] : []),
         ...landmarkYs,
         ...landmarkYs.flatMap((y) => [y - 52, y + 52]),
         ...Array.from({ length: Math.ceil((bounds.bottom - bounds.top) / 60) }, (_, i) => Math.round(bounds.top + 40 + i * 60)),
@@ -586,7 +595,10 @@
     for (const y of ys)
       for (const x of xs) {
         if (!clearPoint(x, y)) continue;
-        const node = { id: world.nodes.length, x, y, edges: [], landmark: landmarkYs.includes(y) };
+        // Mobile companions stand on the divider instead of floating across it.
+        if (narrow && headerRect && y > headerContentBottom && y < headerRect.bottom && y !== laneY) continue;
+        if (narrow && y === laneY && (x < bounds.left + half + 4 || x > bounds.right - half - 4)) continue;
+        const node = { id: world.nodes.length, x, y, edges: [], landmark: landmarkYs.includes(y) || y === laneY };
         world.nodes.push(node);
         if (!columns.has(x)) columns.set(x, []);
         if (!rows.has(y)) rows.set(y, []);
@@ -630,12 +642,45 @@
       agent.alpha = 1;
       agent.rest = 0.7 + i * 0.8;
       agent.blocked = 0;
+      agent.thinkingUntil = 0;
     });
     render();
     schedule();
   }
 
+  function availableLanePath(agent, path) {
+    if (!world.narrow) return true;
+    const clearance = world.half * 2 + 6;
+    const reservations = agents
+      .filter((a) => a.active && a !== agent)
+      .map((a) => {
+        const points = [a, ...a.path];
+        return {
+          left: Math.min(...points.map((p) => p.x)) - clearance,
+          right: Math.max(...points.map((p) => p.x)) + clearance,
+          top: Math.min(...points.map((p) => p.y)) - clearance,
+          bottom: Math.max(...points.map((p) => p.y)) + clearance,
+        };
+      });
+    // On a one-dimensional ledge, reserve each route so peers never swap through each other.
+    return path.every((end, i) => {
+      const start = i ? path[i - 1] : agent;
+      const segment = {
+        left: Math.min(start.x, end.x),
+        right: Math.max(start.x, end.x),
+        top: Math.min(start.y, end.y),
+        bottom: Math.max(start.y, end.y),
+      };
+      return reservations.every((r) => !overlaps(segment, r));
+    });
+  }
+
   function chooseWalk(agent) {
+    // Sometimes stop to think; otherwise choose a different reachable destination.
+    if (Math.random() < 0.18) {
+      agent.thinkingUntil = age + 1.4 + Math.random();
+      return;
+    }
     const candidates = world.nodes.filter(
       (n) =>
         visibleNode(n) &&
@@ -644,33 +689,54 @@
         n.edges.length &&
         agents.every((a) => !a.active || a === agent || distance(a, n) > 44)
     );
-    // Prefer section edges; sometimes use the outer margin to move to the next section.
+    // Shuffle before gently preferring section edges and the outer margins.
+    for (let i = candidates.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [candidates[i], candidates[j]] = [candidates[j], candidates[i]];
+    }
     candidates.sort((a, b) => Number(b.landmark) - Number(a.landmark));
-    const choices = candidates.slice(0, 20);
-    const offset = journey++ % Math.max(1, choices.length);
+    const choices = candidates.slice(0, 24);
+    const offset = Math.floor(Math.random() * Math.max(1, choices.length));
     for (let i = 0; i < choices.length; i++) {
       const target = choices[(offset + i) % choices.length];
-      if (assign(agent, target) && agent.path.length) return;
+      const path = route(agent.node, target);
+      if (path && path.length && availableLanePath(agent, path)) {
+        agent.path = path;
+        return;
+      }
     }
     agent.rest = 1.5;
   }
 
   function startEncounter() {
-    const idle = agents.filter((a) => a.active && !a.path.length);
+    const idle = agents.filter((a) => a.active && !a.path.length && a.thinkingUntil < age);
     for (const host of idle) {
       for (const peer of agents.filter((a) => a.active)) {
         if (peer === host || distance(host, peer) > 360) continue;
-        const targets = world.nodes.filter((n) => visibleNode(n) && distance(n, host) >= 44 && distance(n, host) <= 80 && clearSegment(host, n));
+        const targets = world.nodes
+          .filter((n) => visibleNode(n) && distance(n, host) >= 44 && distance(n, host) <= 110 && clearSegment(host, n))
+          .sort((a, b) => distance(a, peer) - distance(b, peer));
         for (const target of targets) {
           const origin = peer.path[0] || peer.node;
           const path = route(origin, target);
           if (path === null) continue;
           if (distance(peer, origin) > 0.01) path.unshift(origin);
           const length = path.reduce((sum, n, i) => sum + distance(i ? path[i - 1] : peer, n), 0);
-          if (length > 360) continue;
+          if (length > 360 || !availableLanePath(peer, path)) continue;
+          // Do not ask a peer to walk through the waiting conversation partner.
+          if (
+            path.some((end, i) => {
+              const start = i ? path[i - 1] : peer,
+                dx = end.x - start.x,
+                dy = end.y - start.y;
+              const t = Math.max(0, Math.min(1, ((host.x - start.x) * dx + (host.y - start.y) * dy) / (dx * dx + dy * dy || 1)));
+              return Math.hypot(host.x - start.x - t * dx, host.y - start.y - t * dy) < world.half * 2 + 6;
+            })
+          )
+            continue;
           peer.path = path;
+          peer.thinkingUntil = 0;
           encounter = { elapsed: 0, travel: 0, participants: [host.index, peer.index] };
-          meetings++;
           return true;
         }
       }
@@ -726,9 +792,9 @@
 
   function finishEncounter() {
     encounter = null;
-    nextMeeting = age + 12;
+    nextMeeting = age + 8 + Math.random() * 8;
     agents.forEach((a) => {
-      a.rest = 0.8 + a.index * 0.3;
+      a.rest = 0.8 + Math.random() * 1.8;
     });
   }
 
@@ -751,8 +817,59 @@
     schedule();
   }
 
+  const overlaps = (a, b) => a.right > b.left && a.left < b.right && a.bottom > b.top && a.top < b.bottom;
+
+  function speechBubble(agent) {
+    const top = agent.y - world.spriteHeight;
+    const width = 22,
+      height = 15;
+    const positions = [
+      { left: agent.x - width / 2, top: top - height - 4 },
+      { left: agent.x + world.half + 4, top: top + 3 },
+      { left: agent.x - world.half - width - 4, top: top + 3 },
+    ];
+    const occupied = world.obstacles.concat(
+      bubbles,
+      agents
+        .filter((a) => a.active)
+        .map((a) => ({
+          left: a.x - world.half - 2,
+          right: a.x + world.half + 2,
+          top: a.y - world.spriteHeight - 2,
+          bottom: a.y + 2,
+        }))
+    );
+    const rect = positions
+      .map((p) => ({ left: Math.round(p.left), top: Math.round(p.top), right: Math.round(p.left) + width, bottom: Math.round(p.top) + height }))
+      .find(
+        (r) =>
+          r.left > 3 &&
+          r.right < innerWidth - 3 &&
+          r.top > scrollY + world.nav + 3 &&
+          r.bottom < scrollY + innerHeight - 3 &&
+          occupied.every((o) => !overlaps(r, { left: o.left - 2, right: o.right + 2, top: o.top - 2, bottom: o.bottom + 2 }))
+      );
+    if (!rect) return;
+    bubbles.push(rect);
+    const x = rect.left,
+      y = rect.top - scrollY;
+    ctx.globalAlpha = ambientOpacity * agent.alpha;
+    ctx.fillStyle = "#53695f";
+    ctx.fillRect(x + 2, y, width - 4, 1);
+    ctx.fillRect(x, y + 2, width, 9);
+    ctx.fillRect(x + 2, y + 11, width - 4, 1);
+    ctx.fillRect(x + 5, y + 12, 3, 2);
+    ctx.fillRect(x + 4, y + 14, 2, 1);
+    ctx.fillStyle = "#fafaf7";
+    ctx.fillRect(x + 2, y + 2, width - 4, 8);
+    ctx.fillStyle = "#294c48";
+    // Three small dots take turns rising one pixel, as if thinking or replying.
+    for (let i = 0; i < 3; i++) ctx.fillRect(x + 5 + i * 5, y + 5 - (Math.floor(age * 3) % 3 === i ? 1 : 0), 2, 2);
+  }
+
   function render() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    bubbles = [];
     if (!world) return;
     ctx.save();
     ctx.beginPath();
@@ -782,12 +899,14 @@
           ctx.fillText("Josh", x, y - h - 5);
         }
       });
+    agents.filter((a) => a.active && !a.walking && a.thinkingUntil > age).forEach(speechBubble);
     if (encounter && encounter.participants.every((i) => !agents[i].path.length)) {
       const active = encounter.participants.map((i) => agents[i]);
       const sender = Math.floor(encounter.elapsed / 1.6) % active.length;
       const from = active[sender],
         to = active[(sender + 1) % active.length];
       const progress = (encounter.elapsed % 1.6) / 1.6;
+      speechBubble(from);
       // A tiny shared note crosses the safe gap: a visual hint of coordination, without a dashboard.
       const x = from.x + (to.x - from.x) * progress;
       const y = from.y + (to.y - from.y) * progress - scrollY - 8;
@@ -824,11 +943,11 @@
       }
     } else if (age > nextMeeting) startEncounter();
     for (const agent of agents.filter((a) => a.active)) {
-      if (agent.path.length || (encounter && encounter.participants.includes(agent.index))) continue;
+      if (agent.path.length || agent.thinkingUntil > age || (encounter && encounter.participants.includes(agent.index))) continue;
       agent.rest -= dt;
       if (agent.rest <= 0) {
         chooseWalk(agent);
-        agent.rest = 1 + agent.index * 0.2;
+        agent.rest = 0.8 + Math.random() * 2;
       }
     }
     if (time - lastPaint > 1000 / 24) {

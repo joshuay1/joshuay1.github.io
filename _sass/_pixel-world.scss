@@ -38,6 +38,14 @@ html[data-theme="dark"] .pixel-world {
   --world-grid: rgba(215, 219, 193, 0.035);
 }
 
+// The divider is a ledge, with quiet space above for sprites and speech.
+@media (max-width: 899px) {
+  .pixel-world .about-page .post-header {
+    padding-bottom: 5rem;
+    margin-bottom: 2rem;
+  }
+}
+
 @media print {
   .pixel-world {
     background: white;

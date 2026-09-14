@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: Postdoc at MIT / <a href='mailto:joshyang@mit.edu'>joshyang@mit.edu</a> / AI, democracy & collective intelligence.
+subtitle: AI postdoc at MIT / <a href='mailto:joshyang@mit.edu'>joshyang@mit.edu</a> / AI safety, digital democracy & collective intelligence.
 
 profile:
   align: right
