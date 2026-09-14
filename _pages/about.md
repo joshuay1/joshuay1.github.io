@@ -22,9 +22,11 @@ latest_projects: true # includes a list of the newest projects
 teaching: true # includes a short teaching section
 ---
 
-Hello 👋🏽 I am Josh, a **postdoctoral researcher at MIT 🇺🇸** in [Michiel Bakker](https://miba.dev/)’s group. My postdoctoral research focuses on **AI oversight and AI safety**: how our ability to evaluate and govern AI can keep pace with its growing capabilities. I study how AI agents behave and interact, and how we can evaluate their safety and oversee them effectively, including through LLM agent-based simulations.
+Hello 👋🏽 I am Josh, a **postdoctoral researcher at MIT 🇺🇸** in [Michiel Bakker](https://miba.dev/)’s group. I work on **AI oversight and AI safety**, with a focus on **public input in AI alignment and democratic oversight**: how people can help shape AI’s goals and hold increasingly capable systems accountable.
 
-**My PhD focused on digital democracy**, using AI and voting algorithms to support collective decision-making. I completed it at **ETH Zurich 🇨🇭** in summer 2025 in the [Computational Social Science Lab](https://coss.ethz.ch/), supervised by Dirk Helbing. This work continues to inform my interest in pluralistic alignment: helping AI systems understand and represent diverse human values. With a background in Computer Science, I draw on Complex Systems, Computational Social Choice, and Human-AI Interaction. I am also an affiliated researcher at the [Collective Intelligence Project](https://www.cip.org/).
+This builds on my **PhD research in digital democracy** at **ETH Zurich 🇨🇭**, where I studied how AI and voting algorithms can support collective decision-making. I completed my PhD in summer 2025 in the [Computational Social Science Lab](https://coss.ethz.ch/), supervised by Dirk Helbing. I now bring that focus on public participation and diverse human values to AI alignment and democratic oversight. My postdoctoral work extends this research to AI-agent behaviour and interaction, and to tools for evaluating safety and supporting independent oversight.
+
+With a background in Computer Science, I draw on Complex Systems, Computational Social Choice, and Human-AI Interaction, including LLM agent-based simulations. I am also an affiliated researcher at the [Collective Intelligence Project](https://www.cip.org/).
 
 <aside class="thesis-callout" aria-labelledby="thesis-opportunity-title" markdown="1">
 <h2 id="thesis-opportunity-title">Work with us on AI oversight with Apertus</h2>
