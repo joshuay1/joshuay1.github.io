@@ -394,7 +394,7 @@
     lastTime = 0,
     lastPaint = 0;
   let age = 0,
-    nextMeeting = 12,
+    nextMeeting = 4,
     encounter = null,
     paused = false;
   let bubbles = [];
@@ -410,7 +410,6 @@
     walking: false,
     rest: 0.7 + index * 0.8,
     blocked: 0,
-    thinkingUntil: 0,
   }));
   const distance = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
   const docRect = (element) => {
@@ -642,7 +641,6 @@
       agent.alpha = 1;
       agent.rest = 0.7 + i * 0.8;
       agent.blocked = 0;
-      agent.thinkingUntil = 0;
     });
     render();
     schedule();
@@ -676,11 +674,6 @@
   }
 
   function chooseWalk(agent) {
-    // Sometimes stop to think; otherwise choose a different reachable destination.
-    if (Math.random() < 0.18) {
-      agent.thinkingUntil = age + 1.4 + Math.random();
-      return;
-    }
     const candidates = world.nodes.filter(
       (n) =>
         visibleNode(n) &&
@@ -708,37 +701,22 @@
     agent.rest = 1.5;
   }
 
+  function nearbyPartners(a, b) {
+    return distance(a, b) <= world.half * 2 + 36 && clearSegment(a, b);
+  }
+
   function startEncounter() {
-    const idle = agents.filter((a) => a.active && !a.path.length && a.thinkingUntil < age);
-    for (const host of idle) {
-      for (const peer of agents.filter((a) => a.active)) {
-        if (peer === host || distance(host, peer) > 360) continue;
-        const targets = world.nodes
-          .filter((n) => visibleNode(n) && distance(n, host) >= 44 && distance(n, host) <= 110 && clearSegment(host, n))
-          .sort((a, b) => distance(a, peer) - distance(b, peer));
-        for (const target of targets) {
-          const origin = peer.path[0] || peer.node;
-          const path = route(origin, target);
-          if (path === null) continue;
-          if (distance(peer, origin) > 0.01) path.unshift(origin);
-          const length = path.reduce((sum, n, i) => sum + distance(i ? path[i - 1] : peer, n), 0);
-          if (length > 360 || !availableLanePath(peer, path)) continue;
-          // Do not ask a peer to walk through the waiting conversation partner.
-          if (
-            path.some((end, i) => {
-              const start = i ? path[i - 1] : peer,
-                dx = end.x - start.x,
-                dy = end.y - start.y;
-              const t = Math.max(0, Math.min(1, ((host.x - start.x) * dx + (host.y - start.y) * dy) / (dx * dx + dy * dy || 1)));
-              return Math.hypot(host.x - start.x - t * dx, host.y - start.y - t * dy) < world.half * 2 + 6;
-            })
-          )
-            continue;
-          peer.path = path;
-          peer.thinkingUntil = 0;
-          encounter = { elapsed: 0, travel: 0, participants: [host.index, peer.index] };
-          return true;
-        }
+    const present = agents.filter((a) => a.active && a.alpha > 0.9 && visibleNode(a));
+    for (let i = 0; i < present.length; i++) {
+      for (let j = i + 1; j < present.length; j++) {
+        const host = present[i],
+          peer = present[j];
+        if (!nearbyPartners(host, peer)) continue;
+        // A chance meeting interrupts their walks; both resume their own routes afterward.
+        host.walking = false;
+        peer.walking = false;
+        encounter = { elapsed: 0, participants: [host.index, peer.index] };
+        return true;
       }
     }
     return false;
@@ -863,7 +841,7 @@
     ctx.fillStyle = "#fafaf7";
     ctx.fillRect(x + 2, y + 2, width - 4, 8);
     ctx.fillStyle = "#294c48";
-    // Three small dots take turns rising one pixel, as if thinking or replying.
+    // Three small dots take turns rising one pixel as the neighbors reply.
     for (let i = 0; i < 3; i++) ctx.fillRect(x + 5 + i * 5, y + 5 - (Math.floor(age * 3) % 3 === i ? 1 : 0), 2, 2);
   }
 
@@ -899,8 +877,7 @@
           ctx.fillText("Josh", x, y - h - 5);
         }
       });
-    agents.filter((a) => a.active && !a.walking && a.thinkingUntil > age).forEach(speechBubble);
-    if (encounter && encounter.participants.every((i) => !agents[i].path.length)) {
+    if (encounter && nearbyPartners(agents[encounter.participants[0]], agents[encounter.participants[1]])) {
       const active = encounter.participants.map((i) => agents[i]);
       const sender = Math.floor(encounter.elapsed / 1.6) % active.length;
       const from = active[sender],
@@ -931,19 +908,14 @@
       .filter((a) => a.active)
       .forEach((agent) => {
         agent.alpha = Math.max(0, Math.min(1, agent.alpha + dt));
-        move(agent, dt);
+        if (!encounter || !encounter.participants.includes(agent.index)) move(agent, dt);
       });
     if (encounter) {
-      if (encounter.participants.some((i) => agents[i].path.length)) {
-        encounter.travel += dt;
-        if (encounter.travel > 16) finishEncounter();
-      } else {
-        encounter.elapsed += dt;
-        if (encounter.elapsed > 4.8) finishEncounter();
-      }
+      encounter.elapsed += dt;
+      if (encounter.elapsed > 4.8 || !nearbyPartners(agents[encounter.participants[0]], agents[encounter.participants[1]])) finishEncounter();
     } else if (age > nextMeeting) startEncounter();
     for (const agent of agents.filter((a) => a.active)) {
-      if (agent.path.length || agent.thinkingUntil > age || (encounter && encounter.participants.includes(agent.index))) continue;
+      if (agent.path.length || (encounter && encounter.participants.includes(agent.index))) continue;
       agent.rest -= dt;
       if (agent.rest <= 0) {
         chooseWalk(agent);
