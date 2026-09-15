@@ -405,7 +405,6 @@
     node: null,
     path: [],
     active: index === 0,
-    alpha: index === 0 ? 1 : 0,
     facing: "south",
     walking: false,
     rest: 0.7 + index * 0.8,
@@ -638,7 +637,6 @@
       );
       settleAt(agent, node);
       if (node) placed.push(node);
-      agent.alpha = 1;
       agent.rest = 0.7 + i * 0.8;
       agent.blocked = 0;
     });
@@ -706,7 +704,7 @@
   }
 
   function startEncounter() {
-    const present = agents.filter((a) => a.active && a.alpha > 0.9 && visibleNode(a));
+    const present = agents.filter((a) => a.active && visibleNode(a));
     for (let i = 0; i < present.length; i++) {
       for (let j = i + 1; j < present.length; j++) {
         const host = present[i],
@@ -737,7 +735,6 @@
         (other) =>
           other !== agent &&
           other.active &&
-          other.alpha > 0.5 &&
           distance(other, proposed) < world.half * 2 + 4 &&
           distance(other, proposed) < distance(other, agent) &&
           (other.index < agent.index || !other.walking)
@@ -788,7 +785,6 @@
       );
       if (!target) continue;
       settleAt(agent, target);
-      agent.alpha = 0;
       agent.rest = 0.8;
       finishEncounter();
     }
@@ -831,7 +827,7 @@
     bubbles.push(rect);
     const x = rect.left,
       y = rect.top - scrollY;
-    ctx.globalAlpha = ambientOpacity * agent.alpha;
+    ctx.globalAlpha = ambientOpacity;
     ctx.fillStyle = "#53695f";
     ctx.fillRect(x + 2, y, width - 4, 1);
     ctx.fillRect(x, y + 2, width, 9);
@@ -861,7 +857,7 @@
         const x = Math.round(agent.x),
           y = Math.round(agent.y - scrollY);
         if (y < 0 || y > innerHeight + world.spriteHeight) return;
-        ctx.globalAlpha = agent.alpha * ambientOpacity;
+        ctx.globalAlpha = ambientOpacity;
         const h = world.spriteHeight,
           w = h * 0.8;
         ctx.fillStyle = "rgba(41,43,37,0.17)";
@@ -907,7 +903,6 @@
     agents
       .filter((a) => a.active)
       .forEach((agent) => {
-        agent.alpha = Math.max(0, Math.min(1, agent.alpha + dt));
         if (!encounter || !encounter.participants.includes(agent.index)) move(agent, dt);
       });
     if (encounter) {
