@@ -875,21 +875,8 @@
       });
     if (encounter && nearbyPartners(agents[encounter.participants[0]], agents[encounter.participants[1]])) {
       const active = encounter.participants.map((i) => agents[i]);
-      const sender = Math.floor(encounter.elapsed / 1.6) % active.length;
-      const from = active[sender],
-        to = active[(sender + 1) % active.length];
-      const progress = (encounter.elapsed % 1.6) / 1.6;
-      speechBubble(from);
-      // A tiny shared note crosses the safe gap: a visual hint of coordination, without a dashboard.
-      const x = from.x + (to.x - from.x) * progress;
-      const y = from.y + (to.y - from.y) * progress - scrollY - 8;
-      ctx.globalAlpha = Math.sin(progress * Math.PI) * ambientOpacity;
-      ctx.fillStyle = "#293c35";
-      ctx.fillRect(Math.round(x - 4), Math.round(y - 3), 8, 7);
-      ctx.fillStyle = "#faf3e3";
-      ctx.fillRect(Math.round(x - 3), Math.round(y - 2), 6, 5);
-      ctx.fillStyle = "#d9a747";
-      ctx.fillRect(Math.round(x - 2), Math.round(y - 1), 4, 1);
+      const speaker = Math.floor(encounter.elapsed / 1.6) % active.length;
+      speechBubble(active[speaker]);
     }
     ctx.restore();
     ctx.globalAlpha = 1;
