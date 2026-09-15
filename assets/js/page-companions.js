@@ -390,7 +390,6 @@
   let world,
     frame = null,
     rebuildTimer,
-    scrollTimer,
     lastTime = 0,
     lastPaint = 0;
   let age = 0,
@@ -483,10 +482,6 @@
     return !world.obstacles.some((r) => right > r.left && left < r.right && bottom > r.top - 2 && top < r.bottom + 2);
   }
 
-  function visibleNode(node) {
-    return node.y > scrollY + world.nav + world.spriteHeight + 12 && node.y < scrollY + innerHeight - 24;
-  }
-
   function nearest(x, y, filter = () => true) {
     return world.nodes.filter(filter).sort((a, b) => Math.hypot(a.x - x, a.y - y) - Math.hypot(b.x - x, b.y - y))[0];
   }
@@ -534,6 +529,7 @@
   }
 
   function rebuild() {
+    const previousWidth = world ? world.width : null;
     const bounds = docRect(page),
       narrow = innerWidth < 900;
     const spriteHeight = narrow ? 32 : 40,
@@ -623,18 +619,18 @@
     const photo = docRect(page.querySelector(".profile") || page);
     const placed = [];
     agents.forEach((agent, i) => {
-      agent.active = i < (motion.matches ? 1 : narrow ? 3 : 5);
+      const wasActive = agent.active;
+      agent.active = i < (motion.matches ? 1 : appearances.length);
       if (!agent.active) {
         agent.path = [];
         return;
       }
-      const x = i % 2 ? bounds.left - (i === 3 ? 84 : 30) : bounds.right + (i === 2 ? 84 : 30);
-      const y = photo.top + 40 + i * 130;
-      const node = nearest(
-        x,
-        Math.min(y, scrollY + innerHeight - 50),
-        (n) => visibleNode(n) && n.edges.length && placed.every((p) => distance(p, n) > 60)
-      );
+      // Document anchors spread companions across the page, independent of the viewport.
+      const keepPosition = wasActive && agent.node && previousWidth === innerWidth;
+      const x = keepPosition ? agent.x : i < 2 || i === 4 ? bounds.right + 30 : bounds.left - 30;
+      const anchorY = i < 2 ? (narrow ? laneY : photo.top + 40) : i < 4 ? bounds.top + (bounds.bottom - bounds.top) * 0.5 : bounds.bottom - 180;
+      const y = keepPosition ? agent.y : anchorY + (!narrow && i % 2 ? 60 : 0);
+      const node = nearest(x, y, (n) => n.edges.length && placed.every((p) => distance(p, n) > 44));
       settleAt(agent, node);
       if (node) placed.push(node);
       agent.rest = 0.7 + i * 0.8;
@@ -674,11 +670,7 @@
   function chooseWalk(agent) {
     const candidates = world.nodes.filter(
       (n) =>
-        visibleNode(n) &&
-        distance(n, agent) > 42 &&
-        distance(n, agent) < 420 &&
-        n.edges.length &&
-        agents.every((a) => !a.active || a === agent || distance(a, n) > 44)
+        distance(n, agent) > 42 && distance(n, agent) < 420 && n.edges.length && agents.every((a) => !a.active || a === agent || distance(a, n) > 44)
     );
     // Shuffle before gently preferring section edges and the outer margins.
     for (let i = candidates.length - 1; i > 0; i--) {
@@ -704,7 +696,7 @@
   }
 
   function startEncounter() {
-    const present = agents.filter((a) => a.active && visibleNode(a));
+    const present = agents.filter((a) => a.active);
     for (let i = 0; i < present.length; i++) {
       for (let j = i + 1; j < present.length; j++) {
         const host = present[i],
@@ -771,24 +763,6 @@
     agents.forEach((a) => {
       a.rest = 0.8 + Math.random() * 1.8;
     });
-  }
-
-  function maintainViewport() {
-    if (!world || motion.matches) return;
-    for (const agent of agents.filter((a) => a.active)) {
-      if (agent.y >= scrollY + world.nav && agent.y <= scrollY + innerHeight + 80) continue;
-      // Re-enter only after leaving view, never dragging a character across text.
-      const target = nearest(
-        agent.x,
-        scrollY + innerHeight * (0.25 + agent.index * 0.12),
-        (n) => visibleNode(n) && n.edges.length && agents.every((a) => !a.active || a === agent || distance(n, a) > 44)
-      );
-      if (!target) continue;
-      settleAt(agent, target);
-      agent.rest = 0.8;
-      finishEncounter();
-    }
-    schedule();
   }
 
   const overlaps = (a, b) => a.right > b.left && a.left < b.right && a.bottom > b.top && a.top < b.bottom;
@@ -929,20 +903,21 @@
   });
   motion.addEventListener("change", rebuild);
   document.addEventListener("visibilitychange", schedule);
-  addEventListener(
-    "scroll",
-    () => {
-      render();
-      clearTimeout(scrollTimer);
-      scrollTimer = setTimeout(maintainViewport, 180);
-    },
-    { passive: true }
-  );
+  // Scrolling changes only the camera; simulation positions and routes stay untouched.
+  addEventListener("scroll", render, { passive: true });
   const queueRebuild = () => {
     clearTimeout(rebuildTimer);
     rebuildTimer = setTimeout(rebuild, 150);
   };
-  addEventListener("resize", queueRebuild);
+  addEventListener("resize", () => {
+    if (!world || world.width !== innerWidth) queueRebuild();
+    else {
+      // Mobile browser chrome can resize the viewport while scrolling.
+      canvas.height = innerHeight;
+      ctx.imageSmoothingEnabled = false;
+      render();
+    }
+  });
   addEventListener("load", queueRebuild);
   if ("ResizeObserver" in window) {
     new ResizeObserver(queueRebuild).observe(page);
