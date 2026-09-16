@@ -51,7 +51,7 @@ layout: default
     {% endif %}
 
     <!-- Latest posts -->
-    {% if site.latest_posts.enabled %}
+    {% if page.latest_posts and site.latest_posts.enabled %}
       <h2>
         <a href="{{ '/blog/' | relative_url }}" style="color: inherit">latest posts</a>
       </h2>
@@ -69,7 +69,7 @@ layout: default
     <!-- Latest projects -->
     {% if page.latest_projects %}
       <h2>
-        <a href="{{ '/projects/' | relative_url }}" style="color: inherit">real-world projects</a>
+        <a href="{{ '/projects/' | relative_url }}" style="color: inherit">projects</a>
       </h2>
       {% include latest_projects.liquid %}
     {% endif %}

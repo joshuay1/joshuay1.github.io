@@ -40,6 +40,27 @@
       pants: "#373b36",
     },
     { color: "#3c567c", light: "#6380a4", skin: "#9d684d", shade: "#794b3b", hair: "#292529", hairLight: "#4c3d3a", style: "cap", pants: "#354253" },
+    { color: "#8a6449", light: "#b68e69", skin: "#b97c58", shade: "#9a6246", hair: "#282b2d", hairLight: "#414747", style: "long", pants: "#35424b" },
+    {
+      color: "#477c79",
+      light: "#74a6a1",
+      skin: "#efbd92",
+      shade: "#d69a74",
+      hair: "#75432d",
+      hairLight: "#9a6240",
+      style: "short",
+      pants: "#49595b",
+    },
+    {
+      color: "#a87943",
+      light: "#cba26c",
+      skin: "#9d684d",
+      shade: "#794b3b",
+      hair: "#292529",
+      hairLight: "#4c3d3a",
+      style: "glasses",
+      pants: "#354253",
+    },
   ];
   const spriteCache = new Map();
   function personSprite(index, facing, pose, blink) {
@@ -397,8 +418,25 @@
     encounter = null,
     paused = false;
   let bubbles = [];
+  const randomBetween = (min, max) => min + Math.random() * (max - min);
+  // A shuffled range guarantees a mix of leisurely walkers and brisk explorers.
+  const speeds = appearances.map((_, i) => 20 + i * 8 + Math.random() * 6);
+  for (let i = speeds.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [speeds[i], speeds[j]] = [speeds[j], speeds[i]];
+  }
   const agents = Array.from({ length: appearances.length }, (_, index) => ({
     index,
+    speed: speeds[index],
+    pace: speeds[index],
+    targetPace: speeds[index],
+    nextBehaviorChange: randomBetween(2, 7),
+    pauseUntil: 0,
+    changeRoute: false,
+    pauseLength: randomBetween(0.6, 3.6),
+    roamingRange: randomBetween(180, 600),
+    patience: randomBetween(0.7, 2.2),
+    stride: Math.random() * 24,
     x: 0,
     y: 0,
     node: null,
@@ -406,9 +444,10 @@
     active: index === 0,
     facing: "south",
     walking: false,
-    rest: 0.7 + index * 0.8,
+    rest: randomBetween(0.2, 2.5),
     blocked: 0,
   }));
+  const restDuration = (agent) => randomBetween(0.25, agent.pauseLength * 1.5);
   const distance = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
   const docRect = (element) => {
     const r = element.getBoundingClientRect();
@@ -620,20 +659,23 @@
     const placed = [];
     agents.forEach((agent, i) => {
       const wasActive = agent.active;
-      agent.active = i < (motion.matches ? 1 : appearances.length);
+      agent.active = i < (motion.matches ? 1 : narrow ? 5 : appearances.length);
       if (!agent.active) {
         agent.path = [];
         return;
       }
       // Document anchors spread companions across the page, independent of the viewport.
       const keepPosition = wasActive && agent.node && previousWidth === innerWidth;
-      const x = keepPosition ? agent.x : i < 2 || i === 4 ? bounds.right + 30 : bounds.left - 30;
-      const anchorY = i < 2 ? (narrow ? laneY : photo.top + 40) : i < 4 ? bounds.top + (bounds.bottom - bounds.top) * 0.5 : bounds.bottom - 180;
-      const y = keepPosition ? agent.y : anchorY + (!narrow && i % 2 ? 60 : 0);
+      const rightSide = i < 2 || i === 4 || i === 7;
+      const nearTop = i < 2 || i === 5 || i === 6;
+      const x = keepPosition ? agent.x : rightSide ? bounds.right + 30 : bounds.left - 30;
+      const anchorY = nearTop ? (narrow ? laneY : photo.top + 40) : i < 4 ? bounds.top + (bounds.bottom - bounds.top) * 0.5 : bounds.bottom - 180;
+      const pairOffset = i === 1 || i === 3 || i === 6 || i === 7 ? 60 : 0;
+      const y = keepPosition ? agent.y : anchorY + (narrow ? 0 : pairOffset);
       const node = nearest(x, y, (n) => n.edges.length && placed.every((p) => distance(p, n) > 44));
       settleAt(agent, node);
       if (node) placed.push(node);
-      agent.rest = 0.7 + i * 0.8;
+      agent.rest = restDuration(agent);
       agent.blocked = 0;
     });
     render();
@@ -668,9 +710,13 @@
   }
 
   function chooseWalk(agent) {
+    const range = agent.roamingRange * randomBetween(0.75, 1.25);
     const candidates = world.nodes.filter(
       (n) =>
-        distance(n, agent) > 42 && distance(n, agent) < 420 && n.edges.length && agents.every((a) => !a.active || a === agent || distance(a, n) > 44)
+        distance(n, agent) > 42 &&
+        distance(n, agent) < range &&
+        n.edges.length &&
+        agents.every((a) => !a.active || a === agent || distance(a, n) > 44)
     );
     // Shuffle before gently preferring section edges and the outer margins.
     for (let i = candidates.length - 1; i > 0; i--) {
@@ -688,7 +734,6 @@
         return;
       }
     }
-    agent.rest = 1.5;
   }
 
   function nearbyPartners(a, b) {
@@ -697,6 +742,11 @@
 
   function startEncounter() {
     const present = agents.filter((a) => a.active);
+    // Give each nearby group a chance to chat, wherever they are in the document.
+    for (let i = present.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [present[i], present[j]] = [present[j], present[i]];
+    }
     for (let i = 0; i < present.length; i++) {
       for (let j = i + 1; j < present.length; j++) {
         const host = present[i],
@@ -705,21 +755,38 @@
         // A chance meeting interrupts their walks; both resume their own routes afterward.
         host.walking = false;
         peer.walking = false;
-        encounter = { elapsed: 0, participants: [host.index, peer.index] };
+        const turnDuration = randomBetween(1.1, 2);
+        encounter = {
+          elapsed: 0,
+          turnDuration,
+          duration: turnDuration * (2 + Math.floor(Math.random() * 3)),
+          participants: [host.index, peer.index],
+        };
         return true;
       }
     }
     return false;
   }
 
+  function updateBehavior(agent, dt) {
+    if (age >= agent.nextBehaviorChange) {
+      agent.nextBehaviorChange = age + randomBetween(4, 14);
+      agent.targetPace = Math.max(14, Math.min(96, agent.speed * randomBetween(0.55, 1.5)));
+      agent.pauseUntil = Math.random() < 0.25 ? age + restDuration(agent) : 0;
+      agent.changeRoute = Math.random() < 0.45;
+    }
+    // Ease into a new pace rather than jolting between speeds.
+    agent.pace += (agent.targetPace - agent.pace) * Math.min(1, dt * 2);
+  }
+
   function move(agent, dt) {
-    agent.walking = agent.path.length > 0;
+    agent.walking = agent.path.length > 0 && age >= agent.pauseUntil;
     if (!agent.walking) return;
     const target = agent.path[0],
       dx = target.x - agent.x,
       dy = target.y - agent.y;
     const remaining = Math.hypot(dx, dy),
-      step = Math.min(remaining, dt * (agent.index ? 30 : 25));
+      step = Math.min(remaining, dt * agent.pace);
     const proposed = { x: agent.x + (dx / (remaining || 1)) * step, y: agent.y + (dy / (remaining || 1)) * step };
     // A brief yield, then backtrack to let another companion pass.
     if (
@@ -734,10 +801,10 @@
     ) {
       agent.walking = false;
       agent.blocked += dt;
-      if (agent.blocked > 1.5) {
+      if (agent.blocked > agent.patience) {
         if (encounter && encounter.participants.includes(agent.index)) finishEncounter();
         agent.path = distance(agent, agent.node) > 1 ? [agent.node] : [];
-        agent.rest = 0.8;
+        agent.rest = restDuration(agent);
         agent.blocked = 0;
       }
       return;
@@ -751,17 +818,25 @@
     agent.facing = Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? "east" : "west") : dy > 0 ? "south" : "north";
     agent.x = proposed.x;
     agent.y = proposed.y;
+    agent.stride += step;
     if (remaining <= step + 0.01) {
       agent.node = target;
       agent.path.shift();
+      // Change direction only at a safe waypoint, never cutting across page content.
+      if (agent.changeRoute) {
+        agent.path = [];
+        agent.changeRoute = false;
+        agent.rest = 0;
+      }
     }
   }
 
   function finishEncounter() {
+    const participants = encounter ? encounter.participants : [];
     encounter = null;
     nextMeeting = age + 8 + Math.random() * 8;
-    agents.forEach((a) => {
-      a.rest = 0.8 + Math.random() * 1.8;
+    participants.forEach((i) => {
+      agents[i].rest = restDuration(agents[i]);
     });
   }
 
@@ -836,7 +911,7 @@
           w = h * 0.8;
         ctx.fillStyle = "rgba(41,43,37,0.17)";
         ctx.fillRect(x - w / 3, y - 2, (w * 2) / 3, 3);
-        const pose = agent.walking ? Math.floor(age * 6) % 4 : 0;
+        const pose = agent.walking ? Math.floor(agent.stride / 6) % 4 : 0;
         ctx.drawImage(personSprite(agent.index, agent.walking ? agent.facing : "south", pose, false), Math.round(x - w / 2), y - h, w, h);
         if (agent.index === 0 && age < 7 && !world.narrow) {
           ctx.font = '12px "JetBrains Mono", monospace';
@@ -849,7 +924,7 @@
       });
     if (encounter && nearbyPartners(agents[encounter.participants[0]], agents[encounter.participants[1]])) {
       const active = encounter.participants.map((i) => agents[i]);
-      const speaker = Math.floor(encounter.elapsed / 1.6) % active.length;
+      const speaker = Math.floor(encounter.elapsed / encounter.turnDuration) % active.length;
       speechBubble(active[speaker]);
     }
     ctx.restore();
@@ -864,18 +939,22 @@
     agents
       .filter((a) => a.active)
       .forEach((agent) => {
-        if (!encounter || !encounter.participants.includes(agent.index)) move(agent, dt);
+        if (!encounter || !encounter.participants.includes(agent.index)) {
+          updateBehavior(agent, dt);
+          move(agent, dt);
+        }
       });
     if (encounter) {
       encounter.elapsed += dt;
-      if (encounter.elapsed > 4.8 || !nearbyPartners(agents[encounter.participants[0]], agents[encounter.participants[1]])) finishEncounter();
+      if (encounter.elapsed > encounter.duration || !nearbyPartners(agents[encounter.participants[0]], agents[encounter.participants[1]]))
+        finishEncounter();
     } else if (age > nextMeeting) startEncounter();
     for (const agent of agents.filter((a) => a.active)) {
-      if (agent.path.length || (encounter && encounter.participants.includes(agent.index))) continue;
+      if (agent.path.length || age < agent.pauseUntil || (encounter && encounter.participants.includes(agent.index))) continue;
       agent.rest -= dt;
       if (agent.rest <= 0) {
         chooseWalk(agent);
-        agent.rest = 0.8 + Math.random() * 2;
+        agent.rest = restDuration(agent);
       }
     }
     if (time - lastPaint > 1000 / 24) {

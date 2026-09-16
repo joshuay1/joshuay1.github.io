@@ -1,6 +1,6 @@
 ---
 layout: page
-title: real-world projects
+title: projects
 permalink: /projects/
 description: A growing collection of real-world deployments and experimental interfaces.
 nav: true
