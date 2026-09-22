@@ -23,6 +23,19 @@ We want to build tools that help people investigate agent behaviour, find missin
 
 This is already a practical problem. [METR’s investigation of an agent incident](https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/) describes how hard it was to check large volumes of AI-generated analysis. Anthropic’s September 2026 [commitment to embedded evaluators](https://darioamodei.com/post/we-must-pace-the-frontier) makes the question especially timely: even with access, how does a small team keep up?
 
+## What records do we mean?
+
+An **agent trace** is a record of an AI agent carrying out a task: the instructions and context it received, its responses, the tools it called and the results those tools returned. For example, a research agent might read an evaluation plan, run a training script, inspect the results and write a report.
+
+To check what happened, we would connect these traces with supporting records:
+
+- **Model interactions:** prompts, supplied documents and model responses, with model versions and timestamps where available.
+- **Tool activity:** commands executed, files read or changed, searches and their results, including errors.
+- **Research and development records:** code versions, job logs, experiment settings, model checkpoint IDs and evaluation outputs.
+- **Commitments and decisions:** evaluation plans, approval and release records, and relevant messages or documents where access is agreed.
+
+An auditor could then follow a claim such as “this model passed the required evaluation” back to the exact checkpoint, evaluation run and result. Part of the research is checking whether the available records support that conclusion, and identifying what is missing. A saved conversation alone does not show that every relevant action was recorded.
+
 ## Connecting to Pacing the Frontier
 
 [Pacing the Frontier](https://www.pacingthefrontier.com/) calls for an international effort to develop technical and governance tools for deliberately pacing automated AI development. Our project aims to contribute to that goal through **practical, independent AI oversight**: tools that help reviewers verify safety claims, investigate incidents and assess whether developers are following their commitments. Reliable evidence is essential if coordination across labs and countries is to be meaningful.
@@ -61,5 +74,5 @@ Email **[joshyang@mit.edu](mailto:joshyang@mit.edu?cc=bakker%40mit.edu&subject=A
 
 **You don’t need to be looking for a thesis.** If you want to contribute to the project and work towards papers together, I’d be happy to hear from you too.
 
-<p class="thesis-context-date">Updated 14 September 2026.</p>
+<p class="thesis-context-date">Updated 22 September 2026.</p>
 <p class="thesis-back-link"><a href="https://www.joshuacyang.com/">← Back to Josh’s homepage</a></p>
