@@ -1,0 +1,188 @@
+@font-face {
+  font-family: "News Pixel";
+  src: url("/assets/fonts/vt323-regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+// A small conversation at the top of the same world the companions inhabit.
+.about-page .about-heading {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  margin-bottom: 1.25rem;
+
+  .post-title {
+    flex-shrink: 0;
+    margin-bottom: 0;
+  }
+}
+
+.latest-news-dialogue {
+  --news-bubble-edge: #9aa69d;
+  --news-bubble-fill: #edf0ec;
+  --news-bubble-text: #4d5d52;
+  display: flex;
+  flex: 0 1 216px;
+  align-items: flex-end;
+  min-width: 0;
+}
+
+html[data-theme="dark"] .latest-news-dialogue {
+  --news-bubble-edge: #78867c;
+  --news-bubble-fill: #343c36;
+  --news-bubble-text: #dde5df;
+}
+
+.latest-news-bubble {
+  --bubble-shape: polygon(
+    12px 0,
+    calc(100% - 12px) 0,
+    calc(100% - 12px) 4px,
+    calc(100% - 8px) 4px,
+    calc(100% - 8px) 8px,
+    calc(100% - 4px) 8px,
+    calc(100% - 4px) 12px,
+    100% 12px,
+    100% calc(100% - 12px),
+    calc(100% - 4px) calc(100% - 12px),
+    calc(100% - 4px) calc(100% - 8px),
+    calc(100% - 8px) calc(100% - 8px),
+    calc(100% - 8px) calc(100% - 4px),
+    calc(100% - 12px) calc(100% - 4px),
+    calc(100% - 12px) 100%,
+    12px 100%,
+    12px calc(100% - 4px),
+    8px calc(100% - 4px),
+    8px calc(100% - 8px),
+    4px calc(100% - 8px),
+    4px calc(100% - 12px),
+    0 calc(100% - 12px),
+    0 12px,
+    4px 12px,
+    4px 8px,
+    8px 8px,
+    8px 4px,
+    12px 4px
+  );
+  position: relative;
+  isolation: isolate;
+  flex: 1;
+  min-width: 0;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  animation: news-dialogue-arrive 240ms steps(3, end) both;
+
+  // Two inset pixel contours form a thin outline with stepped corners.
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    clip-path: var(--bubble-shape);
+  }
+
+  &::before {
+    inset: -2px;
+    z-index: -2;
+    background: var(--news-bubble-edge);
+  }
+
+  &::after {
+    inset: 0;
+    z-index: -1;
+    background: var(--news-bubble-fill);
+  }
+}
+
+.latest-news-tail {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 100%, 50% 50%, 0 50%);
+  }
+
+  &::before {
+    left: -12px;
+    bottom: 12px;
+    width: 12px;
+    height: 12px;
+    background: var(--news-bubble-edge);
+  }
+
+  &::after {
+    left: -8px;
+    bottom: 14px;
+    width: 10px;
+    height: 8px;
+    background: var(--news-bubble-fill);
+  }
+}
+
+.latest-news-message {
+  color: var(--news-bubble-text);
+  font-family: "News Pixel", "JetBrains Mono", monospace;
+  font-size: 0.875rem;
+  line-height: 1.15;
+  font-weight: 400;
+  overflow-wrap: anywhere;
+
+  p {
+    margin: 0;
+  }
+
+  strong {
+    font-weight: inherit;
+  }
+
+  a {
+    color: inherit;
+    font-weight: inherit;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  img {
+    max-width: 100%;
+  }
+}
+
+@keyframes news-dialogue-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 699px) {
+  .about-page .about-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .latest-news-dialogue {
+    flex-basis: auto;
+    width: 100%;
+    max-width: 216px;
+  }
+
+  .latest-news-bubble {
+    margin-bottom: 0.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce), print {
+  .latest-news-bubble {
+    animation: none;
+  }
+}

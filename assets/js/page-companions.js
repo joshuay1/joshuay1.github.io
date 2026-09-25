@@ -577,7 +577,7 @@
     const nav = navbar ? navbar.getBoundingClientRect().bottom : 56;
     const obstacles = [
       ...page.querySelectorAll(
-        "p,h1,h2,h3,h4,hr,table,.profile,.thesis-callout,.democracy-talk-feature,.card,.publications .row,.contact-icons,button"
+        "p,h1,h2,h3,h4,hr,table,.profile,.thesis-callout,.democracy-talk-feature,.latest-news-dialogue,.card,.publications .row,.contact-icons,button"
       ),
     ]
       .filter((el) => el.getClientRects().length)

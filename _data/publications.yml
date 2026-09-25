@@ -10,8 +10,8 @@ yang2026belief:
   author_text: "Joshua C. Yang, Maurice Flechtner, Damian Dailisan, and Michiel A. Bakker"
   year: "2026"
   publication_date: "2026"
-  venue: "arXiv preprint arXiv:2605.15343"
-  venue_type: "Preprint"
+  venue: "Advances in Neural Information Processing Systems (NeurIPS)"
+  venue_type: "Conference · accepted for publication"
   arxiv: "2605.15343"
   source_url: "https://arxiv.org/abs/2605.15343"
   pdf_url: "https://arxiv.org/pdf/2605.15343"
@@ -49,15 +49,16 @@ yang2026belief:
     - social simulation
     - deliberation
   apa: >-
-    Yang, J. C., Flechtner, M., Dailisan, D., & Bakker, M. A. (2026). Belief Engine: Configurable and Inspectable Stance Dynamics in Multi-Agent LLM Deliberation. arXiv preprint arXiv:2605.15343.
+    Yang, J. C., Flechtner, M., Dailisan, D., & Bakker, M. A. (2026). Belief Engine: Configurable and Inspectable Stance Dynamics in Multi-Agent LLM Deliberation. Accepted for publication in Advances in Neural Information Processing Systems (NeurIPS).
   bibtex: |-
-    @misc{yang2026belief,
-      title   = {Belief Engine: Configurable and Inspectable Stance Dynamics in Multi-Agent LLM Deliberation},
-      author  = {Yang, Joshua C and Flechtner, Maurice and Dailisan, Damian and Bakker, Michiel A},
-      journal = {arXiv preprint arXiv:2605.15343},
-      year    = {2026},
-      arxiv   = {2605.15343},
-      url     = {https://arxiv.org/abs/2605.15343}
+    @inproceedings{yang2026belief,
+      title     = {Belief Engine: Configurable and Inspectable Stance Dynamics in Multi-Agent LLM Deliberation},
+      author    = {Yang, Joshua C and Flechtner, Maurice and Dailisan, Damian and Bakker, Michiel A},
+      booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+      year      = {2026},
+      note      = {Accepted for publication},
+      arxiv     = {2605.15343},
+      url       = {https://arxiv.org/abs/2605.15343}
     }
 
 yang2024llm:

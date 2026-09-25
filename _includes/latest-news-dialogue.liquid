@@ -1,0 +1,17 @@
+{% assign latest_news = site.news | sort: 'date' | last %}
+{% if page.news and site.announcements.enabled and latest_news %}
+  <aside class="latest-news-dialogue" aria-label="Announcement from Joshua">
+    <div class="latest-news-bubble">
+      <span class="latest-news-tail" aria-hidden="true"></span>
+      <div class="latest-news-message">
+        {% if latest_news.inline %}
+          {{ latest_news.content | emojify }}
+        {% else %}
+          <p>
+            <a href="{{ latest_news.url | relative_url }}">{{ latest_news.title }}</a>
+          </p>
+        {% endif %}
+      </div>
+    </div>
+  </aside>
+{% endif %}
