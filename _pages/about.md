@@ -22,9 +22,9 @@ latest_projects: true # includes a list of the newest projects
 teaching: true # includes a short teaching section
 ---
 
-Hello 👋🏽 I am Josh, a **postdoctoral researcher at MIT 🇺🇸** in [Michiel Bakker](https://miba.dev/)’s group. I work on **AI safety**, with a focus on **public input in AI alignment and democratic oversight**: how people can help shape AI’s goals and hold increasingly capable systems accountable.
+Hello 👋🏽 I am Josh, a **postdoctoral researcher at MIT 🇺🇸** in [Michiel Bakker](https://miba.dev/)’s group and the [Laboratory for Information and Decision Systems (LIDS)](https://lids.mit.edu/). I work on **AI safety**, studying **AI agent coordination and collective intelligence**: how AI agents can work together and with people to solve problems and make collective decisions. I also focus on **public input in AI alignment and democratic oversight**, exploring how people can help shape AI’s goals and hold increasingly capable systems accountable.
 
-This builds on my **PhD research in digital democracy and AI-Human collaboration** at **ETH Zurich 🇨🇭**, where I studied how AI and voting algorithms can support collective decision-making. I was supervised by Prof. Dirk Helbing in the [**Computational Social Science Lab**](https://coss.ethz.ch/).
+My **PhD at ETH Zurich 🇨🇭** began with **AI–Human collaboration**, developing voting algorithms and tools to support human collective decision-making in digital democracy. This work, together with **social choice theory**, later informed my study of **how AI agents coordinate**. I was supervised by Prof. Dirk Helbing in the [**Computational Social Science Lab**](https://coss.ethz.ch/).
 
 With a background in Computer Science, I draw on Complex Systems, Computational Social Choice, and Human-AI Interaction, including LLM agent-based simulations. I am also an affiliated researcher at the [Collective Intelligence Project](https://www.cip.org/).
 
