@@ -213,8 +213,11 @@
         {% endif %}
       {% endif %}
       {% if entry.pdf %}
+        {% assign pdf_first_character = entry.pdf | slice: 0, 1 %}
         {% if entry.pdf contains '://' %}
           <a href="{{ entry.pdf }}" class="btn btn-sm z-depth-0" role="button">PDF</a>
+        {% elsif pdf_first_character == '/' %}
+          <a href="{{ entry.pdf | relative_url }}" class="btn btn-sm z-depth-0" role="button">PDF</a>
         {% else %}
           <a href="{{ entry.pdf | prepend: '/assets/pdf/' | relative_url }}" class="btn btn-sm z-depth-0" role="button">PDF</a>
         {% endif %}

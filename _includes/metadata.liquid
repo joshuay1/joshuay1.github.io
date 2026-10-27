@@ -73,7 +73,9 @@
     {% endfor %}
     {% if publication.publication_date %}
       <meta name="citation_publication_date" content="{{ publication.publication_date | escape }}">
-      <meta name="citation_online_date" content="{{ publication.publication_date | escape }}">
+    {% endif %}
+    {% if publication.online_date %}
+      <meta name="citation_online_date" content="{{ publication.online_date | date: '%Y/%m/%d' }}">
     {% endif %}
     {% if publication.journal %}
       <meta name="citation_journal_title" content="{{ publication.journal | escape }}">
