@@ -6,10 +6,10 @@ bibkey: korecki2024democratizing
 keywords: "smart cities, traffic control, democratic algorithms, decentralised optimisation, algorithmic governance"
 ---
 
-### Core Contribution
+## Core Contribution
 
 This paper argues that traffic control is not only a technical optimisation problem. Because traffic decisions distribute costs and benefits across residents, commuters, neighbourhoods, and public space, smart-city systems should account for democratic preferences alongside efficiency.
 
-### Research Use
+## Research Use
 
 The paper connects transportation research with algorithmic governance. It is relevant for researchers working on decentralised traffic optimisation, smart-city infrastructure, participatory control systems, and democratic oversight of urban algorithms.
