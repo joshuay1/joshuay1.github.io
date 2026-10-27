@@ -14,7 +14,7 @@ Joshua C. Yang researches democratic technology, collective decision making, par
 
 ## Publications
 
-- From Voices to Shared Understanding: AI-Supported Dynamic Participatory Sensemaking in Citizen Deliberations: {{ site.url }}/pubs/murmi/
+- From Voices to Shared Understanding: AI-Supported Dynamic Participatory Sensemaking in Citizen Deliberations: {{ site.url }}/pubs/participatory-sensemaking/
   Preprint on Murmi and dynamic participatory sensemaking in four Swiss citizen workshops, with questionnaire responses from 76 participants.
 
 - Belief Engine: Configurable and Inspectable Stance Dynamics in Multi-Agent LLM Deliberation: {{ site.url }}/pubs/belief-engine/

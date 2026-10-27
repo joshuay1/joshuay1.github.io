@@ -21,9 +21,9 @@ Murmi was later tested through [Swiss AI Futures](https://swissaifutures.org/) i
 
 ### Research Paper
 
-Our preprint, [From Voices to Shared Understanding]({{ '/pubs/murmi/' | relative_url }}), studies four language-group workshops at the two Swiss AI Futures events, with questionnaire responses from **76 participants**. Participants more often favoured the AI-supported workflow for perceived output accuracy, while human moderation was more often favoured for feeling heard. These findings describe the workshop arrangements as a whole; they do not isolate the effect of AI.
+Our preprint, [From Voices to Shared Understanding]({{ '/pubs/participatory-sensemaking/' | relative_url }}), studies four language-group workshops at the two Swiss AI Futures events, with questionnaire responses from **76 participants**. Participants more often favoured the AI-supported workflow for perceived output accuracy, while human moderation was more often favoured for feeling heard. These findings describe the workshop arrangements as a whole; they do not isolate the effect of AI.
 
-The paper examines how citizens challenged voting cards and summaries, and what it takes for those concerns to influence the shared record. [Read the paper overview]({{ '/pubs/murmi/' | relative_url }}) or [download the preprint (PDF)]({{ '/pubs/murmi/murmi-preprint.pdf' | relative_url }}).
+The paper examines how citizens challenged voting cards and summaries, and what it takes for those concerns to influence the shared record. [Read the paper overview]({{ '/pubs/participatory-sensemaking/' | relative_url }}) or [download the preprint (PDF)]({{ '/pubs/participatory-sensemaking/participatory-sensemaking.pdf' | relative_url }}).
 
 ### Explore Murmi
 

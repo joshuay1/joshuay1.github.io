@@ -262,6 +262,10 @@ defaults:
       path: "assets"
     values:
       sitemap: false
+  - scope:
+      path: "pubs/murmi"
+    values:
+      sitemap: false
 
 sass:
   style: compressed

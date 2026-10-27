@@ -1,10 +1,10 @@
 ---
 layout: publication
-permalink: /pubs/murmi/
+permalink: /pubs/participatory-sensemaking/
 title: "From Voices to Shared Understanding: AI-Supported Dynamic Participatory Sensemaking in Citizen Deliberations"
-description: "The full Murmi preprint, including all figures, screenshots, tables, references, and appendices."
+description: "The full preprint on AI-supported participatory sensemaking in citizen deliberations, including all figures, tables, references, and appendices."
 bibkey: yang2026voices
-keywords: "Murmi, citizen deliberation, participatory sensemaking, human-AI collaboration, collaborative summarisation"
+keywords: "participatory sensemaking, citizen deliberation, human-AI collaboration, collaborative summarisation, Murmi"
 full_paper: true
 ---
 
