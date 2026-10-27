@@ -1,0 +1,25 @@
+topics:
+  - id: ai-collective-intelligence
+    label: AI & collective intelligence
+  - id: human-ai
+    label: Human–AI collaboration
+  - id: digital-democracy
+    label: Digital democracy
+  - id: voting-allocation
+    label: Voting & allocation
+  - id: decentralised-systems
+    label: Decentralised systems
+
+papers:
+  yang2026voices: [human-ai, digital-democracy, ai-collective-intelligence]
+  yang2026belief: [ai-collective-intelligence]
+  yang2024llm: [ai-collective-intelligence, human-ai, voting-allocation]
+  helbing2023democracy: [digital-democracy, decentralised-systems]
+  korecki2024democratizing: [digital-democracy, decentralised-systems]
+  "10.1145/3772363.3798958": [voting-allocation, digital-democracy]
+  ballandies2023taxonomy: [decentralised-systems]
+  yang2020respeaking: [human-ai]
+  yang2024designing: [voting-allocation, digital-democracy]
+  hanggli2024exploring: [voting-allocation, digital-democracy]
+  yang2025bridging: [voting-allocation, digital-democracy]
+  pournaras2025upgrading: [voting-allocation, digital-democracy]

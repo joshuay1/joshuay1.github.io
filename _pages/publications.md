@@ -8,8 +8,11 @@ nav_order: 2
 ---
 
 <!-- _pages/publications.md -->
-<div class="publications">
+<div class="publications" data-publication-browser>
+{% include publication_filters.liquid %}
+<div class="publication-results">
 
-{% bibliography %}
+{% bibliography --group_by none %}
 
+</div>
 </div>

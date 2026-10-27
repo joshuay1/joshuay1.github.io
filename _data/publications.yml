@@ -10,9 +10,9 @@ yang2026voices:
     - name: Kenneth Holstein
   author_text: "Joshua C. Yang, Maud Reveilhac, Aurelia Tamò-Larrieux, Dirk Helbing, and Kenneth Holstein"
   year: "2026"
-  publication_date: "2026-10-25"
-  venue: "Preprint · version dated 25 October 2026"
-  venue_type: "Preprint"
+  publication_date: "2026-09"
+  venue: "Preprint · September 2026 · Under review at CHI"
+  venue_type: "Preprint · Under review at CHI"
   pdf_url: "/assets/pdf/from-voices-to-shared-understanding-preprint.pdf"
   preview: "/assets/img/publication_preview/murmi-sensemaking.png"
   selected: true
@@ -48,14 +48,14 @@ yang2026voices:
     - Murmi
     - participatory summarisation
   apa: >-
-    Yang, J. C., Reveilhac, M., Tamò-Larrieux, A., Helbing, D., & Holstein, K. (2026). From Voices to Shared Understanding: AI-Supported Dynamic Participatory Sensemaking in Citizen Deliberations [Preprint]. https://www.joshuacyang.com/pubs/from-voices-to-shared-understanding/
+    Yang, J. C., Reveilhac, M., Tamò-Larrieux, A., Helbing, D., & Holstein, K. (2026). From Voices to Shared Understanding: AI-Supported Dynamic Participatory Sensemaking in Citizen Deliberations [Preprint; under review at CHI]. https://www.joshuacyang.com/pubs/from-voices-to-shared-understanding/
   bibtex: |-
     @misc{yang2026voices,
       title  = {From Voices to Shared Understanding: AI-Supported Dynamic Participatory Sensemaking in Citizen Deliberations},
       author = {Yang, Joshua C. and Reveilhac, Maud and Tamò-Larrieux, Aurelia and Helbing, Dirk and Holstein, Kenneth},
       year   = {2026},
-      month  = {October},
-      note   = {Preprint. Version dated 25 October 2026},
+      month  = {September},
+      note   = {Preprint. Under review at CHI},
       url    = {https://www.joshuacyang.com/pubs/from-voices-to-shared-understanding/}
     }
 
