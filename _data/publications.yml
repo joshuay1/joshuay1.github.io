@@ -1,3 +1,64 @@
+yang2026voices:
+  slug: from-voices-to-shared-understanding
+  title: "From Voices to Shared Understanding: AI-Supported Dynamic Participatory Sensemaking in Citizen Deliberations"
+  short_title: "From Voices to Shared Understanding"
+  authors:
+    - name: Joshua C. Yang
+    - name: Maud Reveilhac
+    - name: Aurelia Tamò-Larrieux
+    - name: Dirk Helbing
+    - name: Kenneth Holstein
+  author_text: "Joshua C. Yang, Maud Reveilhac, Aurelia Tamò-Larrieux, Dirk Helbing, and Kenneth Holstein"
+  year: "2026"
+  publication_date: "2026-10-25"
+  venue: "Preprint · version dated 25 October 2026"
+  venue_type: "Preprint"
+  pdf_url: "/assets/pdf/from-voices-to-shared-understanding-preprint.pdf"
+  preview: "/assets/img/publication_preview/murmi-sensemaking.png"
+  selected: true
+  tldr: >-
+    How can citizens help shape the summaries of their own discussions? We studied Murmi in four Swiss citizen workshops, connecting live conversation, voting on position cards, and summary review. Participants more often preferred the AI-supported workflow for perceived output accuracy, but preferred human moderation for feeling heard.
+  why: >-
+    A summary can retain a topic while losing the reasons, uncertainty or disagreement behind it. This study examines how participants can question and revise the way their views are represented, and what it takes for those challenges to influence the shared record.
+  abstract: >-
+    Citizen deliberation offers people with different experiences and priorities a way to shape responses to public problems together. Yet power to shape deliberation outputs often remains in the hands of a select few. Advances in AI offer potential to enable more participatory modes of summarisation, where participants co-construct evolving summaries during live deliberations. We developed Murmi to explore the potential for AI-supported dynamic participatory sensemaking, by integrating live discussion, voting on summarised position cards, and contestation of summaries. Across four workshops, questionnaire responses from 76 participants more often favoured the AI-supported workflow for perceived output accuracy (51% versus 38% for human moderation), but favoured a human-moderated workflow for feeling heard. Participants valued opportunities to express views and question wording, emphasis and missing concerns. These findings inform the design of AI-supported deliberation in which citizens shape not only the discussion, but how their collective views are interpreted and represented.
+  stats:
+    - value: "4"
+      label: "language-group workshops"
+    - value: "76"
+      label: "questionnaire respondents"
+    - value: "3"
+      label: "workshop languages"
+    - value: "2"
+      label: "Swiss events: Zurich and Lausanne"
+  highlights:
+    - title: "Participation includes interpretation"
+      text: "Citizens could check voting cards and summaries, question their wording, and raise missing concerns during the discussion."
+    - title: "Accuracy and feeling heard differed"
+      text: "Ratings more often favoured the AI-supported workflow for perceived output accuracy and human moderation for feeling heard. These are participant assessments, not a test of objective accuracy."
+    - title: "Agreement needs context"
+      text: "Support for individual propositions did not necessarily mean accepting how the discussion was summarised."
+    - title: "Revision needs follow-through"
+      text: "Participants need time to review the shared record and ways to find out whether their concerns have been addressed."
+  best_for: "Researchers and practitioners designing citizen deliberation, participatory AI, collaborative summarisation, and civic technology."
+  keywords:
+    - citizen deliberation
+    - dynamic participatory sensemaking
+    - human-AI collaboration
+    - Murmi
+    - participatory summarisation
+  apa: >-
+    Yang, J. C., Reveilhac, M., Tamò-Larrieux, A., Helbing, D., & Holstein, K. (2026). From Voices to Shared Understanding: AI-Supported Dynamic Participatory Sensemaking in Citizen Deliberations [Preprint]. https://www.joshuacyang.com/pubs/from-voices-to-shared-understanding/
+  bibtex: |-
+    @misc{yang2026voices,
+      title  = {From Voices to Shared Understanding: AI-Supported Dynamic Participatory Sensemaking in Citizen Deliberations},
+      author = {Yang, Joshua C. and Reveilhac, Maud and Tamò-Larrieux, Aurelia and Helbing, Dirk and Holstein, Kenneth},
+      year   = {2026},
+      month  = {October},
+      note   = {Preprint. Version dated 25 October 2026},
+      url    = {https://www.joshuacyang.com/pubs/from-voices-to-shared-understanding/}
+    }
+
 yang2026belief:
   slug: belief-engine
   title: "Belief Engine: Configurable and Inspectable Stance Dynamics in Multi-Agent LLM Deliberation"

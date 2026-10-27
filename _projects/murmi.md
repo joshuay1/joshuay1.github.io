@@ -19,6 +19,12 @@ Murmi was piloted with [vTaiwan](https://info.vtaiwan.tw/) on July 17, 2026, wit
 
 Murmi was later tested through [Swiss AI Futures](https://swissaifutures.org/) in citizen workshops in Zurich and Lausanne on August 11–12, 2026. More than **100 participants** used the app while discussing how AI is affecting work and education in Switzerland. They could see their contributions being recorded, structured, and reflected back as an outcome the group could review together.
 
+### Research Paper
+
+Our preprint, [From Voices to Shared Understanding]({{ '/pubs/from-voices-to-shared-understanding/' | relative_url }}), studies four language-group workshops at the two Swiss AI Futures events, with questionnaire responses from **76 participants**. Participants more often favoured the AI-supported workflow for perceived output accuracy, while human moderation was more often favoured for feeling heard. These findings describe the workshop arrangements as a whole; they do not isolate the effect of AI.
+
+The paper examines how citizens challenged voting cards and summaries, and what it takes for those concerns to influence the shared record. [Read the paper overview]({{ '/pubs/from-voices-to-shared-understanding/' | relative_url }}) or [download the preprint (PDF)]({{ '/assets/pdf/from-voices-to-shared-understanding-preprint.pdf' | relative_url }}).
+
 ### Explore Murmi
 
 <div class="row">

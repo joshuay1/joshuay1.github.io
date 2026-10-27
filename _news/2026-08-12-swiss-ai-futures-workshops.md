@@ -6,3 +6,5 @@ related_posts: false
 ---
 
 Our TA-SWISS project team hosted four workshops in Zurich and Lausanne across three languages, bringing together 100 people to discuss Swiss AI futures using the AI deliberation tool [Murmi](https://www.murmi.org/).
+
+Update, October 2026: [Read the study preprint]({{ '/pubs/from-voices-to-shared-understanding/' | relative_url }}) or [download the PDF]({{ '/assets/pdf/from-voices-to-shared-understanding-preprint.pdf' | relative_url }}).
