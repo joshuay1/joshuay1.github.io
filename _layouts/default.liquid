@@ -1,5 +1,10 @@
 <!doctype html>
-<html lang="{{ site.lang }}">
+<html
+  lang="{{ site.lang }}"
+  {% if page.layout == 'publication' %}
+    class="paper-view"
+  {% endif %}
+>
   <!-- Head -->
   <head>
     {% if page.redirect %}

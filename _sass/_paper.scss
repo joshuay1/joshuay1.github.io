@@ -1,0 +1,171 @@
+// Paper pages have a white canvas, independent of the rest of the site's theme.
+html.paper-view,
+html.paper-view[data-theme="dark"] {
+  color-scheme: light;
+  --global-bg-color: #fff;
+  --global-card-bg-color: #fff;
+  --global-text-color: #222;
+  --global-text-color-light: #555;
+  --global-heading-color: #222;
+  --global-theme-color: #176b68;
+  --global-link-color: #176b68;
+  --global-hover-color: #104b49;
+  --global-nav-link-color: #222;
+  --global-divider-color: #ddd;
+  --global-code-bg-color: #f5f5f5;
+  --global-footer-bg-color: #fff;
+  --global-footer-text-color: #555;
+  --global-footer-link-color: #222;
+  --civic-outline: #ddd;
+  background: #fff;
+
+  body,
+  .navbar,
+  footer {
+    background: #fff;
+    color: #222;
+  }
+
+  .publication-text {
+    h2,
+    h3,
+    h4,
+    h5,
+    [id] {
+      scroll-margin-top: 6rem;
+    }
+
+    h2 {
+      margin-top: 3rem;
+    }
+
+    h3 {
+      margin-top: 2rem;
+    }
+
+    h4,
+    h5 {
+      color: #222;
+      font-size: 1.05rem;
+      margin: 1.75rem 0 0.75rem;
+    }
+
+    figure {
+      margin: 2.5rem 0;
+    }
+
+    .paper-image-link {
+      display: block;
+    }
+
+    img {
+      width: auto;
+      max-width: 100%;
+      height: auto;
+      border: 0;
+      box-shadow: none;
+    }
+
+    .paper-panels {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.5rem;
+      align-items: start;
+
+      .minipage {
+        min-width: 0;
+      }
+
+      p {
+        margin: 0.5rem 0 0;
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
+    }
+
+    figcaption,
+    .paper-table-caption {
+      color: #444;
+      font-size: 0.9rem;
+      line-height: 1.55;
+      text-align: left;
+    }
+
+    blockquote {
+      margin: 1.5rem 0;
+      padding: 0 0 0 1.25rem;
+      border-left: 2px solid #ddd;
+      color: inherit;
+      background: none;
+      font-size: inherit;
+    }
+
+    .paper-table {
+      margin: 2.5rem 0;
+    }
+
+    .paper-table-scroll {
+      max-width: 100%;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      min-width: 42rem;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+
+    .paper-table-caption {
+      margin: 0 0 1rem;
+    }
+
+    th,
+    td {
+      padding: 0.65rem;
+      vertical-align: top;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      border-top: 1px solid #888;
+      border-bottom: 1px solid #888;
+      font-weight: 600;
+    }
+
+    td p {
+      margin-bottom: 0.75rem;
+      font-size: inherit;
+    }
+
+    .math.display {
+      display: block;
+      max-width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 0.5rem 0;
+    }
+
+    .csl-entry {
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .csl-left-margin {
+      float: left;
+      min-width: 2.5rem;
+    }
+
+    .csl-right-inline {
+      margin-left: 2.5rem;
+    }
+
+    @media (max-width: 575px) {
+      .paper-panels {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+}

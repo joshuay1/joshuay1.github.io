@@ -36,7 +36,7 @@ layout: default
     </header>
 
     <div class="publication-text">
-      {% if publication.abstract %}
+      {% if publication.abstract and page.full_paper != true %}
         <section aria-labelledby="abstract">
           <h2 id="abstract">Abstract</h2>
           <p itemprop="abstract">{{ publication.abstract }}</p>
