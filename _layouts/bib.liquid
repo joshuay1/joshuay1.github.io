@@ -1,13 +1,6 @@
 ---
 ---
-{% assign paper_topics = site.data.publication_topics.papers[entry.key] %}
-<div
-  class="row publication-entry"
-  data-publication-topics="{{ paper_topics | join: ' ' }}"
-  data-publication-year="{{ entry.year }}"
-  data-publication-month="{{ entry.month }}"
-  data-publication-title="{{ entry.title | escape }}"
->
+<div class="row">
   {% if site.enable_publication_thumbnails %}
     <div class="col col-sm-2 abbr">
       {%- if entry.abbr -%}
@@ -192,16 +185,6 @@
     <div class="periodical">
       {{ entry.note | strip }}
     </div>
-
-    {% if paper_topics %}
-      <div class="publication-topic-tags" aria-label="Paper topics">
-        {% for topic in site.data.publication_topics.topics %}
-          {% if paper_topics contains topic.id %}
-            <button type="button" data-publication-tag="{{ topic.id }}" aria-pressed="false">{{ topic.label }}</button>
-          {% endif %}
-        {% endfor %}
-      </div>
-    {% endif %}
 
     <!-- Links/Buttons -->
     <div class="links">
