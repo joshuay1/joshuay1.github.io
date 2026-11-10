@@ -1,4 +1,7 @@
-{% assign latest_news = site.news | sort: 'date' | last %}
+{% assign latest_news = site.news | where: 'featured_in_bubble', true | sort: 'date' | last %}
+{% unless latest_news %}
+  {% assign latest_news = site.news | sort: 'date' | last %}
+{% endunless %}
 {% if page.news and site.announcements.enabled and latest_news %}
   <aside class="latest-news-dialogue" aria-label="Announcement from Joshua">
     <div class="latest-news-bubble">
