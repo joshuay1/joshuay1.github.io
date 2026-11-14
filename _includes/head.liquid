@@ -81,6 +81,11 @@
   <script>
     initTheme();
   </script>
+{% else %}
+  <script>
+    document.documentElement.setAttribute("data-theme-mode", "light");
+    document.documentElement.setAttribute("data-theme", "light");
+  </script>
 {% endif %}
 
 <!-- GeoJSON support via Leaflet -->
