@@ -18,7 +18,7 @@
 @inproceedings{yang2026belief,
   abbr          = {NeurIPS},
   bibtex_show   = {true},
-  title         = {Belief Engine: Configurable and Inspectable Stance Dynamics in Multi-Agent LLM Deliberation},
+  title         = {Belief Engine: Making Agent Stance Auditable in LLM Deliberation},
   author        = {Yang, Joshua C and Flechtner, Maurice and Dailisan, Damian and Bakker, Michiel A},
   booktitle     = {Advances in Neural Information Processing Systems (NeurIPS)},
   year          = {2026},
@@ -28,7 +28,7 @@
   siteurl       = {/pubs/belief-engine/},
   preview       = {belief-engine.png},
   selected      = {true},
-  abstract      = {We introduce Belief Engine, an auditable belief-update layer for multi-agent LLM deliberation. The system extracts arguments into structured memory and updates stance with configurable log-odds dynamics, making belief change more inspectable and useful for studying social simulation, disagreement, and deliberation.}
+  abstract      = {LLM-based AI agents are increasingly used to simulate deliberative social interactions, including negotiation, conflict resolution, and multi-turn opinion exchanges. Simulating human-like opinion change calls for agents that balance existing beliefs with openness to new evidence, while making their responses to that evidence traceable. Current systems often make this difficult: agents may drift from assigned roles, echo an interaction partner, keep a stance despite contrary evidence, or appear to change because the prompt or retrieved context has changed. We introduce the Belief Engine (BE), a framework that uses "belief" in a Bayesian modelling sense, as a maintained evidential state over a proposition that is exposed as a scalar stance. BE extracts structured evidence, stores argument records, and updates the belief state through a Bayesian-inspired stance update in log-odds space with two interpretable controls: evidence uptake u and prior anchoring a. Across multiple LLM models, sweeps of u and a demonstrate stable control over stance dynamics. Higher uptake makes agents more responsive to new evidence, while stronger anchoring preserves the initial stance. On DEBATE, a human deliberation dataset with pre/post opinions, BE is most accurate when participants move in the direction of extracted evidence, showing its strength in evidence-following deliberative contexts. When all participants are evaluated together, gains are more modest because many people remain stable or move for reasons not captured by the extracted evidence stream. BE provides a configurable and auditable belief-update layer for evidence-grounded deliberation, in which LLM agents can be configured as open-minded, anchored, or evidence-sensitive, while their stance trajectories and memory can be audited, compared, and calibrated against human opinion change.}
 }
 
 @inproceedings{yang2024llm,

@@ -61,7 +61,7 @@ yang2026voices:
 
 yang2026belief:
   slug: belief-engine
-  title: "Belief Engine: Configurable and Inspectable Stance Dynamics in Multi-Agent LLM Deliberation"
+  title: "Belief Engine: Making Agent Stance Auditable in LLM Deliberation"
   short_title: "Belief Engine"
   authors:
     - name: Joshua C. Yang
@@ -71,7 +71,8 @@ yang2026belief:
   author_text: "Joshua C. Yang, Maurice Flechtner, Damian Dailisan, and Michiel A. Bakker"
   year: "2026"
   publication_date: "2026"
-  venue: "Advances in Neural Information Processing Systems (NeurIPS)"
+  venue: "Accepted at NeurIPS 2026"
+  conference: "Advances in Neural Information Processing Systems (NeurIPS)"
   venue_type: "Conference · accepted for publication"
   arxiv: "2605.15343"
   source_url: "https://arxiv.org/abs/2605.15343"
@@ -79,29 +80,29 @@ yang2026belief:
   preview: "/assets/img/publication_preview/belief-engine.png"
   selected: true
   tldr: >-
-    LLM agents often drift because they do not have a stable inner core. Belief Engine gives an AI agent a traceable stance it can hold onto, while still letting it be persuaded by good evidence. The result is an agent that can stay coherent, change its mind, and show why it changed.
+    Belief Engine makes an LLM agent's stance explicit and auditable. Evidence uptake and prior anchoring control how extracted arguments change its maintained state. Human replay shows the strongest gains for opinion changes aligned with extracted evidence, with more modest gains across all participants.
   why: >-
-    Multi-agent LLM simulations can look persuasive while hiding why agents change their minds. This work makes stance change explicit, configurable, and empirically testable, so researchers can separate evidence-responsive movement from anchoring, prompt effects, retrieval artifacts, and model bias.
+    A convincing transcript does not explain why an agent changed its position. Belief Engine records the evidence, memory, and update settings behind each stance trajectory, making the simulation assumptions available for inspection and comparison.
   abstract: >-
-    We introduce Belief Engine, an auditable belief-update layer for multi-agent LLM deliberation. The system extracts arguments into structured memory and updates stance with configurable log-odds dynamics, making belief change more inspectable and useful for studying social simulation, disagreement, and deliberation.
+    LLM-based AI agents are increasingly used to simulate deliberative social interactions, including negotiation, conflict resolution, and multi-turn opinion exchanges. Simulating human-like opinion change calls for agents that balance existing beliefs with openness to new evidence, while making their responses to that evidence traceable. Current systems often make this difficult: agents may drift from assigned roles, echo an interaction partner, keep a stance despite contrary evidence, or appear to change because the prompt or retrieved context has changed. We introduce the Belief Engine (BE), a framework that uses "belief" in a Bayesian modelling sense, as a maintained evidential state over a proposition that is exposed as a scalar stance. BE extracts structured evidence, stores argument records, and updates the belief state through a Bayesian-inspired stance update in log-odds space with two interpretable controls: evidence uptake u and prior anchoring a. Across multiple LLM models, sweeps of u and a demonstrate stable control over stance dynamics. Higher uptake makes agents more responsive to new evidence, while stronger anchoring preserves the initial stance. On DEBATE, a human deliberation dataset with pre/post opinions, BE is most accurate when participants move in the direction of extracted evidence, showing its strength in evidence-following deliberative contexts. When all participants are evaluated together, gains are more modest because many people remain stable or move for reasons not captured by the extracted evidence stream. BE provides a configurable and auditable belief-update layer for evidence-grounded deliberation, in which LLM agents can be configured as open-minded, anchored, or evidence-sensitive, while their stance trajectories and memory can be audited, compared, and calibrated against human opinion change.
   stats:
     - value: "2,495"
       label: "human DEBATE trajectories replayed"
-    - value: "0.967"
-      label: "correlation between assigned and judged stance"
-    - value: "0.465"
+    - value: "10"
+      label: "topics in expanded stance-to-text validation"
+    - value: "0.466"
       label: "pooled replay RMSE"
     - value: "15"
       label: "round generated debates"
   highlights:
     - title: "Belief is explicit state"
-      text: "The system maintains proposition-level stance instead of inferring belief only from generated text."
+      text: "Belief is an evidential state over one proposition, maintained in log-odds and exposed as a scalar stance."
     - title: "Two interpretable controls"
       text: "Evidence uptake tunes responsiveness to new arguments; prior anchoring tunes persistence of the initial position."
     - title: "Human replay is diagnostic"
-      text: "The DEBATE replay shows that one global human-like update profile misses stable, evidence-aligned, and evidence-opposed participants."
+      text: "The largest reconstruction gains occur for evidence-aligned movers. These diagnostic groups use observed final opinions and cannot assign profiles prospectively."
     - title: "Useful beyond prediction"
-      text: "The main value is an audit trail: why an agent moved, stayed stable, or diverged from the evidence stream."
+      text: "The audit trail records which extracted arguments and update settings produced each maintained stance; it does not establish how humans form beliefs."
   best_for: "Researchers building LLM deliberation, civic simulation, agent memory, opinion-dynamics, or AI mediation systems where hidden stance changes would be unacceptable."
   keywords:
     - multi-agent LLM deliberation
@@ -110,10 +111,10 @@ yang2026belief:
     - social simulation
     - deliberation
   apa: >-
-    Yang, J. C., Flechtner, M., Dailisan, D., & Bakker, M. A. (2026). Belief Engine: Configurable and Inspectable Stance Dynamics in Multi-Agent LLM Deliberation. Accepted for publication in Advances in Neural Information Processing Systems (NeurIPS).
+    Yang, J. C., Flechtner, M., Dailisan, D., & Bakker, M. A. (2026). Belief Engine: Making Agent Stance Auditable in LLM Deliberation. Accepted for publication in Advances in Neural Information Processing Systems (NeurIPS).
   bibtex: |-
     @inproceedings{yang2026belief,
-      title     = {Belief Engine: Configurable and Inspectable Stance Dynamics in Multi-Agent LLM Deliberation},
+      title     = {Belief Engine: Making Agent Stance Auditable in LLM Deliberation},
       author    = {Yang, Joshua C and Flechtner, Maurice and Dailisan, Damian and Bakker, Michiel A},
       booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
       year      = {2026},
