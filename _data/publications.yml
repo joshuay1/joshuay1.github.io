@@ -76,7 +76,7 @@ yang2026belief:
   venue_type: "Conference · accepted for publication"
   arxiv: "2605.15343"
   source_url: "https://arxiv.org/abs/2605.15343"
-  pdf_url: "https://arxiv.org/pdf/2605.15343"
+  pdf_url: "/pubs/belief-engine/belief-engine.pdf"
   preview: "/assets/img/publication_preview/belief-engine.png"
   selected: true
   tldr: >-
@@ -111,7 +111,7 @@ yang2026belief:
     - social simulation
     - deliberation
   apa: >-
-    Yang, J. C., Flechtner, M., Dailisan, D., & Bakker, M. A. (2026). Belief Engine: Making Agent Stance Auditable in LLM Deliberation. Accepted for publication in Advances in Neural Information Processing Systems (NeurIPS).
+    Yang, J. C., Flechtner, M., Dailisan, D., & Bakker, M. A. (2026). Belief Engine: Making Agent Stance Auditable in LLM Deliberation. Accepted for publication in Advances in Neural Information Processing Systems (NeurIPS). https://arxiv.org/abs/2605.15343
   bibtex: |-
     @inproceedings{yang2026belief,
       title     = {Belief Engine: Making Agent Stance Auditable in LLM Deliberation},
