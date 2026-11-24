@@ -9,7 +9,7 @@ document.addEventListener("click", async (event) => {
     try {
       await navigator.clipboard.writeText(target.textContent.trim());
       status.textContent = copy.dataset.copyTarget === "paper-bibtex-text" ? "BibTeX copied." : "Citation copied.";
-    } catch {
+    } catch (error) {
       const range = document.createRange();
       range.selectNodeContents(target);
       const selection = window.getSelection();
