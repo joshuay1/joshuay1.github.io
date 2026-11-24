@@ -2,6 +2,7 @@
 html.paper-view,
 html.paper-view[data-theme="dark"] {
   color-scheme: light;
+  scroll-behavior: auto;
   --global-bg-color: #fff;
   --global-card-bg-color: #fff;
   --global-text-color: #222;
@@ -167,5 +168,95 @@ html.paper-view[data-theme="dark"] {
         grid-template-columns: 1fr;
       }
     }
+  }
+}
+
+html.paper-view {
+  .paper-version {
+    color: #555;
+    font-size: 0.95rem;
+  }
+
+  .paper-contents,
+  .paper-citation {
+    margin: 2rem 0;
+    padding: 1.25rem;
+    border: 1px solid #ddd;
+    border-radius: 0.25rem;
+    scroll-margin-top: 6rem;
+  }
+
+  .paper-contents summary,
+  .paper-bibtex summary {
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  .paper-contents ol {
+    padding-left: 1.5rem;
+    margin: 1rem 0 0;
+  }
+
+  .paper-citation h2 {
+    font-size: 1.35rem;
+    margin-top: 0;
+  }
+
+  .paper-bibtex {
+    margin-top: 1rem;
+  }
+
+  .paper-bibtex pre {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    padding: 1rem;
+    margin: 1rem 0;
+    background: #f5f5f5;
+    color: #222;
+  }
+
+  .paper-copy-button {
+    color: #176b68;
+    background: #fff;
+    border: 1px solid #176b68;
+    border-radius: 0.2rem;
+    padding: 0.45rem 0.8rem;
+    margin: 0.25rem 0.5rem 0.25rem 0;
+    cursor: pointer;
+  }
+
+  .paper-copy-button:focus-visible,
+  summary:focus-visible {
+    outline: 2px solid #176b68;
+    outline-offset: 3px;
+  }
+
+  .paper-copy-status {
+    margin: 0.75rem 0 0;
+    font-size: 0.9rem;
+  }
+
+  .publication-text .paper-image-link img {
+    width: 100%;
+  }
+
+  .publication-text .paper-panels-1 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .paper-references li {
+    padding-left: 0.25rem;
+    margin-bottom: 1rem;
+    overflow-wrap: anywhere;
+    font-size: 0.9rem;
+  }
+
+  .publication-text .paper-table-scroll {
+    margin: 2rem 0;
+  }
+
+  .publication-text table caption {
+    caption-side: top;
+    color: #444;
   }
 }

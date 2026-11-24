@@ -1,0 +1,3051 @@
+{% raw %}
+<nav class="paper-contents" aria-label="Paper contents">
+  <details>
+    <summary>Contents</summary>
+    <ol>
+      <li><a href="#abstract">Abstract</a></li>
+      <li><a href="#introduction">1 Introduction</a></li>
+      <li><a href="#related-work">2 Related work</a></li>
+      <li><a href="#sec:method">3 Method</a></li>
+      <li><a href="#results">4 Results</a></li>
+      <li><a href="#discussion-and-future-work">5 Discussion and future work</a></li>
+      <li><a href="#conclusion">6 Conclusion</a></li>
+      <li><a href="#acknowledgments-and-disclosure-of-funding">Acknowledgments and Disclosure of Funding</a></li>
+      <li><a href="#references">References</a></li>
+      <li><a href="#sec:design-rationale-details">A Design Rationale and Component Comparisons</a></li>
+      <li><a href="#sec:deduplication-details">B Conflict-Resolution Details</a></li>
+      <li><a href="#sec:common-evaluator-details">C Common-Evaluator Baseline Comparison</a></li>
+      <li><a href="#sec:five-topic-prompt-based-check">D Earlier Five-Topic Prompt-Based Check</a></li>
+      <li><a href="#sec:stance-alignment-details">E Alignment Between Maintained and Expressed Stance</a></li>
+      <li><a href="#sec:judgement-validation-details">F Judgement Layer Validation Details</a></li>
+      <li><a href="#sec:debate-replay-protocol">G DEBATE Replay Protocol and Robustness</a></li>
+      <li><a href="#sec:repro-prompts-models">H Implementation and Reproducibility Details</a></li>
+      <li><a href="#sec:two-agent-topic-grids">I Additional Two-Agent Topic Grids</a></li>
+    </ol>
+  </details>
+</nav>
+<h2 class="unnumbered" id="abstract">Abstract</h2>
+<p>
+  LLM-based AI agents are increasingly used to simulate deliberative social interactions, including negotiation, conflict resolution, and multi-turn
+  opinion exchanges. Simulating human-like opinion change calls for agents that balance existing beliefs with openness to new evidence, while making
+  their responses to that evidence traceable. Current systems often make this difficult: agents may drift from assigned roles, echo an interaction
+  partner, keep a stance despite contrary evidence, or appear to change because the prompt or retrieved context has changed. We introduce the Belief
+  Engine (BE), a framework that uses “belief” in a Bayesian modelling sense, as a maintained evidential state over a proposition that is exposed as a
+  scalar stance. BE extracts structured evidence, stores argument records, and updates the belief state through a Bayesian-inspired stance update in
+  log-odds space with two interpretable controls: evidence uptake <span class="math inline">\(u\)</span> and prior anchoring
+  <span class="math inline">\(a\)</span>. Across multiple LLM models, sweeps of <span class="math inline">\(u\)</span> and
+  <span class="math inline">\(a\)</span> demonstrate stable control over stance dynamics. Higher uptake makes agents more responsive to new evidence,
+  while stronger anchoring preserves the initial stance. On DEBATE, a human deliberation dataset with pre/post opinions, BE is most accurate when
+  participants move in the direction of extracted evidence, showing its strength in evidence-following deliberative contexts. When all participants
+  are evaluated together, gains are more modest because many people remain stable or move for reasons not captured by the extracted evidence stream.
+  BE provides a configurable and auditable belief-update layer for evidence-grounded deliberation, in which LLM agents can be configured as
+  open-minded, anchored, or evidence-sensitive, while their stance trajectories and memory can be audited, compared, and calibrated against human
+  opinion change.
+</p>
+<figure id="fig:belief-engine">
+  <div class="paper-panels paper-panels-1">
+    <a aria-label="Open figure 1 at full resolution" class="paper-image-link" href="/assets/img/papers/belief-engine/figure1_s.png"
+      ><img
+        alt="Figure 1; description in the caption below"
+        decoding="async"
+        height="1358"
+        loading="lazy"
+        src="/assets/img/papers/belief-engine/figure1_s.png"
+        style="aspect-ratio: 2400 / 1358"
+        width="2400"
+    /></a>
+  </div>
+  <figcaption>
+    Figure 1. Belief Engine architecture. Incoming messages are converted into scored claims and consolidated in structured memory, retaining the
+    stronger of similar claims with the same polarity. In the illustrated active-record mode, only active evidence contributes to stance: uptake
+    <span class="math inline">\(u\)</span> weights later-message evidence, while anchoring <span class="math inline">\(a\)</span> weights initial seed
+    evidence. Weighted contributions are summed in log-odds space and mapped to stance <span class="math inline">\(S_t\in[-1,1]\)</span>, from
+    opposition to support. The LLM uses this externally computed stance, retrieved memory, and recent dialogue to generate its reply. Solid blue
+    arrows show per-turn processing; dashed purple and teal arrows show seed initialization and memory retrieval, respectively. Bars and the stance
+    marker are schematic.
+  </figcaption>
+</figure>
+<h2 id="introduction">1 Introduction</h2>
+<p>
+  Large language models (LLMs) are moving from single-turn assistants to simulated participants in agent societies, education, civic deliberation, and
+  collective-decision settings. Generative-agent work showed how LLMs can sustain social simulation over time [<a href="#ref-park2023generative">1</a
+  >], while recent deliberation and augmented-democracy studies use LLMs to model discussion, preference formation, and citizen input [<a
+    href="#ref-Yang_2024"
+    >2</a
+  >, <a href="#ref-chuang2025debate">3</a>, <a href="#ref-Gudino2024">4</a>]. Digital-twin proposals extend this ambition by treating synthetic
+  communities as test beds for deliberative design [<a href="#ref-novelli2025testingdeliberative">5</a>]. Across these settings, researchers need to
+  know what agents say and also whether, when, and why their stances change in response to reasons.
+</p>
+<p>
+  Because current LLM agents can generate fluent agreement and disagreement without exposing the source of that movement, attribution becomes central.
+  A transcript may look more moderate because the agent accepted evidence, because its persona drifted [<a href="#ref-choi2025identitydrift">6</a>],
+  because it echoed its interaction partner [<a href="#ref-shekkizhar2025echoing">7</a>], or because inherited model biases shaped the response [<a
+    href="#ref-taubenfeldSystematicBiasesLLM2024"
+    >8</a
+  >]. An agent may also appear resistant because retrieval or prompt context changed. For agent-based simulations, it remains unclear what kind of
+  deliberative behaviour is being represented [<a href="#ref-flechtnerDeliberativeDeficitEmpirical2026">9</a>].
+</p>
+<p>
+  We introduce the Belief Engine (BE), an auditable simulation-control layer that puts log-odds belief updating under experimental control. We use
+  “belief” in an operational Bayesian modelling sense, meaning a proposition-level evidential state maintained in log-odds. We use <em>stance</em> for
+  the scalar readout <span class="math inline">\(S\in[-1,1]\)</span>, with positive values supporting the proposition and negative values opposing it.
+  <span class="math inline">\(S\)</span> records only support for, or opposition to, one declared proposition. It does not capture partial agreement
+  on sub-issues, trust in a speaker, or value trade-offs, so two agents can share the same <span class="math inline">\(S\)</span> for different
+  reasons. Initial seed arguments define the prior, later arguments provide weighted evidence, and both are accumulated through a log-odds rule with
+  two interpretable controls: <em>evidence uptake</em> <span class="math inline">\(u\)</span> and <em>prior anchoring</em> <span class="math inline"
+    >\(a\)</span
+  >. This targets the component of deliberation that current LLM agents leave implicit: what counts as evidence, how much it can move the belief
+  state, and how strongly an initial commitment persists. Incoming arguments are extracted, judged, and stored in structured memory before they enter
+  this update. Language generation is conditioned on the updated stance and retrieved evidence. Because <span class="math inline">\(S\)</span> is
+  computed outside the generator and then supplied to it, the stance trajectory shows how BE updates and records its maintained state, not how an
+  unconstrained LLM or a person would form beliefs. BE supports auditing by making the steps between a received message and a stance update available
+  for inspection. Researchers can trace which arguments contributed to a change, examine how they were weighted, and check the resulting stance
+  against the stated update rule.
+</p>
+<p>
+  Separating the maintained belief state from generation lets researchers state modelling assumptions that are usually buried in prompts. High uptake
+  creates more evidence-responsive agents, strong anchoring preserves initial commitments, and the stance trajectory can be checked against the
+  evidence that produced it. BE therefore turns deliberation simulation from prompt-driven transcript production into a reportable state-transition
+  model in which researchers specify how evidence enters memory, how much it moves the belief state, and how the resulting stance conditions language.
+</p>
+<p>
+  We evaluate BE with controlled parameter sweeps, matched prompt-based baselines, and replay on 2<span>,</span>495 quality-filtered DEBATE [<a
+    href="#ref-chuang2025debate"
+    >3</a
+  >] trajectories from human multi-round discussions. The sweeps test whether <span class="math inline">\(u\)</span> and
+  <span class="math inline">\(a\)</span> control evidence responsiveness across base models. The prompt baselines test whether self-revision and
+  retrieval expose the same update process. We use DEBATE replay to assess how closely the update rule reconstructs observed human stance changes from
+  the extracted evidence participants received.
+</p>
+<p>
+  Concretely, BE makes three pieces of the simulation explicit. Its architecture separates how evidence is extracted, judged, and stored from how the
+  stance is updated and expressed. In generated debates, two scalar controls, uptake and anchoring, produce predictable stance dynamics across base
+  models while keeping an evidence-level audit trail. Replayed on human discussions, the same interface separates movement aligned with extracted
+  evidence, stable anchoring, and movement that the extracted evidence does not account for.
+</p>
+<h2 id="related-work">2 Related work</h2>
+<p>
+  <strong>LLM deliberators blur expression and state.</strong> A central difficulty in LLM-based social simulation is attribution. When an LLM agent
+  changes what it says, the transcript alone does not show whether the movement should be treated as evidence-responsive updating or as a surface
+  shift caused by prompting, retrieval, or generation [<a href="#ref-flechtnerDeliberativeDeficitEmpirical2026">9</a>]. LLM agents exhibit persona
+  shift [<a href="#ref-choi2025identitydrift">6</a>, <a href="#ref-shekkizhar2025echoing">7</a>], knowledge-conflict failures [<a
+    href="#ref-xu2024knowledge"
+    >10</a
+  >], recency sensitivity [<a href="#ref-kim2024bayesian">11</a>, <a href="#ref-zhang2025discounted">12</a>], regression to training biases [<a
+    href="#ref-taubenfeldSystematicBiasesLLM2024"
+    >8</a
+  >], and excessive convergence relative to humans [<a href="#ref-chuang2025debate">3</a>]. The DEBATE dataset is especially relevant because it
+  records both public interaction traces and private pre/post opinions, showing that plausible role-play can still distort individual and group
+  opinion dynamics. Debate can also behave like a martingale without a specified update policy [<a href="#ref-choi2025debateorvote">13</a>]. Even if
+  reasoning models internally simulate dialogic “societies of thought” [<a href="#ref-kim2026reasoning">14</a>], those implicit perspectives are not
+  persistent, auditable social actors. BE addresses this gap by maintaining a separate belief state with an explicit stance variable.
+</p>
+<p>
+  <strong>Democratic simulations need inspectable change.</strong> Applied systems increasingly use LLMs in deliberative settings. AI debate can
+  support factual claim assessment [<a href="#ref-rahman2025aidebate">15</a>] and judicial tasks [<a href="#ref-hu2025multiagent">16</a>]. Agora and
+  ArgueMate scaffold consensus-finding in civic and educational contexts [<a href="#ref-PradeepFulay2026">17</a>,
+  <a href="#ref-wang2026arguemate">18</a>], while Murmi supports participatory sensemaking in citizen deliberations [<a
+    href="#ref-yang2026participatorysensemaking"
+    >19</a
+  >]. Augmented-democracy and digital-twin proposals extend this ambition by using LLMs or synthetic communities to estimate citizen preferences and
+  test deliberative designs through controlled “what-if” scenarios [<a href="#ref-Gudino2024">4</a>,
+  <a href="#ref-novelli2025testingdeliberative">5</a>]. DelibSim shows that LLM groups match human procedural discourse quality while failing to
+  reproduce similar epistemic outcome dynamics [<a href="#ref-flechtner2026procedural">20</a>]. We argue that, in such settings, the missing state
+  variable becomes a substantive problem. A deliberative simulator should report final accuracy, epistemic and discourse quality, and user learning,
+  but it should also expose why simulated participants move, remain stable, or polarise.
+</p>
+<p>
+  <strong>Memory does not determine belief revision.</strong> Agent memory systems decide what can be retained, reflected on, or retrieved. Generative
+  Agents [<a href="#ref-park2023generative">1</a>], episodic memory banks [<a href="#ref-zhong2023memorybank">21</a>], reflection systems [<a
+    href="#ref-xu2025amem"
+    >22</a
+  >, <a href="#ref-liu2024rmm">23</a>], graph memory [<a href="#ref-gutierrez2024hipporag">24</a>, <a href="#ref-kang2025memoryos">25</a>,
+  <a href="#ref-huang2025licomemory">26</a>], large-scale simulations [<a href="#ref-piao2026agentsociety">27</a>,
+  <a href="#ref-xu2026topologyaware">28</a>], and retrieval-augmented debate [<a href="#ref-li2026rdebater">29</a>] all strengthen some form of
+  context persistence. But remembering an argument is not the same as accepting it as evidence. Memory can also amplify noise or reinforce
+  experience-following behaviour [<a href="#ref-xiong2025memory">30</a>]. BE places judgement and updating between memory and generation, so stored
+  arguments become belief-relevant only when the evidence layer marks them active.
+</p>
+<p>
+  <strong>Formal update rules need semantic grounding.</strong> Bayesian models [<a href="#ref-olssonBayesianSimulationModel2013">31</a>], DeGroot
+  updating [<a href="#ref-degroot1974reaching">32</a>], and bounded-confidence models [<a href="#ref-deffuant2000mixing">33</a>,
+  <a href="#ref-hegselmann2002opinion">34</a>] make opinion dynamics explicit, and recent work connects LLM debate to Bayesian Nash equilibrium [<a
+    href="#ref-xie2025econ"
+    >35</a
+  >]. Their abstraction is also their limitation for language-agent simulations. They rarely specify how natural-language arguments are extracted,
+  judged, remembered, or turned back into utterances. Human belief updating also departs from ideal Bayesian assumptions [<a
+    href="#ref-stengardGeneralityCognitiveBasis2022"
+    >36</a
+  >, <a href="#ref-holtUpdateBayesianUpdating2009">37</a>, <a href="#ref-ashinoffEffectsBaseRate2022">38</a>]. People may protect commitments, weigh
+  evidence through identity and trust, and respond differently across social contexts. The BE framework sits between these traditions. It keeps the
+  update rule parameterised, grounds each update in extracted arguments, and exposes profiles that can be calibrated against human deliberation
+  trajectories.
+</p>
+<h2 id="sec:method">3 Method</h2>
+<p>
+  Figure <a data-reference="fig:belief-engine" data-reference-type="ref" href="#fig:belief-engine">1</a> depicts a BE agent as an LLM-based debater
+  whose proposition-level belief state is maintained by the Belief Engine. During a debate it exchanges messages with an opponent on a fixed topic.
+  The agent can use any compatible base model. Across the generated-agent comparisons we use GPT-4o-mini, GPT-5.4-mini, Qwen 3.5 9B, and Gemma 4 E4B
+  in different roles, as detailed below. In the generated-agent conditions, debates use a seed limit of
+  <span class="math inline">\(n{=}10\)</span> arguments and use the same dialogue protocol while varying the uptake–anchoring profile
+  <span class="math inline">\((u,a)\)</span>. Each response is generated from three inputs: (i) current stance instruction, (ii) retrieved context,
+  and (iii) recent dialogue context. Since the belief state is updated by reported parameters and exposed as <span class="math inline">\(S\)</span>,
+  the architecture makes it possible to study how simulated agents change state under argumentative pressure.
+</p>
+<h3 id="belief-engine">3.1 Belief engine</h3>
+<p>
+  The Belief Engine decouples belief maintenance from generative reasoning so that the agents’ belief updating can be controlled systematically. For
+  each new message, the engine follows the five-step loop (Fig. <a
+    data-reference="fig:belief-engine"
+    data-reference-type="ref"
+    href="#fig:belief-engine"
+    >1</a
+  >): <em>Extract Arguments</em> (convert a message into candidate claims), <em>Judge Evidence</em> (score and merge near-duplicate candidates),
+  <em>Update Structured Memory</em> (store active and archived evidence), <em>Update Belief State</em> (apply the log-odds rule and compute stance
+  <span class="math inline">\(S\)</span>), and <em>Compose Response</em> (retrieve active memory in proportion to its pro/con composition and map
+  <span class="math inline">\(S\)</span> to behavioural instructions for generation). Appendix <a
+    data-reference="sec:component-comparisons"
+    data-reference-type="ref"
+    href="#sec:component-comparisons"
+    >A.1</a
+  >
+  reports targeted checks of component behaviour and their scope.
+</p>
+<p>
+  As shown in Fig. <a data-reference="fig:belief-engine" data-reference-type="ref" href="#fig:belief-engine">1</a>, the Belief Engine uses a
+  deterministic log-odds updater that recomputes the belief state from argument polarity, support strength, evidence uptake
+  <span class="math inline">\(u\)</span>, and prior anchoring <span class="math inline">\(a\)</span>, then exposes it as stance
+  <span class="math inline">\(S\)</span>. Each stored argument has an <em>active</em> flag <span class="math inline">\(z_i \in \{0,1\}\)</span>. Only
+  active records contribute to stance <span class="math inline">\(S \in [-1,1]\)</span>, separating record-level evidence selection from the aggregate
+  stance.
+</p>
+<h4 id="sec:argument-extraction">Extract arguments.</h4>
+<p>
+  An independent LLM module decomposes each message <span class="math inline">\(m_t\)</span> into candidate records
+  <span class="math inline">\(\tilde{\mathcal{E}}_t=J(m_t)=\{\tilde e_i=(c_i,p_i,r_i)\}_{i=1}^{n_t}\)</span>, where
+  <span class="math inline">\(c_i\)</span> is the canonical claim, <span class="math inline">\(p_i\in\{-1,+1\}\)</span> is its polarity (<span
+    class="math inline"
+    >\(+1\)</span
+  >
+  affirmative, <span class="math inline">\(-1\)</span> negative), and
+  <span class="math inline">\(r_i\in\{\texttt{seed},\texttt{self},\texttt{opponent}\}\)</span> is the source role. We use the same extractor across
+  experiments, while the base debater model varies in generated-agent comparisons. Polarity is defined relative to the debate proposition, independent
+  of sentiment. A single message may yield zero, one, or several candidate arguments. Extraction only proposes candidate evidence records, and the
+  judgement step decides whether a claim affects the belief state. We adopt a broad conception of deliberative communication that includes narratives,
+  rhetorical forms, and experiential knowledge [<a href="#ref-youngInclusionDemocracy2002">39</a>,
+  <a href="#ref-nakazawaEffectStorytellingAttitude2024">40</a>]. Accordingly, any persuasive contribution, whether formal reasoning, anecdotal
+  evidence, or rhetorical framing, is treated as a valid unit of analysis. The extractor prompt and its output schema are listed in Appendix <a
+    data-reference="sec:exact-prompts"
+    data-reference-type="ref"
+    href="#sec:exact-prompts"
+    >H.3</a
+  >. Appendix <a data-reference="sec:judgement-validation-details" data-reference-type="ref" href="#sec:judgement-validation-details">F</a> reports
+  validation details for the extractor and judgement layers.
+</p>
+<h4 id="sec:judgement-layer">Judge evidence.</h4>
+<p>
+  The judgement layer governs how candidate arguments are transformed into structured evidence. Following Xiong et al. [<a href="#ref-xiong2025memory"
+    >30</a
+  >], we treat scoring and conflict resolution as separate architectural choices with explicit outputs. <strong>Strength scoring.</strong> Each
+  extracted argument receives a strength <span class="math inline">\(s_i\in[0,1]\)</span> from either the LLM extractor (<span class="math inline"
+    >\(s_i^{\mathrm{LLM}}\)</span
+  >) or a classifier (<span class="math inline">\(s_i^{\mathrm{clf}}\)</span>). The classifier is <code>DeBERTa-v3-large</code> [<a
+    href="#ref-deberta2023paper"
+    >41</a
+  >] fine-tuned as a regressor on crowd-rated argument-quality labels [<a href="#ref-Gretz2019argumentquality">42</a>], mapping each claim text to a
+  scalar score in <span class="math inline">\([0,1]\)</span>. Appendix <a
+    data-reference="sec:code-release-plan"
+    data-reference-type="ref"
+    href="#sec:code-release-plan"
+    >H.5</a
+  >
+  gives the released checkpoint and scoring procedure. We set <span class="math inline">\(s_i=s_i^{\mathrm{clf}}\)</span> when classifier scoring is
+  enabled and <span class="math inline">\(s_i=s_i^{\mathrm{LLM}}\)</span> otherwise. Sweeps may use either scorer, while DEBATE replay fixes
+  <span class="math inline">\(s_i=s_i^{\mathrm{clf}}\)</span> so calibration varies only belief-update parameters. Each record is then written as
+  <span class="math inline">\(e_i=(c_i,p_i,s_i,r_i,z_i)\)</span> with <span class="math inline">\(z_i\leftarrow 1\)</span> prior to conflict
+  resolution. <strong>Conflict resolution.</strong> To avoid similar arguments causing repeated updates, we soft-deduplicate same-polarity active
+  claims. For a new argument, we compare its claim embedding against active records with the same polarity. If none exist, or if the nearest match has
+  cosine similarity below the configured threshold <span class="math inline">\(\theta\)</span>, the new record stays active. Otherwise, we keep only
+  the stronger record active and archive the other. Records are retained for auditability, but in this mode only active ones (<span
+    class="math inline"
+    >\(z_i=1\)</span
+  >) affect the belief state. Appendix <a data-reference="sec:deduplication-details" data-reference-type="ref" href="#sec:deduplication-details">B</a>
+  gives the replacement rule and reports how <span class="math inline">\(\theta\)</span> is set.
+</p>
+<h4 id="sec:memory-layer">Update structured memory.</h4>
+<p>
+  After conflict resolution, the BE agent stores each claim as a structured record with polarity, strength estimates, source role, and an active flag.
+  Accepted evidence remains active, while superseded evidence is archived for traceability. This selective consolidation supports record-level
+  replacement during conflict resolution and later retrieval by active pro/con memory composition.
+</p>
+<h4 id="sec:belief-updating">Update belief state.</h4>
+<p>
+  The Belief Engine exposes an uptake–anchoring (UA) profile <span class="math inline">\((u,a)\)</span>. <em>Evidence uptake</em> determines how
+  strongly new evidence shifts the belief state, while <em>prior anchoring</em> sets the strength of the initial prior.
+</p>
+<p>
+  Belief updating is modelled as additive evidence accumulation in log-odds space over the currently active memory, with bounded stance
+  <span class="math inline">\(S_t\)</span>. Let <span class="math inline">\(\mathcal{A}_t=\{i:z_i=1\}\)</span> denote the active-memory index set
+  after judgement and conflict resolution at time <span class="math inline">\(t\)</span>. The log-odds state is recomputed from the active set, so
+  arguments that have since been archived no longer contribute. With <span class="math inline">\(\gamma_i=a\)</span> for seed records (<span
+    class="math inline"
+    >\(r_i=\texttt{seed}\)</span
+  >) and <span class="math inline">\(\gamma_i=u\)</span> for later debate records (<span class="math inline">\(r_i\neq\texttt{seed}\)</span>), the
+  update is
+  <span class="math display" id="eq:belief-update"
+    >\[ \begin{aligned} L_t &amp;= \sum_{i\in\mathcal{A}_t} p_i \ln\!\left(1+s_i\,\gamma_i\right), \\ S_t &amp;= 2\sigma(L_t)-1 =
+    \frac{2}{1+\exp(-L_t)}-1, \\ &amp;\quad S_t\in[-1,1], \end{aligned}\tag{1}\]</span
+  >
+  where <span class="math inline">\(\sigma(x)\)</span> is the logistic function. Seed records represent the prior, with no separate intercept. The
+  anchoring <span class="math inline">\(a\)</span> sets how strongly seed records establish the initial belief state, while
+  <span class="math inline">\(u\)</span> sets how strongly later debate evidence shifts it. Evidence accumulates linearly in log-odds, while the
+  logistic transform yields bounded stance and diminishing returns near certainty. This update draws on the Bayesian idea of combining prior beliefs
+  with new evidence in log-odds space. Argument scores determine how strongly each argument contributes to the updated belief, without requiring a
+  calibrated likelihood model. In this mode, archived records remain auditable but no longer affect the belief state. Because
+  <span class="math inline">\(a\)</span> scales the seed terms once while <span class="math inline">\(u\)</span> scales every later evidence
+  increment, different <span class="math inline">\((u,a)\)</span> profiles can reach the same final stance along different intermediate trajectories.
+  BE therefore records the full stance path so that such differences remain visible. Appendix <a
+    data-reference="sec:endpoint-paths"
+    data-reference-type="ref"
+    href="#sec:endpoint-paths"
+    >G.1</a
+  >
+  reports a fixed-evidence analysis of matching final stances and different intermediate trajectories.
+</p>
+<h4 id="sec:retrieval-conditioning">Compose response.</h4>
+<p>
+  After updating the belief state, the BE agent retrieves a bounded context <span class="math inline">\(R_t\)</span> from active memory. Let
+  <span class="math inline">\(\mathcal{M}_t^+\)</span> and <span class="math inline">\(\mathcal{M}_t^-\)</span> denote the active affirmative and
+  negative records. Retrieval allocates
+  <span class="math inline">\(k_+=\operatorname{round}\!\left(k|\mathcal{M}_t^+|/(|\mathcal{M}_t^+|+|\mathcal{M}_t^-|)\right)\)</span> slots to
+  affirmative evidence and <span class="math inline">\(k_-=k-k_+\)</span> to negative evidence, with an even split when active memory is empty.
+  <span class="math inline">\(R_t\)</span> is the union of the strongest <span class="math inline">\(k_+\)</span> and
+  <span class="math inline">\(k_-\)</span> active records by support strength. Retrieval therefore follows accepted evidence and does not directly
+  amplify the scalar stance. The next utterance is generated as <span class="math inline">\(y_t \sim \mathrm{LLM}(S_t,R_t,h_t)\)</span>, where
+  <span class="math inline">\(S_t\)</span> is mapped to a 10-bin stance-intensity instruction and <span class="math inline">\(h_t\)</span> is recent
+  dialogue context. The generator receives <span class="math inline">\(S_t\)</span> as an input and does not directly modify it, so any later change
+  in stance must pass through the configured update rule.
+</p>
+<h3 id="sec:experimental-setup">3.2 Experimental setup</h3>
+<p>
+  We separate two empirical targets. Generated-agent experiments evaluate the full loop, including generation, judgement, memory, retrieval, and
+  belief updating. DEBATE replay isolates the update rule under real received-evidence histories, giving a human-grounded calibration test for the
+  resulting stance dynamics.
+</p>
+<h4 id="generated-agent-experiments.">Generated-agent experiments.</h4>
+<p>
+  Seed and counter-agent arguments come from the Argument Quality Ranking dataset [<a href="#ref-Gretz2019argumentquality">42</a>], which contains
+  about 30<span>,</span>000 crowd-annotated arguments with topic, polarity, and quality scores. All generated debates run for 15 rounds with a limit
+  of <span class="math inline">\(n{=}10\)</span> seed arguments per side and agent temperature <span class="math inline">\(T{=}0.7\)</span>. Symmetric
+  two-agent debate provides a controlled setting for testing update mechanics, profile dynamics, and evidence-conditioned generation.
+</p>
+<p>
+  In Secs. <a data-reference="sec:sensitivity" data-reference-type="ref" href="#sec:sensitivity">4.1</a> and
+  <a data-reference="sec:prompt-based-baselines" data-reference-type="ref" href="#sec:prompt-based-baselines">4.2</a>, we focus on (i) five-point
+  parameter sweeps over <span class="math inline">\(u\)</span> or <span class="math inline">\(a\)</span> across three base models (five trials per
+  setting) and (ii) matched prompt baselines, namely prompt-only and RAG. Appendix diagnostics add Open-minded/Stubborn profile and topic-grid
+  demonstrations over 10 topics with three debates per profile-pairing cell. When a system does not expose <span class="math inline">\(S\)</span>, a
+  shared external LLM judge receives the proposition and generated text, then returns a scalar stance in
+  <span class="math inline">\([-1,1]\)</span> at temperature <span class="math inline">\(0.0\)</span>. Appendix <a
+    data-reference="sec:repro-prompts-models"
+    data-reference-type="ref"
+    href="#sec:repro-prompts-models"
+    >H</a
+  >
+  collects the implementation details, with settings for the earlier diagnostics in Table <a
+    data-reference="tab:hyperparams"
+    data-reference-type="ref"
+    href="#tab:hyperparams"
+    >A9</a
+  >
+  and model roles in Table <a data-reference="tab:model-identifiers" data-reference-type="ref" href="#tab:model-identifiers">A10</a>. The
+  common-evaluator comparison uses the separate protocol in Appendix <a
+    data-reference="sec:common-evaluator-details"
+    data-reference-type="ref"
+    href="#sec:common-evaluator-details"
+    >C</a
+  >.
+</p>
+<h4 id="human-replay-validation.">Human replay validation.</h4>
+<p>
+  We use the DEBATE dataset as a baseline for observed-evidence replay [<a href="#ref-chuang2025debate">3</a>]. This differs from its original
+  simulation tasks. For each participant, we initialise BE from the private initial Likert stance, replay directed evidence from partner tweets and
+  received chat messages, and compare the final BE stance with the private final Likert stance. Six-point Likert responses use fixed log-odds anchors
+  <span class="math inline">\((-3,-1.5,-0.5,0.5,1.5,3)\)</span>, mapped to stance by <span class="math inline">\(S=2\sigma(L)-1\)</span>. In this
+  replay, the participant’s initial stance supplies the prior in place of seed arguments. Anchoring <span class="math inline">\(a\)</span> scales the
+  log odds of that initial stance, while uptake <span class="math inline">\(u\)</span> controls the contribution of received evidence. We perform a
+  grid search over <span class="math inline">\((u,a)\)</span> and select settings by training-fold RMSE, then evaluate final-stance RMSE on the
+  held-out fold. We report two references. A no-change baseline predicts the final stance from the initial stance, and a net-evidence linear baseline,
+  <span class="math inline">\(\hat S_{\mathrm{final}} = S_{\mathrm{initial}} + \beta E\)</span>, fits one scalar evidence weight on training folds
+  only. The linear baseline uses the same quality-filtered, received-evidence stream, human-like uptake and deduplication filter, and classifier
+  strength scores as BE, but omits the log-odds belief-update rule. The replay excludes self-authored posts and messages, isolating the belief-update
+  component under the evidence a participant received.
+</p>
+<h2 id="results">4 Results</h2>
+<p>
+  The results ask three questions. First, is the maintained stance <span class="math inline">\(S\)</span> visible in generated text strongly enough to
+  support comparison with external stance scores? Second, do uptake and anchoring give predictable control across base models, and do Prompt-only or
+  RAG memory expose a comparable update trail? Third, when replayed on DEBATE, which uptake–anchoring profiles best match observed final stances under
+  the received-evidence stream? Generated-agent experiments test controllability and auditability, while DEBATE replay tests how the same update
+  interface captures human response heterogeneity.
+</p>
+<h3 id="sec:sensitivity">4.1 Uptake and anchoring control stance dynamics</h3>
+<p>
+  We first validate that the maintained stance <span class="math inline">\(S\)</span> is expressed in generated language. We sweep
+  <span class="math inline">\(S \in [-1,1]\)</span> across ten propositions and ask an external judge to score each generated response. The scores
+  align tightly with the assigned stance (<span class="math inline">\(r = 0.959\)</span>, topic-clustered 95% CI
+  <span class="math inline">\([0.952,0.964]\)</span>), with a fitted slope of <span class="math inline">\(0.928\)</span> indicating mild compression
+  at the extremes. Because the judge sees the proposition and response but not <span class="math inline">\(S\)</span>, this checks how closely the
+  generated text expresses the assigned stance. This shows that the externally computed stance shapes observable language. Whether human readers
+  perceive the same stance remains to be tested. Appendix <a
+    data-reference="sec:stance-alignment-details"
+    data-reference-type="ref"
+    href="#sec:stance-alignment-details"
+    >E</a
+  >
+  reports the protocol, per-topic results, and robustness checks.
+</p>
+<p>
+  We next test the two controls directly. These single-agent sweeps admit eight seed arguments and use the historical incremental update mode
+  (Appendix <a data-reference="sec:update-semantics" data-reference-type="ref" href="#sec:update-semantics">B.1</a>). We sweep
+  <em>evidence uptake</em> <span class="math inline">\(u\)</span> and <em>prior anchoring</em> <span class="math inline">\(a\)</span> across five
+  levels (<span class="math inline">\(\{0.2, \dots, 1.0\}\)</span>) in 15-round debates against a deterministic counter-argument opponent on the
+  proposition “<em>We should introduce compulsory voting</em>”. We repeat the sweep with three base language models (GPT-4o-mini, Qwen 3.5 9B, and
+  Gemma 4 E4B) to test whether the pattern depends on the generator. When we vary evidence uptake, all agents start at the same stance, approximately
+  <span class="math inline">\(+0.93\)</span>. When we vary anchoring, stronger anchoring gives more weight to the initial seed arguments, so agents
+  begin with stronger support for the proposition. Figure <a
+    data-reference="fig:model-sensitivity-be-agent-trajectories"
+    data-reference-type="ref"
+    href="#fig:model-sensitivity-be-agent-trajectories"
+    >2</a
+  >
+  shows the intended ordering.
+</p>
+<figure id="fig:model-sensitivity-be-agent-trajectories">
+  <div class="paper-panels paper-panels-2">
+    <a aria-label="Open figure 2 panel 1 at full resolution" class="paper-image-link" href="/assets/img/papers/belief-engine/sweep_be_agent.png"
+      ><img
+        alt="Figure 2 panel 1; description in the caption below"
+        decoding="async"
+        height="2400"
+        loading="lazy"
+        src="/assets/img/papers/belief-engine/sweep_be_agent.png"
+        style="aspect-ratio: 2276 / 2400"
+        width="2276" /></a
+    ><a aria-label="Open figure 2 panel 2 at full resolution" class="paper-image-link" href="/assets/img/papers/belief-engine/configure.png"
+      ><img
+        alt="Figure 2 panel 2; description in the caption below"
+        decoding="async"
+        height="2400"
+        loading="lazy"
+        src="/assets/img/papers/belief-engine/configure.png"
+        style="aspect-ratio: 1334 / 2400"
+        width="1334"
+    /></a>
+  </div>
+  <figcaption>
+    Figure 2. Parameter control and profile dynamics. Stance <span class="math inline">\(S\in[-1,1]\)</span>, where
+    <span class="math inline">\(+1\)</span> means affirmative with respect to the proposition and <span class="math inline">\(-1\)</span> means
+    negative. <strong>Left:</strong> BE single-agent sweeps across three base LLMs, varying evidence uptake
+    <span class="math inline">\(u\)</span> (<span class="math inline">\(a=0.70\)</span>) and prior anchoring
+    <span class="math inline">\(a\)</span> (<span class="math inline">\(u=0.4\)</span>). <strong>Right:</strong> GPT-5.4-mini two-agent profile
+    debates on austerity with Open-minded <span class="math inline">\((u,a)=(0.40,0.20)\)</span> and Stubborn
+    <span class="math inline">\((0.10,0.80)\)</span> agents. Thin lines show trials, thick lines show means.
+  </figcaption>
+</figure>
+<p>
+  Higher <span class="math inline">\(u\)</span> makes agents more responsive to new evidence. For GPT-4o-mini, the final stance shifts from
+  <span class="math inline">\(+0.81\)</span> (<span class="math inline">\(u{=}0.2\)</span>) to <span class="math inline">\(-0.49\)</span> (<span
+    class="math inline"
+    >\(u{=}1.0\)</span
+  >), and Qwen and Gemma move even further in the high-uptake setting (<span class="math inline">\(-0.96\)</span> and
+  <span class="math inline">\(-0.99\)</span>). Higher <span class="math inline">\(a\)</span> makes the seeded prior more persistent. Holding
+  <span class="math inline">\(u{=}0.4\)</span>, GPT-4o-mini ranges from <span class="math inline">\(-0.37\)</span> (<span class="math inline"
+    >\(a{=}0.2\)</span
+  >) to <span class="math inline">\(+0.80\)</span> (<span class="math inline">\(a{=}1.0\)</span>), and Qwen and Gemma follow the same pattern.
+</p>
+<p>
+  Figure <a data-reference="fig:model-sensitivity-be-agent-trajectories" data-reference-type="ref" href="#fig:model-sensitivity-be-agent-trajectories"
+    >2</a
+  >
+  (right) shows that the same rule could also create recognisable two-agent profiles. Open/Open agents reduce disagreement, Stubborn/Open pulls the
+  open con agent toward the anchored pro agent, and Stubborn/Stubborn preserves more of the initial gap. The outcomes differ by base model and trial
+  because retrieval keeps active evidence from both sides available, so generation still affects the rate and magnitude of movement. This is the
+  desired behaviour for simulation, because openness and anchoring become explicit settings that researchers can report.
+</p>
+<h3 id="sec:prompt-based-baselines">4.2 Prompt-based self-updating produces less convergence than BE</h3>
+<p>
+  We compare BE with two prompt-based baselines: <em>Prompt self-update</em>, which asks agents to reconsider their stance after each opponent
+  message, and <em>RAG+self-update</em>, which additionally supplies retrieved arguments when generating replies. We run ten trials per method on each
+  of five topics, for a total of 150 debates. In each debate, two agents start at opposing stances of
+  <span class="math inline">\({\pm}0.75\)</span> and exchange messages for 15 rounds. All methods use the same base model and response budget. A
+  shared external judge scores their responses without seeing the method labels.
+</p>
+<p>
+  By the final round, BE agents express positions that are closer together than those of either baseline. The average final stance gap is
+  <span class="math inline">\(0.53\)</span> for BE, compared with <span class="math inline">\(1.12\)</span> for Prompt self-update and
+  <span class="math inline">\(1.02\)</span> for RAG+self-update. A gap of <span class="math inline">\(0\)</span> means that the judge assigns both
+  responses the same stance score. A gap of <span class="math inline">\(2\)</span> places them at opposite extremes. BE has smaller gaps on all five
+  topics, and the aggregate pattern persists when each topic is excluded in turn. Confidence intervals and per-topic results appear in Appendix <a
+    data-reference="sec:common-evaluator-details"
+    data-reference-type="ref"
+    href="#sec:common-evaluator-details"
+    >C</a
+  >. These results show that BE agents reach closer expressed positions under the tested protocol.
+</p>
+<figure id="fig:mechanism-and-calibration">
+  <div class="paper-panels paper-panels-2">
+    <a aria-label="Open figure 3 panel 1 at full resolution" class="paper-image-link" href="/assets/img/papers/belief-engine/atheism.png"
+      ><img
+        alt="Figure 3 panel 1; description in the caption below"
+        decoding="async"
+        height="2400"
+        loading="lazy"
+        src="/assets/img/papers/belief-engine/atheism.png"
+        style="aspect-ratio: 1785 / 2400"
+        width="1785" /></a
+    ><a aria-label="Open figure 3 panel 2 at full resolution" class="paper-image-link" href="/assets/img/papers/belief-engine/parameter_alignment.png"
+      ><img
+        alt="Figure 3 panel 2; description in the caption below"
+        decoding="async"
+        height="2392"
+        loading="lazy"
+        src="/assets/img/papers/belief-engine/parameter_alignment.png"
+        style="aspect-ratio: 2400 / 2392"
+        width="2400"
+    /></a>
+  </div>
+  <figcaption>
+    Figure 3. Mechanism and calibration checks. <strong>Left:</strong> Earlier diagnostic: 15-round atheism debates compare BE variants (fixed
+    <span class="math inline">\((u,a)=(0.2,0.4)\)</span>) with GPT-5.4-mini and RAG baselines. BE panels show internal stance and baselines show
+    external-judge scores. These mixed measurements are not the primary cross-method comparison. <strong>Right:</strong> DEBATE replay sweeps evidence
+    uptake <span class="math inline">\(u\)</span> (x-axis) and prior anchoring <span class="math inline">\(a\)</span> (y-axis). Each heatmap is one
+    participant subset. Cells show mean training RMSE across five group-split and five topic-split training folds, relative to the panel minimum.
+    Lower values are better. A star marks the panel optimum.
+  </figcaption>
+</figure>
+<h3 id="sec:evidence-alignment-parameters">4.3 Human replay reveals different uptake–anchoring profiles</h3>
+<p>
+  The DEBATE replay keeps the received evidence fixed and tests which uptake–anchoring settings best reconstruct participants’ final stances. We
+  compare groups defined by how their opinions actually changed. These groups help us interpret the observed outcomes, but cannot be used to assign
+  profiles before the final opinions are known. Figure <a
+    data-reference="fig:mechanism-and-calibration"
+    data-reference-type="ref"
+    href="#fig:mechanism-and-calibration"
+    >3</a
+  >
+  (right) shows the calibration surface. Each heatmap sweeps <span class="math inline">\(u\)</span> and <span class="math inline">\(a\)</span> for one
+  participant subset and colours each cell by how much its mean training RMSE exceeds that panel’s best cell. The pooled surface favours low uptake
+  with moderate anchoring. After partitioning by evidence alignment, the minima move to different regions: evidence-aligned movers favour high uptake,
+  evidence-opposed movers favour near-zero uptake, and stable participants favour near-zero uptake with maximal anchoring. The panel therefore shows
+  why a single default profile is misspecified for a mixed population.
+</p>
+<div>
+  <div
+    aria-label="Table 1. Pooled held-out RMSE in reconstructing final human stances on the \([-1,1]\) scale. Lower R"
+    class="paper-table-scroll"
+    role="region"
+    tabindex="0"
+  >
+    <table id="tab:debate-main-rmse">
+      <caption>
+        Table 1. Pooled held-out RMSE in reconstructing final human stances on the
+        <span class="math inline">\([-1,1]\)</span>
+        scale. Lower RMSE is better.
+        <em>No-change</em>
+        carries the initial stance forward.
+        <em>Net-evidence</em>
+        uses the same signed extracted evidence as BE, with a scalar weight fitted on the training folds.
+        <em>BE</em>
+        uses each group’s calibrated uptake–anchoring settings. Mean
+        <span class="math inline">\(|\Delta|\)</span>
+        is the average absolute pre/post human stance change.
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col" style="text-align: left"><strong>Group</strong></th>
+          <th scope="col" style="text-align: right">
+            <strong><span class="math inline">\(N\)</span></strong>
+          </th>
+          <th scope="col" style="text-align: right">
+            <strong>Mean <span class="math inline">\(|\Delta|\)</span></strong>
+          </th>
+          <th scope="col" style="text-align: right"><strong>No-change</strong></th>
+          <th scope="col" style="text-align: right"><strong>Net-evidence</strong></th>
+          <th scope="col" style="text-align: right"><strong>BE</strong></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: left">All participants</td>
+          <td style="text-align: right">2<span>,</span>495</td>
+          <td style="text-align: right">0.283</td>
+          <td style="text-align: right">0.489</td>
+          <td style="text-align: right">0.488</td>
+          <td style="text-align: right">0.466</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Evidence-aligned movers</td>
+          <td style="text-align: right">542</td>
+          <td style="text-align: right">0.619</td>
+          <td style="text-align: right">0.718</td>
+          <td style="text-align: right">0.689</td>
+          <td style="text-align: right">0.395</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Evidence-opposed movers</td>
+          <td style="text-align: right">400</td>
+          <td style="text-align: right">0.633</td>
+          <td style="text-align: right">0.737</td>
+          <td style="text-align: right">0.765</td>
+          <td style="text-align: right">0.662</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Stable participants</td>
+          <td style="text-align: right">1<span>,</span>379</td>
+          <td style="text-align: right">0.000</td>
+          <td style="text-align: right">0.000</td>
+          <td style="text-align: right">0.037</td>
+          <td style="text-align: right">0.006</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<p>
+  Table <a data-reference="tab:debate-main-rmse" data-reference-type="ref" href="#tab:debate-main-rmse">1</a> reports the held-out errors and mean
+  observed movement. In the pooled population, BE reduces RMSE from <span class="math inline">\(0.489\)</span> under no-change and
+  <span class="math inline">\(0.488\)</span> under net-evidence linear replay to <span class="math inline">\(0.466\)</span>. Outcome-conditioned
+  diagnostic gains are larger. Evidence-aligned and evidence-opposed movers have similar movement magnitudes (mean
+  <span class="math inline">\(|\Delta|=0.619\)</span> and <span class="math inline">\(0.633\)</span>), but require different profiles. Aligned movers
+  are reconstructed by high uptake (<span class="math inline">\(0.395\)</span> RMSE), while opposed movers flag cases where extracted evidence points
+  against observed movement. Stable participants do not show predictive improvement over no-change, which is exact by definition for this group.
+  Instead, they check that BE can represent resistance to extracted evidence without forcing movement. The group-specific settings have lower RMSE
+  than the prior-only and pooled global replay references in each of the five folds, both when holding out discussion groups and when holding out
+  topics (Appendix <a data-reference="sec:debate-fold-robustness" data-reference-type="ref" href="#sec:debate-fold-robustness">G.2</a>). This supports
+  using different profiles to reconstruct the observed response patterns.
+</p>
+<p>
+  At the single-participant level, Fig. <a
+    data-reference="fig:debate-individual-trajectories"
+    data-reference-type="ref"
+    href="#fig:debate-individual-trajectories"
+    >4</a
+  >
+  provides explanatory traces for the update mechanism. Aligned endpoints show cases where accepted evidence accounts for movement, while divergence
+  points to interpretation, social context, or arguments not captured by extraction. These patterns separate three cases that would look similar in a
+  Prompt-only agent: movement with accepted evidence, stability under evidence pressure, and movement that the extracted evidence cannot explain.
+</p>
+<figure id="fig:debate-individual-trajectories">
+  <div class="paper-panels paper-panels-1">
+    <a aria-label="Open figure 4 at full resolution" class="paper-image-link" href="/assets/img/papers/belief-engine/example.png"
+      ><img
+        alt="Figure 4; description in the caption below"
+        decoding="async"
+        height="702"
+        loading="lazy"
+        src="/assets/img/papers/belief-engine/example.png"
+        style="aspect-ratio: 2400 / 702"
+        width="2400"
+    /></a>
+  </div>
+  <figcaption>
+    Figure 4. Single-participant DEBATE replay examples. Each panel samples one participant from a diagnostic subset and applies that subset’s
+    calibrated <span class="math inline">\((u,a)\)</span> profile, shown above the panel. The x-axis counts accepted received-evidence updates rather
+    than debate rounds. Starting from the observed human initial stance, the teal curve shows the BE replay after each accepted evidence item. Markers
+    indicate whether the extracted item pushes stance upward or downward. The red dashed line connects only the observed human initial and final
+    stances, since DEBATE does not measure intermediate human stances.
+  </figcaption>
+</figure>
+<h2 id="discussion-and-future-work">5 Discussion and future work</h2>
+<p>
+  These experiments suggest that the value of BE is not to make every deliberative trajectory predictable, but to make change attributable. “Belief”
+  here is an operational evidential state over a proposition, maintained in log-odds and exposed through scalar stance. Under this definition,
+  researchers can specify what counts as evidence, how strongly it shifts the belief state, and how strongly initial commitments persist. The
+  judgement layer validation shows reliable directed-evidence extraction on clean single-argument inputs (96.9% polarity accuracy), DEBATE replay
+  improves over no-change and net-evidence linear references while showing why a single profile is insufficient for a heterogeneous population, and
+  the prompt comparison shows that externally scored stance change does not expose the update process itself.
+</p>
+<p>
+  The same operational definition limits what BE can claim to model. Because the stance is computed by a researcher-chosen rule and imposed on the
+  generator, observed stance changes largely reflect that rule by design. Our claims therefore concern the control and auditing of stance change and
+  leave intrinsic LLM belief updating as a separate question. A single proposition-level stance also cannot capture every way people deliberate. They
+  may partly agree, trade off values, distrust a speaker, or soften rhetorically without moving on the headline proposition.
+</p>
+<p>
+  Some of this granularity is already present. Each argument record is tied to its own claim, so a new argument on an earlier claim can replace that
+  record and shift the stance through it. Trust is partly reflected in uptake <span class="math inline">\(u\)</span>, although isolating it as its own
+  parameter would need a separate mechanism. A natural extension is a multidimensional state in which each argument updates the sub-issue it affects,
+  and retrieval brings back the records relevant to that sub-issue. How these dimensions should combine into the headline position, and which datasets
+  could calibrate them, remain open questions.
+</p>
+<p>
+  The DEBATE replay further clarifies what calibration means for deliberative agents. We do not expect one global profile to match everyone, and
+  averaging all participants together can hide behaviours that a heterogeneous simulator may need to represent. Some people stay close to their
+  initial stance, some move with the extracted evidence they receive, and others move in ways the current evidence stream does not explain. BE makes
+  these differences explicit: a stable endpoint can be represented as anchoring, evidence-aligned movement as uptake, and divergence from extracted
+  evidence as a signal that some social or interpretive factor is missing. Which profile is appropriate depends on the deliberative setting. Our point
+  is that BE lets these profiles be separated, inspected, and reported.
+</p>
+<p>
+  DEBATE captures one particular deliberative context. Its participants encounter partner posts and chat messages in a short online setting, and most
+  do not show mapped Likert movement. That stability is informative for online opinion-exposure simulations, but it should not be confused with
+  settings such as citizens’ assemblies, facilitated workshops, or in-person deliberation, where participants may enter with an explicit norm of
+  listening, compromise, and joint problem solving. Separating uptake, anchoring, and response profiles lets BE change the assumed deliberative
+  context. A citizens’ assembly simulation, for example, may contain more evidence-responsive or compromise-seeking agents, or agents whose movement
+  appears first on sub-issues and value trade-offs rather than on the headline proposition.
+</p>
+<p>
+  All our experiments are two-agent discussions. Although DEBATE participants interacted in four-person groups over pairwise rounds, we treat each
+  participant’s data as a two-agent discussion, without distinguishing between speakers. Since the update rule does not depend on how many people an
+  agent talks to, future work can extend BE to generated multi-party or longer deliberations, though this needs further design choices such as when an
+  agent should interject.
+</p>
+<p>
+  Finally, evidence assessment remains a modelling choice. BE makes this choice explicit, but it does not make it value-free. LLM extractors, base
+  models, external judges, and the AQR-trained strength classifier can all reflect training-data, safety-tuning, and community-specific priors. This
+  matters most for moral and political topics, where argument quality is contested. For new domains, the judgement layer should be calibrated against
+  domain data and, where appropriate, audited with human or participatory feedback. BE makes these choices available for auditing. When a trajectory
+  is unexpected, researchers can examine which claims were extracted, which records remained active, and how their weights shaped the update. This
+  helps locate whether the outcome arose from the interpretation of evidence, its selection in memory, or the configured update rule, providing a
+  basis for targeted changes to the simulation.
+</p>
+<p>
+  The broader implication is that a simulated persona should specify how the agent treats new information, in addition to its role. A prompt can say
+  who an agent is, while a memory-and-judgement process specifies what the agent treats as experience, which parts of that experience count as
+  evidence, and how much they can revise persistent commitments. BE moves deliberative-agent simulation toward this standard, with accountable
+  trajectories in which convergence, polarisation, and stability can be traced back to explicit assumptions.
+</p>
+<h2 id="conclusion">6 Conclusion</h2>
+<p>
+  As LLM agents move from single-turn assistants into deliberative multi-agent systems, stance change becomes a modelling problem. We presented the
+  Belief Engine, a framework that separates evidence extraction, judgement, memory, log-odds updating, stance computation, and response generation. By
+  combining persistent memory with a belief state that remains open to new evidence, BE offers a configurable basis for modelling the human-like
+  balance between retaining prior beliefs and revising them. Researchers can configure evidence uptake and prior anchoring, then audit stance changes
+  by tracing which arguments contributed, how they were weighted, and whether updates followed the specified rules. Across tested base models, these
+  controls make agents predictably more evidence-responsive or more anchored. DEBATE replay shows that BE best reconstructs human opinion changes
+  aligned with the extracted evidence, supporting its use for simulating evidence-responsive behaviour. BE therefore provides a foundation for
+  configurable agent simulations in which researchers can audit how persistent beliefs change in response to new evidence.
+</p>
+<h2 class="unnumbered" id="acknowledgments-and-disclosure-of-funding">Acknowledgments and Disclosure of Funding</h2>
+<p>
+  We gratefully acknowledge the Computational Social Science team at ETH Zurich, where Joshua C. Yang, Maurice Flechtner, and Damian Dailisan were
+  employed while conducting this work, and the Horizon Europe project AI for Deliberation, which partially supported Maurice Flechtner. The authors
+  declare no competing interests.
+</p>
+<p>
+  <span>
+    <h2 id="references">References</h2>
+    <ol class="paper-references">
+      <li id="ref-park2023generative">
+        Joon Sung Park, Joseph C. O’Brien, Carrie J. Cai, Meredith Ringel Morris, Percy Liang, and Michael S. Bernstein. Generative agents:
+        Interactive simulacra of human behavior. In <em>Proceedings of the 36th Annual ACM Symposium on User Interface Software and Technology</em>,
+        pages 1–22, 2023.
+      </li>
+      <li id="ref-Yang_2024">
+        Joshua C. Yang, Damian Dailisan, Marcin Korecki, Carina I. Hausladen, and Dirk Helbing. Llm voting: Human choices and ai collective
+        decision-making. <em>Proceedings of the AAAI/ACM Conference on AI, Ethics, and Society</em>, 7 (1): 1696–1708, Oct. 2024.
+        <a href="https://doi.org/10.1609/aies.v7i1.31758">doi: 10.1609/aies.v7i1.31758</a>.
+      </li>
+      <li id="ref-chuang2025debate">
+        Yun-Shiuan Chuang, Ruixuan Tu, Chengtao Dai, Smit Vasani, You Li, Binwei Yao, Michael Henry Tessler, Sijia Yang, Dhavan Shah, Robert Hawkins,
+        Junjie Hu, and Timothy T. Rogers. Debate: A large-scale benchmark for multi-agent opinion dynamics. <em>arXiv preprint arXiv:2510.25110</em>,
+        2025.
+      </li>
+      <li id="ref-Gudino2024">
+        Jairo F. Gudiño, Umberto Grandi, and César Hidalgo. Large language models (llms) as agents for augmented democracy.
+        <em>Philosophical Transactions of the Royal Society A: Mathematical, Physical and Engineering Sciences</em>, 382 (2285): 20240100, 11 2024.
+        <a href="https://doi.org/10.1098/rsta.2024.0100">doi: 10.1098/rsta.2024.0100</a>. URL
+        <a class="uri" href="https://doi.org/10.1098/rsta.2024.0100">https://doi.org/10.1098/rsta.2024.0100</a>.
+      </li>
+      <li id="ref-novelli2025testingdeliberative">
+        Claudio Novelli, Javier Argota Sánchez-Vaquerizo, Dirk Helbing, Antonino Rotolo, and Luciano Floridi. Testing deliberative democracy through
+        digital twins. <em>SSRN preprint</em>, 2025. <a href="https://doi.org/10.2139/ssrn.5193012">doi: 10.2139/ssrn.5193012</a>.
+      </li>
+      <li id="ref-choi2025identitydrift">
+        Junhyuk Choi, Yeseon Hong, Minju Kim, and Bugeun Kim. Examining identity drift in conversations of <span>LLM</span> agents.
+        <em>arXiv preprint arXiv:2412.00804</em>, 2025<span>a</span>.
+      </li>
+      <li id="ref-shekkizhar2025echoing">
+        Sarath Shekkizhar, Romain Cosentino, Adam Earle, and Silvio Savarese. Echoing: Identity failures when <span>LLM</span> agents talk to each
+        other. <em>arXiv preprint arXiv:2511.09710</em>, 2025.
+      </li>
+      <li id="ref-taubenfeldSystematicBiasesLLM2024">
+        Amir Taubenfeld, Yaniv Dover, Roi Reichart, and Ariel Goldstein. Systematic <span>Biases</span> in <span>LLM Simulations</span> of
+        <span>Debates</span>. In
+        <em>Proceedings of the 2024 <span>Conference</span> on <span>Empirical Methods</span> in <span>Natural Language Processing</span></em
+        >, pages 251–267, 2024. <a href="https://doi.org/10.18653/v1/2024.emnlp-main.16">doi: 10.18653/v1/2024.emnlp-main.16</a>.
+      </li>
+      <li id="ref-flechtnerDeliberativeDeficitEmpirical2026">
+        Maurice Flechtner. The <span>Deliberative Deficit</span>: <span>An Empirical Critique</span> of <span>LLMs</span> in
+        <span>Democratic Discourse</span>. <em>Proceedings of the AAAI/ACM Conference on AI, Ethics, and Society</em>, 9 (2): 948–960, October
+        2026<span>a</span>. ISSN 3065-8365. <a href="https://doi.org/10.1609/aies.v9i2.43197">doi: 10.1609/aies.v9i2.43197</a>.
+      </li>
+      <li id="ref-xu2024knowledge">
+        Rongwu Xu, Zehan Qi, Zhijiang Guo, Cunxiang Wang, Hongru Wang, Yue Zhang, and Wei Xu. Knowledge conflicts for <span>LLM</span>s: A survey. In
+        Yaser Al-Onaizan, Mohit Bansal, and Yun-Nung Chen, editors,
+        <em>Proceedings of the 2024 Conference on Empirical Methods in Natural Language Processing</em>, pages 8541–8565, Miami, Florida, USA,
+        November 2024. Association for Computational Linguistics.
+        <a href="https://doi.org/10.18653/v1/2024.emnlp-main.486">doi: 10.18653/v1/2024.emnlp-main.486</a>.
+      </li>
+      <li id="ref-kim2024bayesian">
+        Minsu Kim, Sangryul Kim, and James Thorne. From evidence to belief: A bayesian epistemology approach to language models.
+        <em>arXiv preprint arXiv:2504.19622</em>, 2024.
+      </li>
+      <li id="ref-zhang2025discounted">
+        Jensen Zhang, Jing Yang, and Keze Wang. Large language models as discounted bayesian filters. <em>arXiv preprint arXiv:2512.18489</em>, 2025.
+      </li>
+      <li id="ref-choi2025debateorvote">
+        Hyeong Kyu Choi, Xiaojin Zhu, and Sharon Li. Debate or vote: Which yields better decisions in multi-agent large language models? In
+        <em>Advances in Neural Information Processing Systems</em>, 2025<span>b</span>.
+      </li>
+      <li id="ref-kim2026reasoning">
+        Junsol Kim, Shiyang Lai, Nino Scherrer, Blaise Ag<span>ü</span>era y Arcas, and James Evans. Reasoning models generate societies of thought.
+        <em>arXiv preprint arXiv:2601.10825</em>, 2026.
+      </li>
+      <li id="ref-rahman2025aidebate">
+        Salman Rahman, Sheriff Issaka, Ashima Suvarna, Genglin Liu, James Shiffer, Jaeyoung Lee, Md Rizwan Parvez, Hamid Palangi, Shi Feng, Nanyun
+        Peng, Yejin Choi, Julian Michael, Liwei Jiang, and Saadia Gabriel. Ai debate aids assessment of controversial claims. In
+        <em>Advances in Neural Information Processing Systems</em>, 2025.
+      </li>
+      <li id="ref-hu2025multiagent">
+        Tianyu Hu, Zhen Tan, Song Wang, Huaizhi Qu, and Tianlong Chen. Multi-agent debate for llm judges with adaptive stability detection. In
+        <em>Advances in Neural Information Processing Systems</em>, 2025.
+      </li>
+      <li id="ref-PradeepFulay2026">
+        Suyash Pradeep Fulay, Prerna Ravi, Om Gokhale, Eugene Yi, Michiel A Bakker, and Deb Roy. Agora: Teaching the skill of consensus-finding with
+        ai personas grounded in human voice. In
+        <em>Proceedings of the Extended Abstracts of the 2026 CHI Conference on Human Factors in Computing Systems</em>, CHI EA ’26, pages 1–6. ACM,
+        April 2026. <a href="https://doi.org/10.1145/3772363.3798888">doi: 10.1145/3772363.3798888</a>. URL
+        <a class="uri" href="http://dx.doi.org/10.1145/3772363.3798888">http://dx.doi.org/10.1145/3772363.3798888</a>.
+      </li>
+      <li id="ref-wang2026arguemate">
+        Chenyang Wang, Filippo Forte, L<span>é</span>ane Wettstein, Pierre Dillenbourg, and Thiemo Wambsganss. Arguemate: Designing an arguing agent
+        with maximised disagreement to support student peer-argumentation exercise. In
+        <em>Extended Abstracts of the 2026 CHI Conference on Human Factors in Computing Systems</em>, CHI EA ’26, pages 1–9, Barcelona, Spain, 2026.
+        ACM. <a href="https://doi.org/10.1145/3772363.3799300">doi: 10.1145/3772363.3799300</a>.
+      </li>
+      <li id="ref-yang2026participatorysensemaking">
+        Joshua C. Yang, Maud Reveilhac, Aurelia Tam<span>ò</span>-Larrieux, Dirk Helbing, and Kenneth Holstein. From voices to shared understanding:
+        <span>AI</span>-supported dynamic participatory sensemaking in citizen deliberations, September 2026. URL
+        <a class="uri" href="https://joshuacyang.com/pubs/participatory-sensemaking/">https://joshuacyang.com/pubs/participatory-sensemaking/</a>.
+        Preprint.
+      </li>
+      <li id="ref-flechtner2026procedural">
+        Maurice Flechtner. Procedural parity, outcome mismatch: Evaluating human vs llm deliberation. In
+        <em>Extended Abstracts of the 2026 CHI Conference on Human Factors in Computing Systems</em>, CHI EA ’26, page 14, Barcelona, Spain,
+        2026<span>b</span>. ACM. <a href="https://doi.org/10.1145/3772363.3798499">doi: 10.1145/3772363.3798499</a>.
+      </li>
+      <li id="ref-zhong2023memorybank">
+        Wanjun Zhong, Lianghong Guo, Qiqi Gao, He Ye, and Yanlin Wang. Memorybank: Enhancing large language models with long-term memory.
+        <em>arXiv preprint arXiv:2305.10250</em>, 2023. <a href="https://doi.org/10.48550/arXiv.2305.10250">doi: 10.48550/arXiv.2305.10250</a>.
+      </li>
+      <li id="ref-xu2025amem">
+        Wujiang Xu, Zujie Liang, Kai Mei, Hang Gao, Juntao Tan, and Yongfeng Zhang. A-mem: Agentic memory for <span>LLM</span> agents.
+        <em>arXiv preprint arXiv:2502.12110</em>, 2025.
+      </li>
+      <li id="ref-liu2024rmm">
+        Zhen Tan, Jun Yan, I-Hung Hsu, Rujun Han, Zifeng Wang, Long Le, Yiwen Song, Yanfei Chen, Hamid Palangi, George Lee, Anand Rajan Iyer, Tianlong
+        Chen, Huan Liu, Chen-Yu Lee, and Tomas Pfister. In prospect and retrospect: Reflective memory management for long-term personalized dialogue
+        agents. In <em>Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)</em>, pages
+        8416–8439. Association for Computational Linguistics, 2025.
+        <a href="https://doi.org/10.18653/v1/2025.acl-long.413">doi: 10.18653/v1/2025.acl-long.413</a>.
+      </li>
+      <li id="ref-gutierrez2024hipporag">
+        Bernal Jim<span>é</span>nez Guti<span>é</span>rrez, Yiheng Shu, Yu Gu, Michihiro Yasunaga, and Yu Su. Hipporag: Neurobiologically inspired
+        long-term memory for large language models. In <em>ACL</em>, 2024.
+      </li>
+      <li id="ref-kang2025memoryos">
+        Jiazheng Kang, Mingming Ji, Zhe Zhao, and Ting Bai. Memory <span>OS</span> of <span>AI</span> agent. <em>arXiv preprint arXiv:2506.06326</em>,
+        2025.
+      </li>
+      <li id="ref-huang2025licomemory">
+        Zhengjun Huang, Zhoujin Tian, Qintian Guo, Fangyuan Zhang, Yingli Zhou, Di Jiang, and Xiaofang Zhou. Licomemory: Lightweight and cognitive
+        agentic memory for efficient long-term reasoning. <em>arXiv preprint arXiv:2511.01448</em>, 2025.
+      </li>
+      <li id="ref-piao2026agentsociety">
+        Jinghua Piao, Yuwei Yan, Jun Zhang, Nian Li, Junbo Yan, Xiaochong Lan, Zhihong Lu, Zhiheng Zheng, Jing Yi Wang, Di Zhou, Chen Gao, Fengli Xu,
+        Fang Zhang, Ke Rong, Jun Su, and Yong Li. Agentsociety: Large-scale simulation of <span>LLM</span>-driven generative agents advances
+        understanding of human behaviors and society. <em>arXiv preprint arXiv:2502.08691</em>, 2026.
+      </li>
+      <li id="ref-xu2026topologyaware">
+        Yuwei Xu, Shulun Zhang, Yingli Zhou, Shipei Zeng, Laks V. S. Lakshmanan, and Chenhao Ma. Topology-aware <span>LLM</span>-driven social
+        simulation: A unified framework for efficient and realistic agent dynamics. <em>arXiv preprint arXiv:2604.18011</em>, 2026.
+      </li>
+      <li id="ref-li2026rdebater">
+        Maoyuan Li, Zhongsheng Wang, Haoyuan Li, and Jiamou Liu. R-debater: Retrieval-augmented debate generation through argumentative memory. In
+        <em>Proceedings of AAMAS 2026</em>, 2026.
+      </li>
+      <li id="ref-xiong2025memory">
+        Zidi Xiong, Yuping Lin, Wenya Xie, Pengfei He, Zirui Liu, Jiliang Tang, Himabindu Lakkaraju, and Zhen Xiang. How memory management impacts
+        <span>LLM</span> agents: An empirical study of experience-following behavior. <em>arXiv preprint arXiv:2505.16067</em>, 2025.
+      </li>
+      <li id="ref-olssonBayesianSimulationModel2013">
+        Erik J. Olsson. A <span>Bayesian Simulation Model</span> of <span>Group Deliberation</span> and <span>Polarization</span>. In Frank Zenker,
+        editor, <em>Bayesian <span>Argumentation</span></em
+        >, volume 362, pages 113–133. Springer Netherlands, Dordrecht, 2013. ISBN 978-94-007-5356-3 978-94-007-5357-0.
+        <a href="https://doi.org/10.1007/978-94-007-5357-0_6">doi: 10.1007/978-94-007-5357-0_6</a>.
+      </li>
+      <li id="ref-degroot1974reaching">
+        Morris H. DeGroot. Reaching a consensus. <em>Journal of the American Statistical Association</em>, 69 (345): 118–121, 1974.
+      </li>
+      <li id="ref-deffuant2000mixing">
+        Guillaume Deffuant, David Neau, Frederic Amblard, and G<span>é</span>rard Weisbuch. Mixing beliefs among interacting agents.
+        <em>Advances in Complex Systems</em>, 3 (01n04): 87–98, 2000.
+      </li>
+      <li id="ref-hegselmann2002opinion">
+        Rainer Hegselmann and Ulrich Krause. Opinion dynamics and bounded confidence: models, analysis, and simulation.
+        <em>Journal of Artificial Societies and Social Simulation</em>, 5 (3), 2002.
+      </li>
+      <li id="ref-xie2025econ">
+        Yi Xie, Zhanke Zhou, Chentao Cao, Qiyu Niu, Tongliang Liu, and Bo Han. From debate to equilibrium: Belief-driven multi-agent
+        <span>LLM</span> reasoning via bayesian nash equilibrium. In <em>Proceedings of ICML 2025</em>, 2025.
+      </li>
+      <li id="ref-stengardGeneralityCognitiveBasis2022">
+        Elina Steng<span>å</span>rd, Peter Juslin, Ulrike Hahn, and Ronald <span>van den Berg</span>. On the generality and cognitive basis of
+        base-rate neglect. <em>Cognition</em>, 226: 105160, September 2022. ISSN 0010-0277.
+        <a href="https://doi.org/10.1016/j.cognition.2022.105160">doi: 10.1016/j.cognition.2022.105160</a>.
+      </li>
+      <li id="ref-holtUpdateBayesianUpdating2009">
+        Charles A. Holt and Angela M. Smith. An update on <span>Bayesian</span> updating. <em>Journal of Economic Behavior &amp; Organization</em>, 69
+        (2): 125–134, February 2009. ISSN 0167-2681. <a href="https://doi.org/10.1016/j.jebo.2007.08.013">doi: 10.1016/j.jebo.2007.08.013</a>.
+      </li>
+      <li id="ref-ashinoffEffectsBaseRate2022">
+        Brandon K. Ashinoff, Justin Buck, Michael Woodford, and Guillermo Horga. The effects of base rate neglect on sequential belief updating and
+        real-world beliefs. <em>PLOS Computational Biology</em>, 18 (12): e1010796, December 2022. ISSN 1553-7358.
+        <a href="https://doi.org/10.1371/journal.pcbi.1010796">doi: 10.1371/journal.pcbi.1010796</a>.
+      </li>
+      <li id="ref-youngInclusionDemocracy2002">
+        Iris Marion Young. <em>Inclusion and Democracy</em>. Oxford University Press, 2002. ISBN 9780198297550.
+        <a href="https://doi.org/10.1093/0198297556.001.0001">doi: 10.1093/0198297556.001.0001</a>.
+      </li>
+      <li id="ref-nakazawaEffectStorytellingAttitude2024">
+        Takashi Nakazawa, Tomoyuki Tatsumi, Yume Souma, and Susumu Ohnuma. An effect of storytelling on attitude changes in deliberative mini-publics.
+        <em>Journal of Deliberative Democracy</em>, 20 (1), 2024. <a href="https://doi.org/10.16997/jdd.1426">doi: 10.16997/jdd.1426</a>.
+      </li>
+      <li id="ref-deberta2023paper">
+        Pengcheng He, Jianfeng Gao, and Weizhu Chen. Debertav3: Improving deberta using electra-style pre-training with gradient-disentangled
+        embedding sharing. <em>arXiv preprint arXiv:2111.09543</em>, 2021.
+        <a href="https://doi.org/10.48550/arXiv.2111.09543">doi: 10.48550/arXiv.2111.09543</a>.
+      </li>
+      <li id="ref-Gretz2019argumentquality">
+        Shai Gretz, Roni Friedman, Edo Cohen<span>-</span>Karlik, Assaf Toledo, Dan Lahav, Ranit Aharonov, and Noam Slonim. A large-scale dataset for
+        argument quality ranking: Construction and analysis. <em>arXiv preprint arXiv:1911.11408</em>, 2019.
+      </li>
+    </ol>
+  </span>
+</p>
+<div id="paper-appendices"></div>
+<h2 id="sec:design-rationale-details">A Design Rationale and Component Comparisons</h2>
+<div>
+  <div
+    aria-label="Table A1. Design rationale for the Belief Engine. Each component gives researchers a separate handle"
+    class="paper-table-scroll"
+    role="region"
+    tabindex="0"
+  >
+    <table id="tab:design-rationale">
+      <caption>
+        Table A1. Design rationale for the Belief Engine. Each component gives researchers a separate handle on belief-state change in
+        deliberative-agent simulations.
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col" style="text-align: left"><strong>Design choice</strong></th>
+          <th scope="col" style="text-align: left"><strong>Rationale</strong></th>
+          <th scope="col" style="text-align: left"><strong>Alternative</strong></th>
+          <th scope="col" style="text-align: left"><strong>Risk addressed</strong></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: left">External belief state</td>
+          <td style="text-align: left">Keeps belief maintenance separate from response generation.</td>
+          <td style="text-align: left">Prompt-only persona or hidden context.</td>
+          <td style="text-align: left">Reduces untraceable drift and context-dependent stance changes.</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Argument-level evidence</td>
+          <td style="text-align: left">Stores claims, polarity, strength, and provenance as structured records.</td>
+          <td style="text-align: left">Free-form memory summaries.</td>
+          <td style="text-align: left">Preserves auditability and enables record-level ablations.</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Judgement layer</td>
+          <td style="text-align: left">Makes extraction, polarity, and strength estimation explicit modules.</td>
+          <td style="text-align: left">Let the generator implicitly decide what mattered.</td>
+          <td style="text-align: left">Exposes where bias, calibration error, or disagreement enters.</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Active flag</td>
+          <td style="text-align: left">Marks records eligible for stance updates and retrieval.</td>
+          <td style="text-align: left">Delete weak or conflicting memories.</td>
+          <td style="text-align: left">Preserves rejected/superseded records for inspection.</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Log-odds update rule</td>
+          <td style="text-align: left">
+            Provides ordered, bounded, reproducible belief-state updates with interpretable parameters and scalar stance.
+          </td>
+          <td style="text-align: left">Direct LLM numerical updates.</td>
+          <td style="text-align: left">Avoids stochastic jumps and makes uptake/anchoring tunable.</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Memory-composition-proportional retrieval</td>
+          <td style="text-align: left">
+            Conditions future responses on accepted evidence while keeping minority-side active memories eligible for retrieval.
+          </td>
+          <td style="text-align: left">Stance-conditioned or semantic-only retrieval.</td>
+          <td style="text-align: left">
+            Avoids making the current stance itself determine evidence exposure, while still linking accepted memory to observable language.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<h3 id="sec:component-comparisons">A.1 Evidence on component behaviour</h3>
+<p>
+  Table <a data-reference="tab:design-rationale" data-reference-type="ref" href="#tab:design-rationale">A1</a> explains the intended function of each
+  component. The comparisons below test particular consequences of those choices. Final disagreement, agreement with human quality ratings, and
+  resistance to repeated evidence assess different properties, so no single outcome validates the whole design.
+</p>
+<h4 id="argument-decomposition.">Argument decomposition.</h4>
+<p>
+  In a focused comparison, storing separate reasons rather than one whole-message record reduced final externally judged disagreement by
+  <span class="math inline">\(1.086\)</span> (adjusted interval <span class="math inline">\([0.995,1.171]\)</span>). The comparison covers ten topics
+  and 50 matched topic–seed blocks. Its direction is consistent across every topic and when each topic is excluded in turn. Both conditions retain
+  memory, but structured extraction produces an average of 6.34 claims per message, compared with exactly one proposition-classified verbatim record.
+  The result shows that this decomposition procedure changes expressed stance dynamics. It does not isolate the structure of the records from the
+  number of evidence contributions or directly measure auditability.
+</p>
+<h4 id="other-effects-on-disagreement.">Other effects on disagreement.</h4>
+<p>
+  Agents that kept evidence from earlier turns ended with a smaller stance gap than agents using only the latest opponent message. The estimated
+  reduction was <span class="math inline">\(0.165\)</span>, with an adjusted interval of <span class="math inline">\([0.052,0.286]\)</span>. For the
+  other components, we also measure how much enabling each one reduces the final gap. The estimates were
+  <span class="math inline">\(-0.024\)</span> for response retrieval (<span class="math inline">\([-0.114,0.062]\)</span>),
+  <span class="math inline">\(+0.014\)</span> for deduplication (<span class="math inline">\([-0.355,0.370]\)</span>), and
+  <span class="math inline">\(-0.048\)</span> for graded rather than fixed strength scores (<span class="math inline">\([-0.367,0.240]\)</span>). Each
+  of these three intervals includes zero, so the study does not clearly establish whether these choices increase or decrease final disagreement.
+</p>
+<p>
+  An uncertain effect on disagreement does not show that a component makes no difference or can be removed. Components may serve other purposes. For
+  example, this study does not measure whether retrieval helps responses use relevant evidence. It also does not establish that closer final positions
+  mean better deliberation.
+</p>
+<h4 id="checks-tied-to-component-functions.">Checks tied to component functions.</h4>
+<p>
+  For deduplication, a controlled repeated-claim test directly checks the intended protection against repeated counting: stance stayed unchanged when
+  equivalent evidence was repeated three or five times with deduplication enabled. This is a controlled invariance result, not a measure of general
+  duplicate-detection accuracy. In a separate natural-dialogue replay, removing deduplication modestly improved squared error. For scoring,
+  Appendix <a data-reference="sec:judgement-validation-details" data-reference-type="ref" href="#sec:judgement-validation-details">F</a> reports
+  agreement with crowd-rated argument quality, rather than an effect on convergence. Earlier replay comparisons held accepted evidence fixed and
+  varied scoring and the update rule. Uniform versus classifier strengths gave inconclusive RMSE differences. Linear stance aggregation also gave
+  inconclusive RMSE differences relative to log-odds updating, while reducing MAE by <span class="math inline">\(0.0198\)</span>. These checks do not
+  establish a uniquely superior scorer or update rule, or equivalence in generated dialogue.
+</p>
+<h4 id="focused-study-protocol.">Focused-study protocol.</h4>
+<p>
+  The study crosses separate versus whole-message records, retrieval on versus off, and persistent versus turn-local memory, giving eight conditions.
+  Two further conditions disable deduplication or replace graded strengths with the fixed value <span class="math inline">\(0.8476\)</span> at the
+  full setting. Five trials per condition on ten topics give 500 debates. All use GPT-5.4-mini, 15 rounds, initial stances
+  <span class="math inline">\(\pm0.75\)</span>, uptake <span class="math inline">\(u=0.2\)</span>, and the explicit-prior mode in Appendix <a
+    data-reference="sec:update-semantics"
+    data-reference-type="ref"
+    href="#sec:update-semantics"
+    >B.1</a
+  >, where anchoring has no numerical effect. Responses use four recent messages and up to ten retrieved records when retrieval is enabled. Turn-local
+  memory retains only evidence from the latest opponent turn alongside the fixed prior. Uniform scoring changes new-record strengths and preserves
+  seed strengths. The Pro agent speaks first, and a shared external GPT-5.4-mini evaluator scores the responses.
+</p>
+<p>
+  Decomposition, retrieval, and persistence contrasts average over the other crossed choices. Deduplication and scoring are tested only at the full
+  setting, without identifying their interactions. All five intervals above use 100,000 hierarchical bootstrap draws over topics and then matched
+  trial blocks (analysis seed 20260725). The 99% percentile intervals give nominal 95% familywise coverage using a Bonferroni adjustment. These
+  generated-debate results remain separate from earlier fixed-stream replay and three-condition persistence/retrieval checks. Their scope is expressed
+  disagreement under one model family and a fixed speaker order, not truthfulness or human realism.
+</p>
+<h2 id="sec:deduplication-details">B Conflict-Resolution Details</h2>
+<p>
+  The main text describes conflict resolution at a high level. Here we give the exact rule used to decide whether a candidate argument remains active.
+  Let <span class="math inline">\(\phi(c)\)</span> be the embedding of claim <span class="math inline">\(c\)</span> and define cosine similarity as
+  <span class="math display">\[\operatorname{sim}(i,j) = \frac{\phi(c_i)^\top \phi(c_j)} {\|\phi(c_i)\|\,\|\phi(c_j)\|}.\]</span> For a new argument
+  <span class="math inline">\(e_i\)</span>, if no active same-polarity record exists, we set <span class="math inline">\(z_i=1\)</span>. Otherwise,
+  let <span class="math display">\[j^\star = \arg\max_{j:z_j=1,\;p_j=p_i} \operatorname{sim}(i,j).\]</span> If
+  <span class="math inline">\(\operatorname{sim}(i,j^\star)&lt;\theta\)</span>, where <span class="math inline">\(\theta\)</span> is set by the
+  corresponding experiment configuration, the new argument remains active. If the similarity exceeds the threshold, only the stronger of the two
+  near-duplicate records remains active:
+  <span class="math display"
+    >\[(z_i,z_{j^\star}) = \begin{cases} (1,0), &amp; s_i &gt; s_{j^\star},\\ (0,1), &amp; s_i \leq s_{j^\star}. \end{cases}\]</span
+  >
+  The archived record remains stored, but it is excluded from the active set used for belief updating and retrieval. Generated-agent thresholds are
+  reported in Tab. <a data-reference="tab:hyperparams" data-reference-type="ref" href="#tab:hyperparams">A9</a>, and DEBATE replay uses
+  <span class="math inline">\(\theta=0.85\)</span>.
+</p>
+<h3 id="sec:update-semantics">B.1 Initialization and update modes</h3>
+<p>
+  The implementation stores each structured record as an <code>ArgumentRecord</code>. Its <code>credence_relevant</code> field corresponds to the
+  active flag <span class="math inline">\(z_i\)</span>. In the seed-derived mode (<code>active_seed_v1</code>), Eq. <a
+    data-reference="eq:belief-update"
+    data-reference-type="ref"
+    href="#eq:belief-update"
+    >1</a
+  >
+  recomputes the state from active seed and later-message records. In the explicit-prior mode (<code>active_explicit_prior_v1</code>), a fixed initial
+  stance <span class="math inline">\(S_0\)</span> instead supplies log odds <span class="math inline">\(\ell(S_0)=\ln((1+S_0)/(1-S_0))\)</span>, and
+  only active non-seed contributions are added. Seed records remain retrievable but are excluded from the numerical sum to avoid counting the prior
+  twice. Therefore, <span class="math inline">\(a\)</span> does not affect the numerical state in this mode.
+</p>
+<p>
+  The submitted incremental implementation (<code>incremental_v1</code>) accumulated newly admitted contributions without recomputing the active set.
+  On replacement, it changed the active flags but neither subtracted the old contribution nor added the replacement contribution. Archiving therefore
+  did not undo previously applied stance movement. A configured initial target could also overwrite the state after seeding. These historical
+  trajectories cannot generally be reconstructed from the final active set and must be distinguished from active-set recomputation.
+</p>
+<h2 id="sec:common-evaluator-details">C Common-Evaluator Baseline Comparison</h2>
+<h4 id="matched-protocol.">Matched protocol.</h4>
+<p>
+  The new comparison comprises five preregistered topics, ten matched seed blocks per topic, and three methods: BE, Prompt self-update, and
+  RAG+self-update. All 150 debates run for 15 rounds from Pro/Con targets <span class="math inline">\(+0.75\)</span> and
+  <span class="math inline">\(-0.75\)</span>, using GPT-5.4-mini for generation at temperature <span class="math inline">\(0.7\)</span> with a shared
+  response shell and response budget. Recent dialogue contains four messages. BE and RAG retrieve up to ten active records. BE uses uptake
+  <span class="math inline">\(u=0.2\)</span> and an explicit initial prior plus active non-seed evidence (<code>active_explicit_prior_v1</code>).
+  Seeds remain retrievable but do not enter the numerical sum. The configured <span class="math inline">\(a=0.4\)</span> therefore has no numerical
+  effect in this comparison. These runs are distinct from the earlier three-trial diagnostics.
+</p>
+<h4 id="common-outcome.">Common outcome.</h4>
+<p>
+  A frozen GPT-5.4-mini evaluator, at temperature <span class="math inline">\(0.0\)</span> with condition labels removed, scores every method’s
+  generated text on <span class="math inline">\([-1,1]\)</span>. The primary outcome is the absolute difference between final Pro and Con scores,
+  ranging from 0 to 2. Generator and evaluator share a model family, so the comparison controls measurement consistency but does not establish
+  evaluator-independent validity.
+</p>
+<div>
+  <div
+    aria-label="Table A2. Final externally judged disagreement by topic in the common-evaluator comparison. Each top"
+    class="paper-table-scroll"
+    role="region"
+    tabindex="0"
+  >
+    <table id="tab:common-evaluator-topics">
+      <caption>
+        Table A2. Final externally judged disagreement by topic in the common-evaluator comparison. Each topic has ten matched blocks per method.
+        Smaller values indicate closer expressed positions.
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col" style="text-align: left">Topic</th>
+          <th scope="col" style="text-align: right">BE</th>
+          <th scope="col" style="text-align: right">Prompt self-update</th>
+          <th scope="col" style="text-align: right">RAG+self-update</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: left">Social media</td>
+          <td style="text-align: right">0.174</td>
+          <td style="text-align: right">1.450</td>
+          <td style="text-align: right">1.246</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Journalism</td>
+          <td style="text-align: right">0.813</td>
+          <td style="text-align: right">1.018</td>
+          <td style="text-align: right">1.284</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Compulsory voting</td>
+          <td style="text-align: right">0.546</td>
+          <td style="text-align: right">0.993</td>
+          <td style="text-align: right">1.003</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Atheism</td>
+          <td style="text-align: right">0.522</td>
+          <td style="text-align: right">1.135</td>
+          <td style="text-align: right">0.771</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Libertarianism</td>
+          <td style="text-align: right">0.586</td>
+          <td style="text-align: right">0.983</td>
+          <td style="text-align: right">0.787</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Equal-topic mean</td>
+          <td style="text-align: right">0.528</td>
+          <td style="text-align: right">1.116</td>
+          <td style="text-align: right">1.018</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<h4 id="uncertainty-and-sensitivity.">Uncertainty and sensitivity.</h4>
+<p>
+  The experimental unit is a matched topic–seed block. Mean final gaps and 95% intervals are <span class="math inline">\(0.53\)</span> [<span
+    class="math inline"
+    >\(0.31,0.75\)</span
+  >] for BE, <span class="math inline">\(1.12\)</span> [<span class="math inline">\(0.97,1.31\)</span>] for Prompt self-update, and
+  <span class="math inline">\(1.02\)</span> [<span class="math inline">\(0.76,1.24\)</span>] for RAG+self-update. Condition-level 95% intervals use
+  10,000 hierarchical bootstrap draws, resampling topics and then paired seed blocks. The two planned BE-minus-baseline contrasts receive simultaneous
+  95% intervals from a separate post-hoc multiplicity audit using 100,000 shared hierarchical draws and a maximum absolute studentized-deviation
+  statistic. The BE-minus-Prompt difference is <span class="math inline">\(-0.59\)</span> [<span class="math inline">\(-0.99,-0.19\)</span>], and BE
+  minus RAG is <span class="math inline">\(-0.49\)</span> [<span class="math inline">\(-0.86,-0.12\)</span>]. The corresponding Bonferroni percentile
+  intervals are <span class="math inline">\([-1.033,-0.214]\)</span> for BE minus Prompt and <span class="math inline">\([-0.884,-0.111]\)</span> for
+  BE minus RAG. Leave-one-topic-out estimates range from <span class="math inline">\(-0.683\)</span> to
+  <span class="math inline">\(-0.416\)</span> and from <span class="math inline">\(-0.562\)</span> to <span class="math inline">\(-0.345\)</span>,
+  respectively. An exhaustive sign-flip check over the <span class="math inline">\(2^5=32\)</span> topic-sign assignments gives two-sided
+  <span class="math inline">\(p=0.0625\)</span> for each contrast, also after the joint adjustment. This coarse five-topic check limits topic-general
+  claims despite the negative bootstrap intervals. Smaller disagreement alone does not establish greater truthfulness, human realism, neutrality,
+  better reasoning, or preferable consensus.
+</p>
+<h2 id="sec:five-topic-prompt-based-check">D Earlier Five-Topic Prompt-Based Check</h2>
+<p>
+  The five-topic mechanism check broadens the prompt-based comparison beyond the main atheism example (Tab. <a
+    data-reference="tab:five-topic-prompt-based-check"
+    data-reference-type="ref"
+    href="#tab:five-topic-prompt-based-check"
+    >A3</a
+  >). Each run pairs a Pro agent and a Con agent for 15 rounds, with fixed initial stance anchors <span class="math inline">\(+0.75\)</span> and
+  <span class="math inline">\(-0.75\)</span>, respectively. We run three independent trials per topic–setup pair and summarise the final stance
+  dynamics across five topics: social media, journalism, compulsory voting, atheism, and libertarianism.
+</p>
+<p>
+  The four Belief Engine rows use the same memory, retrieval, and update profile across topics, with evidence uptake
+  <span class="math inline">\(u=0.2\)</span> and prior anchoring <span class="math inline">\(a=0.4\)</span>, and differ only in the base language
+  model generating debate turns. The two non-BE baselines use GPT-5.4-mini. In Prompt-only, agents have no retrieval memory or Belief Engine and are
+  instead prompted to update their stance after opponent turns. In RAG, agents receive retrieved argument memory and prompt-level self-updating, but
+  still do not use the Belief Engine stance update.
+</p>
+<p>
+  The five-topic check keeps the same measurement caveat as Fig. <a
+    data-reference="fig:mechanism-and-calibration"
+    data-reference-type="ref"
+    href="#fig:mechanism-and-calibration"
+    >3</a
+  >. BE rows report internal stance, whereas baseline rows report external judge scores because those systems do not expose
+  <span class="math inline">\(S\)</span>. The external judge is a calibrated proxy for expressed stance and cannot replace an auditable internal
+  trajectory.
+</p>
+<div>
+  <div
+    aria-label="Table A3. Five-topic prompt-based mechanism check over 15-round Pro/Con debates. Each row averages t"
+    class="paper-table-scroll"
+    role="region"
+    tabindex="0"
+  >
+    <table id="tab:five-topic-prompt-based-check">
+      <caption>
+        Table A3. Five-topic prompt-based mechanism check over 15-round Pro/Con debates. Each row averages three trials for one topic and setup. BE
+        variants share the same retrieval and update profile, with
+        <span class="math inline">\(u=0.2\)</span>
+        and
+        <span class="math inline">\(a=0.4\)</span
+        >, and differ only in the base debate model. Prompt-only and RAG are GPT-5.4-mini non-BE baselines. BE rows use internal stance, and
+        prompt-based baselines use external judge scores.
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col" style="text-align: left">Topic</th>
+          <th scope="col" style="text-align: left">Setup</th>
+          <th scope="col" style="text-align: left">Measure</th>
+          <th scope="col" style="text-align: right"><span class="math inline">\(n\)</span></th>
+          <th scope="col" style="text-align: right">Final Pro</th>
+          <th scope="col" style="text-align: right">Final Con</th>
+          <th scope="col" style="text-align: right">Final gap</th>
+          <th scope="col" style="text-align: right">Gap reduction</th>
+          <th scope="col" style="text-align: right">Mean abs. shift</th>
+          <th scope="col" style="text-align: right">Centre shift</th>
+          <th scope="col" style="text-align: right">Crossing rate</th>
+          <th scope="col" style="text-align: right"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: left">Social media</td>
+          <td style="text-align: left">BE GPT-4o-mini</td>
+          <td style="text-align: left">BE internal</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">0.36</td>
+          <td style="text-align: right">0.06</td>
+          <td style="text-align: right">0.38</td>
+          <td style="text-align: right">1.12</td>
+          <td style="text-align: right">0.60</td>
+          <td style="text-align: right">0.60</td>
+          <td style="text-align: right">0.33</td>
+          <td style="text-align: right"></td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Social media</td>
+          <td style="text-align: left">BE GPT-5.4-mini</td>
+          <td style="text-align: left">BE internal</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">0.84</td>
+          <td style="text-align: right">0.95</td>
+          <td style="text-align: right">0.14</td>
+          <td style="text-align: right">1.36</td>
+          <td style="text-align: right">0.96</td>
+          <td style="text-align: right">0.81</td>
+          <td style="text-align: right">0.67</td>
+          <td style="text-align: right"></td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Social media</td>
+          <td style="text-align: left">BE Qwen 3.5 9B</td>
+          <td style="text-align: left">BE internal</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">-0.02</td>
+          <td style="text-align: right">-0.17</td>
+          <td style="text-align: right">0.18</td>
+          <td style="text-align: right">1.32</td>
+          <td style="text-align: right">0.68</td>
+          <td style="text-align: right">0.68</td>
+          <td style="text-align: right">0.33</td>
+          <td style="text-align: right"></td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Social media</td>
+          <td style="text-align: left">BE Gemma 4 E4B</td>
+          <td style="text-align: left">BE internal</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">-0.16</td>
+          <td style="text-align: right">0.73</td>
+          <td style="text-align: right">0.89</td>
+          <td style="text-align: right">0.61</td>
+          <td style="text-align: right">1.20</td>
+          <td style="text-align: right">1.20</td>
+          <td style="text-align: right">1.00</td>
+          <td style="text-align: right"></td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Social media</td>
+          <td style="text-align: left">Prompt-only</td>
+          <td style="text-align: left">External judge</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">-0.03</td>
+          <td style="text-align: right">0.05</td>
+          <td style="text-align: right">0.31</td>
+          <td style="text-align: right">1.19</td>
+          <td style="text-align: right">0.79</td>
+          <td style="text-align: right">0.79</td>
+          <td style="text-align: right">0.33</td>
+          <td style="text-align: right"></td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Social media</td>
+          <td style="text-align: left">RAG</td>
+          <td style="text-align: left">External judge</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">-0.11</td>
+          <td style="text-align: right">0.34</td>
+          <td style="text-align: right">0.68</td>
+          <td style="text-align: right">0.82</td>
+          <td style="text-align: right">0.98</td>
+          <td style="text-align: right">0.98</td>
+          <td style="text-align: right">0.67</td>
+          <td style="text-align: right"></td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Journalism</td>
+          <td style="text-align: left">BE GPT-4o-mini</td>
+          <td style="text-align: left">BE internal</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">0.02</td>
+          <td style="text-align: right">-0.08</td>
+          <td style="text-align: right">0.14</td>
+          <td style="text-align: right">1.36</td>
+          <td style="text-align: right">0.70</td>
+          <td style="text-align: right">0.70</td>
+          <td style="text-align: right">0.33</td>
+          <td style="text-align: right"></td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Journalism</td>
+          <td style="text-align: left">BE GPT-5.4-mini</td>
+          <td style="text-align: left">BE internal</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">0.11</td>
+          <td style="text-align: right">0.33</td>
+          <td style="text-align: right">0.22</td>
+          <td style="text-align: right">1.28</td>
+          <td style="text-align: right">0.86</td>
+          <td style="text-align: right">0.86</td>
+          <td style="text-align: right">1.00</td>
+          <td style="text-align: right"></td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Journalism</td>
+          <td style="text-align: left">BE Qwen 3.5 9B</td>
+          <td style="text-align: left">BE internal</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">0.58</td>
+          <td style="text-align: right">0.27</td>
+          <td style="text-align: right">0.39</td>
+          <td style="text-align: right">1.11</td>
+          <td style="text-align: right">0.60</td>
+          <td style="text-align: right">0.60</td>
+          <td style="text-align: right">0.33</td>
+          <td style="text-align: right"></td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Journalism</td>
+          <td style="text-align: left">BE Gemma 4 E4B</td>
+          <td style="text-align: left">BE internal</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">0.36</td>
+          <td style="text-align: right">0.39</td>
+          <td style="text-align: right">0.15</td>
+          <td style="text-align: right">1.35</td>
+          <td style="text-align: right">0.76</td>
+          <td style="text-align: right">0.76</td>
+          <td style="text-align: right">0.33</td>
+          <td style="text-align: right"></td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Journalism</td>
+          <td style="text-align: left">Prompt-only</td>
+          <td style="text-align: left">External judge</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">0.34</td>
+          <td style="text-align: right">-0.73</td>
+          <td style="text-align: right">1.07</td>
+          <td style="text-align: right">0.43</td>
+          <td style="text-align: right">0.24</td>
+          <td style="text-align: right">0.22</td>
+          <td style="text-align: right">0.00</td>
+          <td style="text-align: right"></td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Journalism</td>
+          <td style="text-align: left">RAG</td>
+          <td style="text-align: left">External judge</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">0.27</td>
+          <td style="text-align: right">-0.58</td>
+          <td style="text-align: right">0.85</td>
+          <td style="text-align: right">0.65</td>
+          <td style="text-align: right">0.34</td>
+          <td style="text-align: right">0.33</td>
+          <td style="text-align: right">0.00</td>
+          <td style="text-align: right"></td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Compulsory voting</td>
+          <td style="text-align: left">BE GPT-4o-mini</td>
+          <td style="text-align: left">BE internal</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">0.05</td>
+          <td style="text-align: right">-0.15</td>
+          <td style="text-align: right">0.26</td>
+          <td style="text-align: right">1.24</td>
+          <td style="text-align: right">0.65</td>
+          <td style="text-align: right">0.65</td>
+          <td style="text-align: right">0.33</td>
+          <td style="text-align: right"></td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Compulsory voting</td>
+          <td style="text-align: left">BE GPT-5.4-mini</td>
+          <td style="text-align: left">BE internal</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">-0.37</td>
+          <td style="text-align: right">-0.08</td>
+          <td style="text-align: right">0.29</td>
+          <td style="text-align: right">1.21</td>
+          <td style="text-align: right">0.90</td>
+          <td style="text-align: right">0.90</td>
+          <td style="text-align: right">1.00</td>
+          <td style="text-align: right"></td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Compulsory voting</td>
+          <td style="text-align: left">BE Qwen 3.5 9B</td>
+          <td style="text-align: left">BE internal</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">0.48</td>
+          <td style="text-align: right">0.24</td>
+          <td style="text-align: right">0.27</td>
+          <td style="text-align: right">1.23</td>
+          <td style="text-align: right">0.64</td>
+          <td style="text-align: right">0.63</td>
+          <td style="text-align: right">0.33</td>
+          <td style="text-align: right"></td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Compulsory voting</td>
+          <td style="text-align: left">BE Gemma 4 E4B</td>
+          <td style="text-align: left">BE internal</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">-0.17</td>
+          <td style="text-align: right">0.06</td>
+          <td style="text-align: right">0.22</td>
+          <td style="text-align: right">1.28</td>
+          <td style="text-align: right">0.86</td>
+          <td style="text-align: right">0.86</td>
+          <td style="text-align: right">1.00</td>
+          <td style="text-align: right"></td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Compulsory voting</td>
+          <td style="text-align: left">Prompt-only</td>
+          <td style="text-align: left">External judge</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">0.27</td>
+          <td style="text-align: right">-0.34</td>
+          <td style="text-align: right">0.61</td>
+          <td style="text-align: right">0.89</td>
+          <td style="text-align: right">0.45</td>
+          <td style="text-align: right">0.45</td>
+          <td style="text-align: right">0.00</td>
+          <td style="text-align: right"></td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Compulsory voting</td>
+          <td style="text-align: left">RAG</td>
+          <td style="text-align: left">External judge</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">0.22</td>
+          <td style="text-align: right">-0.30</td>
+          <td style="text-align: right">0.53</td>
+          <td style="text-align: right">0.97</td>
+          <td style="text-align: right">0.49</td>
+          <td style="text-align: right">0.49</td>
+          <td style="text-align: right">0.00</td>
+          <td style="text-align: right"></td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Atheism</td>
+          <td style="text-align: left">BE GPT-4o-mini</td>
+          <td style="text-align: left">BE internal</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">0.16</td>
+          <td style="text-align: right">-0.34</td>
+          <td style="text-align: right">0.50</td>
+          <td style="text-align: right">1.00</td>
+          <td style="text-align: right">0.50</td>
+          <td style="text-align: right">0.50</td>
+          <td style="text-align: right">0.00</td>
+          <td style="text-align: right"></td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Atheism</td>
+          <td style="text-align: left">BE GPT-5.4-mini</td>
+          <td style="text-align: left">BE internal</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">0.17</td>
+          <td style="text-align: right">0.40</td>
+          <td style="text-align: right">0.23</td>
+          <td style="text-align: right">1.27</td>
+          <td style="text-align: right">0.86</td>
+          <td style="text-align: right">0.86</td>
+          <td style="text-align: right">1.00</td>
+          <td style="text-align: right"></td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Atheism</td>
+          <td style="text-align: left">BE Qwen 3.5 9B</td>
+          <td style="text-align: left">BE internal</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">0.09</td>
+          <td style="text-align: right">-0.12</td>
+          <td style="text-align: right">0.22</td>
+          <td style="text-align: right">1.28</td>
+          <td style="text-align: right">0.65</td>
+          <td style="text-align: right">0.64</td>
+          <td style="text-align: right">0.00</td>
+          <td style="text-align: right"></td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Atheism</td>
+          <td style="text-align: left">BE Gemma 4 E4B</td>
+          <td style="text-align: left">BE internal</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">0.74</td>
+          <td style="text-align: right">0.76</td>
+          <td style="text-align: right">0.07</td>
+          <td style="text-align: right">1.43</td>
+          <td style="text-align: right">0.84</td>
+          <td style="text-align: right">0.76</td>
+          <td style="text-align: right">0.67</td>
+          <td style="text-align: right"></td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Atheism</td>
+          <td style="text-align: left">Prompt-only</td>
+          <td style="text-align: left">External judge</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">0.23</td>
+          <td style="text-align: right">-0.40</td>
+          <td style="text-align: right">0.63</td>
+          <td style="text-align: right">0.87</td>
+          <td style="text-align: right">0.45</td>
+          <td style="text-align: right">0.44</td>
+          <td style="text-align: right">0.00</td>
+          <td style="text-align: right"></td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Atheism</td>
+          <td style="text-align: left">RAG</td>
+          <td style="text-align: left">External judge</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">0.23</td>
+          <td style="text-align: right">-0.62</td>
+          <td style="text-align: right">0.85</td>
+          <td style="text-align: right">0.65</td>
+          <td style="text-align: right">0.37</td>
+          <td style="text-align: right">0.33</td>
+          <td style="text-align: right">0.00</td>
+          <td style="text-align: right"></td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Libertarianism</td>
+          <td style="text-align: left">BE GPT-4o-mini</td>
+          <td style="text-align: left">BE internal</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">-0.26</td>
+          <td style="text-align: right">-0.04</td>
+          <td style="text-align: right">0.23</td>
+          <td style="text-align: right">1.27</td>
+          <td style="text-align: right">0.86</td>
+          <td style="text-align: right">0.86</td>
+          <td style="text-align: right">0.67</td>
+          <td style="text-align: right"></td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Libertarianism</td>
+          <td style="text-align: left">BE GPT-5.4-mini</td>
+          <td style="text-align: left">BE internal</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">-0.36</td>
+          <td style="text-align: right">0.40</td>
+          <td style="text-align: right">0.76</td>
+          <td style="text-align: right">0.74</td>
+          <td style="text-align: right">1.13</td>
+          <td style="text-align: right">1.13</td>
+          <td style="text-align: right">1.00</td>
+          <td style="text-align: right"></td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Libertarianism</td>
+          <td style="text-align: left">BE Qwen 3.5 9B</td>
+          <td style="text-align: left">BE internal</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">0.60</td>
+          <td style="text-align: right">0.09</td>
+          <td style="text-align: right">0.51</td>
+          <td style="text-align: right">0.99</td>
+          <td style="text-align: right">0.56</td>
+          <td style="text-align: right">0.49</td>
+          <td style="text-align: right">0.00</td>
+          <td style="text-align: right"></td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Libertarianism</td>
+          <td style="text-align: left">BE Gemma 4 E4B</td>
+          <td style="text-align: left">BE internal</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">0.39</td>
+          <td style="text-align: right">0.90</td>
+          <td style="text-align: right">0.50</td>
+          <td style="text-align: right">1.00</td>
+          <td style="text-align: right">1.02</td>
+          <td style="text-align: right">1.00</td>
+          <td style="text-align: right">1.00</td>
+          <td style="text-align: right"></td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Libertarianism</td>
+          <td style="text-align: left">Prompt-only</td>
+          <td style="text-align: left">External judge</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">0.60</td>
+          <td style="text-align: right">-0.51</td>
+          <td style="text-align: right">1.11</td>
+          <td style="text-align: right">0.39</td>
+          <td style="text-align: right">0.25</td>
+          <td style="text-align: right">0.19</td>
+          <td style="text-align: right">0.00</td>
+          <td style="text-align: right"></td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Libertarianism</td>
+          <td style="text-align: left">RAG</td>
+          <td style="text-align: left">External judge</td>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">0.41</td>
+          <td style="text-align: right">-0.49</td>
+          <td style="text-align: right">0.90</td>
+          <td style="text-align: right">0.60</td>
+          <td style="text-align: right">0.32</td>
+          <td style="text-align: right">0.30</td>
+          <td style="text-align: right">0.00</td>
+          <td style="text-align: right"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<p>
+  As an illustrative measurement-controlled check, we rescored the generated journalism debates with the same external stance judge for all setups
+  (Fig. <a data-reference="fig:external-judge-journalism" data-reference-type="ref" href="#fig:external-judge-journalism">A1</a>). This removes the
+  mixed-measurement caveat in Tab. <a
+    data-reference="tab:five-topic-prompt-based-check"
+    data-reference-type="ref"
+    href="#tab:five-topic-prompt-based-check"
+    >A3</a
+  >, since all setups are now scored the same way. The figure should be read qualitatively, since it covers one topic with three trials per setup, but
+  it supports the same pattern. Most BE variants move both sides closer to the centre under the external judge, while Prompt-only and RAG leave a
+  larger final gap.
+</p>
+<figure id="fig:external-judge-journalism">
+  <div class="paper-panels paper-panels-1">
+    <a aria-label="Open figure a1 at full resolution" class="paper-image-link" href="/assets/img/papers/belief-engine/ex_judge.png"
+      ><img
+        alt="Figure A1; description in the caption below"
+        decoding="async"
+        height="1460"
+        loading="lazy"
+        src="/assets/img/papers/belief-engine/ex_judge.png"
+        style="aspect-ratio: 2400 / 1460"
+        width="2400"
+    /></a>
+  </div>
+  <figcaption>
+    Figure A1. External-judge trajectory check on the journalism topic, “We should subsidize journalism.” All panels use the same judged-text stance
+    metric, from <span class="math inline">\(-1\)</span> strongly con to <span class="math inline">\(+1\)</span> strongly pro. Thick lines show mean
+    judged stance across three trials for Pro-side and Con-side agents. Faint lines show individual trials and bands show across-trial variation. This
+    figure is an illustrative comparability check.
+  </figcaption>
+</figure>
+<h2 id="sec:stance-alignment-details">E Alignment Between Maintained and Expressed Stance</h2>
+<h4 id="controlled-protocol.">Controlled protocol.</h4>
+<p>
+  We extend the original compulsory-voting check to ten propositions. For each proposition, we set the maintained stance to 21 positions from
+  <span class="math inline">\(-1\)</span> to <span class="math inline">\(+1\)</span> in steps of <span class="math inline">\(0.1\)</span> and generate
+  three responses at each position. This produces 630 response–judgment pairs, all completed successfully. Task order is randomized with seed
+  20260727. The generator is GPT-4o-mini (<code>gpt-4o-mini-2024-07-18</code>) at temperature <span class="math inline">\(0.7\)</span>. It uses the
+  production SubjectAgent prompt and the Belief Engine’s stance description, with no retrieved arguments or conversation history. GPT-5.4-mini judges
+  the proposition and generated response at temperature <span class="math inline">\(0\)</span>, using a frozen evaluator prompt. The judge does not
+  receive the internal score or the generator’s stance instruction.
+</p>
+<h4 id="estimates-and-uncertainty.">Estimates and uncertainty.</h4>
+<p>
+  We average the three external scores within each topic–stance cell before computing the primary statistics. The analysis therefore contains 210 cell
+  means, with 21 per topic. This avoids treating repeated generations at the same position as additional stance positions. Pearson correlation
+  measures how closely the scores track the assigned stance, while the OLS slope, fitted with an intercept, measures their relative scale. A slope
+  below one indicates compression on average. We obtain pooled 95% confidence intervals from 5,000 bootstrap samples that resample whole topics with
+  replacement, retaining all 21 cell means within each selected topic, using seed 20260727.
+</p>
+<p>
+  Across the ten topics, the pooled correlation is <span class="math inline">\(r=0.959\)</span> (95% CI
+  <span class="math inline">\([0.952,0.964]\)</span>) and the slope is <span class="math inline">\(0.928\)</span> (95% CI
+  <span class="math inline">\([0.905,0.950]\)</span>). The mean absolute error is <span class="math inline">\(0.144\)</span> and the root mean squared
+  error is <span class="math inline">\(0.173\)</span>. Table <a
+    data-reference="tab:stance-alignment-topics"
+    data-reference-type="ref"
+    href="#tab:stance-alignment-topics"
+    >A4</a
+  >
+  gives the per-topic estimates. Figure <a data-reference="fig:stance-alignment-topics" data-reference-type="ref" href="#fig:stance-alignment-topics"
+    >A2</a
+  >
+  shows the response patterns and variation across repeated generations.
+</p>
+<div>
+  <div
+    aria-label="Table A4. Maintained versus externally judged stance across ten propositions. Each topic has 21 stan"
+    class="paper-table-scroll"
+    role="region"
+    tabindex="0"
+  >
+    <table id="tab:stance-alignment-topics">
+      <caption>
+        Table A4. Maintained versus externally judged stance across ten propositions. Each topic has 21 stance positions and 63 generated responses.
+        Statistics use the 21 cell means. The final column recomputes the pooled correlation after excluding the named topic. MAE is mean absolute
+        error on the
+        <span class="math inline">\([-1,1]\)</span>
+        stance scale.
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col" style="text-align: left">Proposition</th>
+          <th scope="col" style="text-align: right"><span class="math inline">\(r\)</span></th>
+          <th scope="col" style="text-align: right">Slope</th>
+          <th scope="col" style="text-align: right">MAE</th>
+          <th scope="col" style="text-align: right">Excluded <span class="math inline">\(r\)</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: left">Entrapment should be legalized</td>
+          <td style="text-align: right">0.951</td>
+          <td style="text-align: right">0.912</td>
+          <td style="text-align: right">0.167</td>
+          <td style="text-align: right">0.959</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Homeopathy brings more harm than good</td>
+          <td style="text-align: right">0.960</td>
+          <td style="text-align: right">0.922</td>
+          <td style="text-align: right">0.141</td>
+          <td style="text-align: right">0.958</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Social media brings more harm than good</td>
+          <td style="text-align: right">0.970</td>
+          <td style="text-align: right">0.985</td>
+          <td style="text-align: right">0.134</td>
+          <td style="text-align: right">0.957</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">We should adopt a zero-tolerance policy in schools</td>
+          <td style="text-align: right">0.968</td>
+          <td style="text-align: right">0.968</td>
+          <td style="text-align: right">0.134</td>
+          <td style="text-align: right">0.957</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">We should adopt an austerity regime</td>
+          <td style="text-align: right">0.961</td>
+          <td style="text-align: right">0.939</td>
+          <td style="text-align: right">0.136</td>
+          <td style="text-align: right">0.958</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">We should adopt atheism</td>
+          <td style="text-align: right">0.934</td>
+          <td style="text-align: right">0.849</td>
+          <td style="text-align: right">0.169</td>
+          <td style="text-align: right">0.961</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">We should adopt libertarianism</td>
+          <td style="text-align: right">0.963</td>
+          <td style="text-align: right">0.948</td>
+          <td style="text-align: right">0.145</td>
+          <td style="text-align: right">0.958</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">We should introduce compulsory voting</td>
+          <td style="text-align: right">0.950</td>
+          <td style="text-align: right">0.892</td>
+          <td style="text-align: right">0.145</td>
+          <td style="text-align: right">0.959</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">We should legalize sex selection</td>
+          <td style="text-align: right">0.964</td>
+          <td style="text-align: right">0.944</td>
+          <td style="text-align: right">0.136</td>
+          <td style="text-align: right">0.958</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">We should subsidize journalism</td>
+          <td style="text-align: right">0.966</td>
+          <td style="text-align: right">0.924</td>
+          <td style="text-align: right">0.133</td>
+          <td style="text-align: right">0.958</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<h4 id="robustness-and-interpretation.">Robustness and interpretation.</h4>
+<p>
+  Per-topic correlations range from <span class="math inline">\(0.934\)</span> to <span class="math inline">\(0.970\)</span>. Removing each topic’s
+  mean from both variables before pooling gives <span class="math inline">\(r=0.959\)</span>, and the Fisher-<span class="math inline">\(z\)</span>
+  macro-average of the ten topic correlations is <span class="math inline">\(0.960\)</span>. Leaving out one topic at a time gives pooled correlations
+  between <span class="math inline">\(0.957\)</span> and <span class="math inline">\(0.961\)</span>, so the aggregate result is not driven by a single
+  proposition. Slopes range from <span class="math inline">\(0.849\)</span> to <span class="math inline">\(0.985\)</span>, showing that strong
+  correlation can coexist with compression. These checks establish alignment between controlled stance and automated judgments of generated text under
+  this protocol. They do not establish agreement with human readers or validate the scalar state as a model of human belief. This expanded study is
+  separate from the earlier 201-position compulsory-voting check (<span class="math inline">\(r=0.967\)</span>, slope approximately
+  <span class="math inline">\(0.86\)</span>).
+</p>
+<figure id="fig:stance-alignment-topics">
+  <div class="paper-panels paper-panels-1">
+    <a aria-label="Open figure a2 at full resolution" class="paper-image-link" href="/assets/img/papers/belief-engine/stance-alignment.png"
+      ><img
+        alt="Figure A2; description in the caption below"
+        decoding="async"
+        height="2400"
+        loading="lazy"
+        src="/assets/img/papers/belief-engine/stance-alignment.png"
+        style="aspect-ratio: 1970 / 2400"
+        width="1970"
+    /></a>
+  </div>
+  <figcaption>
+    Figure A2. Maintained and expressed stance for all ten propositions. Each teal point is the mean external score of three responses at one assigned
+    stance. Error bars show one standard deviation across those responses, not confidence intervals. Red lines are OLS fits with intercepts, and
+    dashed diagonal lines show exact agreement. The shaded band marks external scores between <span class="math inline">\(-0.1\)</span> and
+    <span class="math inline">\(+0.1\)</span>. All panels use the same scales.
+  </figcaption>
+</figure>
+<h2 id="sec:judgement-validation-details">F Judgement Layer Validation Details</h2>
+<p>
+  We evaluate argument extraction, polarity, and strength scoring using the Argument Quality Ranking (AQR) dataset [<a
+    href="#ref-Gretz2019argumentquality"
+    >42</a
+  >]. AQR contains clean single arguments with crowd-derived pro/con labels and crowd-rated argument quality scores. These labels let us check whether
+  the system recovers an argument’s direction and whether its strength scores track human-rated quality. They do not establish how much an argument
+  should change a person’s stance.
+</p>
+<p>
+  For the extraction audit, we use 100 single-argument inputs. The extractor returned at least one claim for 97, exactly one claim for 77, and several
+  subclaims for 20. Among the 97 inputs that yielded an argument, the strongest extracted claim had the correct polarity in 94 (96.9% accuracy, 0.969
+  macro F1). These results support polarity recovery on clean, in-domain arguments.
+</p>
+<p>
+  We also check strength scores against crowd-rated quality, using the mean of AQR’s WA and MACE-P ratings as the target. On all 100 inputs in this
+  audit, classifier scores correlated with that target at <span class="math inline">\(r=0.720\)</span>. LLM-assigned strengths showed little
+  correlation on the 97 inputs that yielded an extracted claim (<span class="math inline">\(r=0.089\)</span>). These summaries therefore have
+  different denominators. The classifier was trained on the same dataset family, so its result describes agreement on this in-domain sample. Table <a
+    data-reference="tab:aqr-judgement"
+    data-reference-type="ref"
+    href="#tab:aqr-judgement"
+    >A5</a
+  >
+  reports the sample size for each metric.
+</p>
+<div>
+  <div
+    aria-label="Table A5. Judgement-layer diagnostics on AQR. Extraction rates use all 100 inputs. Polarity and LLM-"
+    class="paper-table-scroll"
+    role="region"
+    tabindex="0"
+  >
+    <table id="tab:aqr-judgement">
+      <caption>
+        Table A5. Judgement-layer diagnostics on AQR. Extraction rates use all 100 inputs. Polarity and LLM-strength results use the 97 inputs that
+        yielded an argument. Classifier strength uses all 100 inputs from the same audit. Correlations measure agreement with crowd-rated quality, not
+        stance-update magnitude.
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col" style="text-align: left"><strong>Metric</strong></th>
+          <th scope="col" style="text-align: left">
+            <strong><span class="math inline">\(N\)</span></strong>
+          </th>
+          <th scope="col" style="text-align: left"><strong>Value</strong></th>
+          <th scope="col" style="text-align: left"><strong>Interpretation</strong></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: left">Extraction rate</td>
+          <td style="text-align: left">100</td>
+          <td style="text-align: left">0.970</td>
+          <td style="text-align: left">At least one claim extracted.</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Exact-one extraction rate</td>
+          <td style="text-align: left">100</td>
+          <td style="text-align: left">0.770</td>
+          <td style="text-align: left">Exactly one claim extracted.</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Over-split rate</td>
+          <td style="text-align: left">100</td>
+          <td style="text-align: left">0.200</td>
+          <td style="text-align: left">A single argument split into several claims.</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Strongest-claim polarity accuracy</td>
+          <td style="text-align: left">97</td>
+          <td style="text-align: left">0.969</td>
+          <td style="text-align: left">Extracted direction matches the pro/con label.</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Strongest-claim macro F1</td>
+          <td style="text-align: left">97</td>
+          <td style="text-align: left">0.969</td>
+          <td style="text-align: left">F1 averaged across the two polarity labels.</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">LLM strength vs. AQR quality (<span class="math inline">\(r\)</span>)</td>
+          <td style="text-align: left">97</td>
+          <td style="text-align: left">0.089</td>
+          <td style="text-align: left">Little correlation with crowd-rated quality.</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Classifier strength vs. AQR quality (<span class="math inline">\(r\)</span>)</td>
+          <td style="text-align: left">100</td>
+          <td style="text-align: left">0.720</td>
+          <td style="text-align: left">Agreement with crowd-rated quality on the 100-input audit sample.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<h2 id="sec:debate-replay-protocol">G DEBATE Replay Protocol and Robustness</h2>
+<p>
+  DEBATE contains 2<span>,</span>792 U.S.-based participants in four-person discussions over 107 controversial topics: participants privately report
+  an initial opinion and justification, exchange round-wise tweet-like posts and dyadic chat messages, and privately report a final opinion. Our
+  replay uses 2<span>,</span>495 quality-filtered participant trajectories with usable pre/post stance reports and processable directed-exposure
+  histories. Six-point Likert responses use fixed log-odds anchors <span class="math inline">\((-3,-1.5,-0.5,0.5,1.5,3)\)</span>, mapped to stance by
+  <span class="math inline">\(S=2\sigma(L)-1\)</span>. For each participant, the mapped initial Likert stance initialises the prior. Prior anchoring
+  <span class="math inline">\(a\)</span> scales that initial log-odds state, and arguments extracted from directed partner tweets and received chat
+  messages are replayed chronologically under evidence uptake <span class="math inline">\(u\)</span>. The replay evaluates belief updating under a
+  fixed received-evidence stream, without generating new responses. It uses the same log-odds evidence contributions as Eq. <a
+    data-reference="eq:belief-update"
+    data-reference-type="ref"
+    href="#eq:belief-update"
+    >1</a
+  >, with the prior supplied by the participant’s initial stance rather than seed arguments.
+</p>
+<p>
+  The main replay uses directed received exposure, human-like uptake and vector deduplication, classifier-based argument strength, five held-out group
+  folds, and seed 42. Appendix <a data-reference="sec:debate-fold-robustness" data-reference-type="ref" href="#sec:debate-fold-robustness">G.2</a>
+  compares these results with a split that holds out entire topics. For each fold, <span class="math inline">\((u,a)\)</span> is selected on training
+  groups from the grid below and evaluated on held-out groups by RMSE against the participant’s mapped final stance.
+</p>
+<p>
+  The net-evidence linear baseline is fit on the same group-held-out replay setup. For participant <span class="math inline">\(j\)</span> in fold
+  <span class="math inline">\(f\)</span>, it predicts
+  <span class="math display">\[\hat S_{j,\mathrm{final}} = S_{j,\mathrm{initial}} + \beta_f E_j,\]</span> where
+  <span class="math inline">\(E_j=\sum_{i\in\mathcal{R}_j} p_i s_i\)</span> is the signed net evidence over accepted received records
+  <span class="math inline">\(\mathcal{R}_j\)</span>, after the same quality filtering, human-like uptake/deduplication filter, and
+  classifier-strength scoring used by BE. We fit one scalar coefficient <span class="math inline">\(\beta_f\)</span> on training folds only, then
+  evaluate on the held-out fold. The five fitted coefficients were small: <span class="math inline">\(0.0083\)</span>,
+  <span class="math inline">\(0.0105\)</span>, <span class="math inline">\(0.0080\)</span>, <span class="math inline">\(0.0089\)</span>, and
+  <span class="math inline">\(0.0082\)</span>.
+</p>
+<div class="center">
+  <div aria-label="Calibration parameter grid" class="paper-table-scroll" role="region" tabindex="0">
+    <table>
+      <tbody>
+        <tr>
+          <td style="text-align: left"><span class="math inline">\(u\)</span> grid</td>
+          <td style="text-align: left">
+            <span class="math inline">\(0.005\)</span>, <span class="math inline">\(0.01\)</span>, <span class="math inline">\(0.02\)</span>,
+            <span class="math inline">\(0.035\)</span>, <span class="math inline">\(0.05\)</span>, <span class="math inline">\(0.075\)</span>,
+            <span class="math inline">\(0.1\)</span>, <span class="math inline">\(0.15\)</span>, <span class="math inline">\(0.2\)</span>,
+            <span class="math inline">\(0.3\)</span>, <span class="math inline">\(0.4\)</span>, <span class="math inline">\(0.6\)</span>,
+            <span class="math inline">\(0.8\)</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: left"><span class="math inline">\(a\)</span> grid</td>
+          <td style="text-align: left">
+            <span class="math inline">\(0.02\)</span>, <span class="math inline">\(0.05\)</span>, <span class="math inline">\(0.1\)</span>,
+            <span class="math inline">\(0.15\)</span>, <span class="math inline">\(0.2\)</span>, <span class="math inline">\(0.3\)</span>,
+            <span class="math inline">\(0.4\)</span>, <span class="math inline">\(0.5\)</span>, <span class="math inline">\(0.6\)</span>,
+            <span class="math inline">\(0.8\)</span>, <span class="math inline">\(1.0\)</span>, <span class="math inline">\(1.2\)</span>,
+            <span class="math inline">\(1.5\)</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div>
+  <div
+    aria-label="Table A6. Evidence-alignment grouping used for DEBATE replay calibration. These are outcome-conditio"
+    class="paper-table-scroll"
+    role="region"
+    tabindex="0"
+  >
+    <table id="tab:debate-replay-groups">
+      <caption>
+        Table A6. Evidence-alignment grouping used for DEBATE replay calibration. These are outcome-conditioned diagnostic groups used to analyse
+        replay behaviour.
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col" style="text-align: left">Group</th>
+          <th scope="col" style="text-align: right"><span class="math inline">\(N\)</span></th>
+          <th scope="col" style="text-align: left">Definition and use</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: left">All participants</td>
+          <td style="text-align: right">2,495</td>
+          <td style="text-align: left">Full quality-filtered replay population used for the pooled default calibration.</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Evidence-aligned movers</td>
+          <td style="text-align: right">542</td>
+          <td style="text-align: left">
+            Non-stable participants whose observed movement has the same sign as net accepted evidence from received messages.
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Evidence-opposed movers</td>
+          <td style="text-align: right">400</td>
+          <td style="text-align: left">
+            Non-stable participants whose observed movement has the opposite sign from net accepted evidence from received messages.
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Weak-signal movers</td>
+          <td style="text-align: right">174</td>
+          <td style="text-align: left">
+            Non-stable participants with weak or mixed accepted-evidence pressure; retained in the pooled calibration but excluded from the three
+            headline profiles.
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Stable participants</td>
+          <td style="text-align: right">1,379</td>
+          <td style="text-align: left">
+            Participants with no mapped Likert movement; this combines stable-low-pressure and stable-despite-pressure cases in the calibration code.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<p>
+  Table <a data-reference="tab:debate-main-rmse" data-reference-type="ref" href="#tab:debate-main-rmse">1</a> in the main text reports the replay
+  errors. The three participant subgroups are defined using observed final opinion change, so their results describe how well the model reconstructs
+  known outcomes. They do not establish that the appropriate profile can be predicted in advance. The 174 weak-signal movers are included in the All
+  participants row but are not reported as a separate subgroup in that table.
+</p>
+<h3 id="sec:endpoint-paths">G.1 Same final stance, different trajectories</h3>
+<p>
+  A final stance score does not show how the update rule responded to evidence along the way. We therefore asked whether two settings of evidence
+  uptake <span class="math inline">\(u\)</span> and prior anchoring <span class="math inline">\(a\)</span> could reach the same final stance while
+  following different paths. For each participant in DEBATE, we kept the accepted evidence and its order fixed, then searched for two settings whose
+  final stance scores matched. This comparison changes how the rule weighs the prior and the evidence, while keeping the evidence itself the same.
+</p>
+<h4 id="what-we-found.">What we found.</h4>
+<p>
+  Among 2,441 eligible participant records, we found matching final stances for 958. In 869 of those matches, the two stance scores differed by at
+  least <span class="math inline">\(0.20\)</span> after an earlier evidence item, even though they ended at the same value. These cases account for
+  35.60% of all eligible records and 90.71% of the detected matches (Table <a
+    data-reference="tab:endpoint-paths"
+    data-reference-type="ref"
+    href="#tab:endpoint-paths"
+    >A7</a
+  >). Thus, comparing only the final scores would miss differences in how the two settings responded during the replay.
+</p>
+<div>
+  <div
+    aria-label="Table A7. How often different settings reach the same final stance after receiving the same evidence"
+    class="paper-table-scroll"
+    role="region"
+    tabindex="0"
+  >
+    <table id="tab:endpoint-paths">
+      <caption>
+        Table A7. How often different settings reach the same final stance after receiving the same evidence. The first two rows count cases among all
+        2,441 eligible records. The last row counts earlier differences among the 958 records with matching final stances.
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col" style="text-align: left">Outcome</th>
+          <th scope="col" style="text-align: right">Count</th>
+          <th scope="col" style="text-align: right">Rate</th>
+          <th scope="col" style="text-align: right">95% CI</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: left">Matching final stance</td>
+          <td style="text-align: right">958/2,441</td>
+          <td style="text-align: right">39.25%</td>
+          <td style="text-align: right">[36.38, 42.14]%</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Matching final stance and earlier gap <span class="math inline">\(\geq0.20\)</span></td>
+          <td style="text-align: right">869/2,441</td>
+          <td style="text-align: right">35.60%</td>
+          <td style="text-align: right">[32.75, 38.46]%</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Earlier gap <span class="math inline">\(\geq0.20\)</span> among matches</td>
+          <td style="text-align: right">869/958</td>
+          <td style="text-align: right">90.71%</td>
+          <td style="text-align: right">[87.64, 93.52]%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<p>
+  Figure <a data-reference="fig:endpoint-paths" data-reference-type="ref" href="#fig:endpoint-paths">A3</a> illustrates the comparison with two
+  records. The lower-uptake setting changes relatively little, while the higher-uptake setting moves further as evidence arrives. Both finish at the
+  same stance. Their starting points differ because anchoring gives different weights to the same participant’s initial opinion.
+</p>
+<figure id="fig:endpoint-paths">
+  <div class="paper-panels paper-panels-1">
+    <a aria-label="Open figure a3 at full resolution" class="paper-image-link" href="/assets/img/papers/belief-engine/endpoint_paths_camera_ready.png"
+      ><img
+        alt="Figure A3; description in the caption below"
+        decoding="async"
+        height="1115"
+        loading="lazy"
+        src="/assets/img/papers/belief-engine/endpoint_paths_camera_ready.png"
+        style="aspect-ratio: 2400 / 1115"
+        width="2400"
+    /></a>
+  </div>
+  <figcaption>
+    Figure A3. Different paths to the same final stance. Each panel replays one participant’s accepted evidence under two uptake–anchoring settings.
+    Teal curves use lower uptake and orange curves use higher uptake. Giving more weight to the evidence reinforces the initial position in A and
+    opposes it in B. Open circles mark the shared final stance. The largest differences after an intermediate evidence item are
+    <span class="math inline">\(0.4301\)</span> (A) and <span class="math inline">\(0.5136\)</span> (B). Uptake values in the legends are rounded.
+  </figcaption>
+</figure>
+<h4 id="how-we-constructed-the-comparisons.">How we constructed the comparisons.</h4>
+<p>
+  We used the DEBATE replay formulation, where the participant’s observed initial stance
+  <span class="math inline">\(S_{\mathrm{init}}\)</span> supplies the prior. Anchoring <span class="math inline">\(a\)</span> scales its log odds, and
+  uptake <span class="math inline">\(u\)</span> controls the contribution of each accepted evidence item:
+  <span class="math display"
+    >\[L_t(a,u)=a\ell(S_{\mathrm{init}})+\sum_{i=1}^{t}p_i\ln(1+u s_i), \qquad \ell(S)=\ln\frac{1+S}{1-S}, \qquad
+    S_t(a,u)=2\sigma(L_t(a,u))-1.\]</span
+  >
+  Here <span class="math inline">\(t\)</span> counts accepted evidence items, <span class="math inline">\(p_i\)</span> is an item’s polarity, and
+  <span class="math inline">\(s_i\)</span> is its strength. Both settings use the same items, polarities, and strengths. At
+  <span class="math inline">\(t=0\)</span>, the evidence sum is empty, so the maintained stance depends on the initial opinion and its anchoring
+  weight. This analysis uses an observed initial opinion as the prior, rather than generated seed arguments.
+</p>
+<p>
+  The two anchoring settings were <span class="math inline">\(a=0.2\)</span> and <span class="math inline">\(a=1.0\)</span>. We fixed uptake at
+  <span class="math inline">\(u=0.05\)</span> for one setting and searched over <span class="math inline">\(u\in[0.25,0.8]\)</span> for the other.
+  Which setting received the stronger anchor depended on whether increasing uptake reinforced or opposed the initial position. To determine this, we
+  computed the total evidence contribution <span class="math inline">\(E(u)=\sum_{i=1}^{T}p_i\ln(1+u s_i)\)</span> and the change
+  <span class="math inline">\(E(0.8)-E(0.05)\)</span>. When this change had the same sign as
+  <span class="math inline">\(\ell(S_{\mathrm{init}})\)</span>, we compared <span class="math inline">\((a,u)=(1.0,0.05)\)</span> with
+  <span class="math inline">\((0.2,u^*)\)</span>. When the signs differed, we compared <span class="math inline">\((0.2,0.05)\)</span> with
+  <span class="math inline">\((1.0,u^*)\)</span>. In each case, <span class="math inline">\(u^*\)</span> was the smallest uptake value found that
+  produced the same final stance as the fixed-uptake setting. The parameter comparison, eligibility criteria, and example selection did not use
+  participants’ observed final opinions.
+</p>
+<h4 id="numerical-search-and-eligible-records.">Numerical search and eligible records.</h4>
+<p>
+  The solver searched for uptake values where the difference between the two final stance scores was zero. We divided the search range into 8,192
+  intervals and applied Brent’s method wherever that difference changed sign. Exact zeros at scan points were also retained. Absolute and relative
+  solver tolerances were <span class="math inline">\(5\times10^{-15}\)</span> and <span class="math inline">\(10^{-14}\)</span>, respectively. We
+  counted a match when final stance scores differed by at most <span class="math inline">\(10^{-10}\)</span>. The largest observed difference among
+  matches was <span class="math inline">\(6.48\times10^{-15}\)</span>.
+</p>
+<p>
+  Of the 2,495 source records, 53 had fewer than three accepted evidence items and one had a reference final stance at or beyond
+  <span class="math inline">\(\pm0.95\)</span>. No records met the exclusion criterion for negligible change in evidence contribution,
+  <span class="math inline">\(|E(0.8)-E(0.05)|\leq10^{-14}\)</span>. The remaining 2,441 records covered 694 discussion groups and 107 topics. We
+  retained the 1,483 records with no detected match when calculating the rates among all eligible records.
+</p>
+<h4 id="path-differences-and-uncertainty.">Path differences and uncertainty.</h4>
+<p>
+  For each match, we measured the largest absolute stance difference after an intermediate evidence item,
+  <span class="math inline">\(\max_{1\leq t&lt;T}|S_t^{\mathrm{reference}}-S_t^{\mathrm{matched}}|\)</span>. This excludes the initial and final
+  points. The median of these maximum differences was <span class="math inline">\(0.4405\)</span> (95% CI
+  <span class="math inline">\([0.4237,0.4544]\)</span>). To select the examples in Figure <a
+    data-reference="fig:endpoint-paths"
+    data-reference-type="ref"
+    href="#fig:endpoint-paths"
+    >A3</a
+  >, we restricted attention to matches with a difference of at least <span class="math inline">\(0.20\)</span>. Within each evidence direction, we
+  chose the record closest to that subset’s median difference, breaking ties by participant identifier.
+</p>
+<p>
+  We computed percentile confidence intervals from 100,000 bootstrap draws, sampling topics and then intact discussion groups within each sampled
+  topic (seed 2026072502). The share of eligible records with both matching final stances and an earlier gap of at least
+  <span class="math inline">\(0.20\)</span> was similar when increasing uptake reinforced or opposed the prior (35.35% and 35.92%). Leaving out each
+  topic in turn gave estimates from 35.31% to 35.93%. Sampling groups alone gave a 95% interval of [33.60, 37.62]%. Keeping topics fixed and
+  resampling groups within them gave [33.82, 37.39]%.
+</p>
+<h4 id="what-this-analysis-establishes.">What this analysis establishes.</h4>
+<p>
+  The result shows that different uptake–anchoring settings can reach the same final stance through different intermediate states. Recording the full
+  trajectory makes those differences visible. Because we hold the received evidence fixed, this test does not establish what would happen in a
+  generated conversation, where changing a reply can also change the evidence received next. It also does not identify human cognitive parameters or
+  show that matching internal stances produce identical replies. Finally, the numerical search is finite. It can miss a zero that does not change sign
+  or multiple zeros within one scan interval, so failure to find a match does not establish that none exists.
+</p>
+<h3 id="sec:debate-fold-robustness">G.2 Robustness across discussion groups and topics</h3>
+<p>
+  We checked whether the replay results were consistent when holding out entire discussion groups or entire topics. For each split, we computed one
+  held-out RMSE for each of five outer folds. Table <a
+    data-reference="tab:debate-fold-robustness"
+    data-reference-type="ref"
+    href="#tab:debate-fold-robustness"
+    >A8</a
+  >
+  reports the mean error and comparisons with the prior-only and pooled global replay references. The 95% confidence intervals are
+  <span class="math inline">\(t\)</span> intervals across the five folds. They summarise variation across folds and do not estimate uncertainty at the
+  participant level.
+</p>
+<div>
+  <div
+    aria-label="Table A8. Replay errors across five held-out folds. Differences are the RMSE of the group-specific u"
+    class="paper-table-scroll"
+    role="region"
+    tabindex="0"
+  >
+    <table id="tab:debate-fold-robustness">
+      <caption>
+        Table A8. Replay errors across five held-out folds. Differences are the RMSE of the group-specific uptake–anchoring settings minus that of
+        each reference model. Negative differences favour the group-specific settings.
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col" style="text-align: left">Split</th>
+          <th scope="col" style="text-align: center">
+            <span
+              >Fold mean<br />
+              RMSE</span
+            >
+          </th>
+          <th scope="col" style="text-align: center">95% CI</th>
+          <th scope="col" style="text-align: center">
+            <span
+              ><span class="math inline">\(\Delta\)</span> vs<br />
+              prior-only</span
+            >
+          </th>
+          <th scope="col" style="text-align: center">
+            <span
+              ><span class="math inline">\(\Delta\)</span> vs<br />
+              global</span
+            >
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: left">Group-held-out</td>
+          <td style="text-align: center">0.365</td>
+          <td style="text-align: center">[0.337, 0.393]</td>
+          <td style="text-align: center">-0.123 [-0.145, -0.102]</td>
+          <td style="text-align: center">-0.100 [-0.112, -0.087]</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Topic-held-out</td>
+          <td style="text-align: center">0.366</td>
+          <td style="text-align: center">[0.356, 0.376]</td>
+          <td style="text-align: center">-0.122 [-0.152, -0.092]</td>
+          <td style="text-align: center">-0.099 [-0.118, -0.081]</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<p>
+  The group-specific settings have lower RMSE than both references in every fold under both splits, as well as lower aggregate RMSE. However, the
+  participant groups are defined using observed opinion change. This check therefore assesses how well the settings reconstruct known outcomes. It
+  does not show that we can select a participant’s profile before their final opinion is known.
+</p>
+<h2 id="sec:repro-prompts-models">H Implementation and Reproducibility Details</h2>
+<p>
+  This appendix brings together the experiment settings, model roles, prompts, and release information. The detailed baseline and human-replay
+  protocols remain in Appendices <a data-reference="sec:common-evaluator-details" data-reference-type="ref" href="#sec:common-evaluator-details">C</a>
+  and <a data-reference="sec:debate-replay-protocol" data-reference-type="ref" href="#sec:debate-replay-protocol">G</a>.
+</p>
+<h3 id="sec:experimental-hyperparameters">H.1 Experiment settings and update modes</h3>
+<p>
+  Table <a data-reference="tab:hyperparams" data-reference-type="ref" href="#tab:hyperparams">A9</a> reports settings for the earlier generated-agent
+  diagnostics, including the parameter sweeps and profile demonstrations. These settings do not apply to every experiment. The common-evaluator
+  comparison uses the separate settings in Appendix <a
+    data-reference="sec:common-evaluator-details"
+    data-reference-type="ref"
+    href="#sec:common-evaluator-details"
+    >C</a
+  >, including retrieval of up to ten records per turn. The DEBATE replay uses the parameter grid and held-out splits in Appendix <a
+    data-reference="sec:debate-replay-protocol"
+    data-reference-type="ref"
+    href="#sec:debate-replay-protocol"
+    >G</a
+  >.
+</p>
+<p>
+  The prior also enters the update differently across protocols. In the common-evaluator comparison, BE starts from a fixed stance and recomputes
+  contributions from active non-seed records. Seed records remain available for retrieval, but anchoring does not change the numerical state. In
+  DEBATE replay, anchoring instead scales the participant’s initial log odds before received evidence is added, as written in Appendix <a
+    data-reference="sec:endpoint-paths"
+    data-reference-type="ref"
+    href="#sec:endpoint-paths"
+    >G.1</a
+  >. Appendix <a data-reference="sec:update-semantics" data-reference-type="ref" href="#sec:update-semantics">B.1</a> distinguishes the seed-derived
+  and explicit-prior modes from the historical incremental implementation, where archiving a record did not undo its earlier contribution.
+</p>
+<div>
+  <div
+    aria-label="Table A9. Hyperparameters and scoring settings for the earlier generated-agent diagnostics. The comm"
+    class="paper-table-scroll"
+    role="region"
+    tabindex="0"
+  >
+    <table id="tab:hyperparams">
+      <caption>
+        Table A9. Hyperparameters and scoring settings for the earlier generated-agent diagnostics. The common-evaluator comparison uses the settings
+        in Appendix <a data-reference="sec:common-evaluator-details" data-reference-type="ref" href="#sec:common-evaluator-details">C</a
+        >. The Belief Engine controls are evidence uptake
+        <span class="math inline">\(u\)</span>
+        and prior anchoring
+        <span class="math inline">\(a\)</span
+        >. Values are fixed unless a row explicitly states a sweep or profile-specific setting.
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col" style="text-align: left"><strong>Setting</strong></th>
+          <th scope="col" style="text-align: left"><strong>Symbol / config key</strong></th>
+          <th scope="col" style="text-align: left"><strong>Value(s)</strong></th>
+          <th scope="col" style="text-align: left"><strong>Used in</strong></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: left">Evidence uptake</td>
+          <td style="text-align: left">
+            <span
+              ><span class="math inline">\(u\)</span><br />
+              <code>update_sensitivity</code></span
+            >
+          </td>
+          <td style="text-align: left">
+            Sweep: <span class="math inline">\(\{0.2,0.4,0.6,0.8,1.0\}\)</span>; fixed prompt-baseline BE rows:
+            <span class="math inline">\(0.2\)</span>; Open-minded: <span class="math inline">\(0.40\)</span>; Stubborn:
+            <span class="math inline">\(0.10\)</span>
+          </td>
+          <td style="text-align: left">Parameter sweeps, prompt-baseline comparison, profile grids</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Prior anchoring</td>
+          <td style="text-align: left">
+            <span
+              ><span class="math inline">\(a\)</span><br />
+              <code>anchor_sensitivity</code></span
+            >
+          </td>
+          <td style="text-align: left">
+            Sweep: <span class="math inline">\(\{0.2,0.4,0.6,0.8,1.0\}\)</span>; fixed prompt-baseline BE rows:
+            <span class="math inline">\(0.4\)</span>; Open-minded: <span class="math inline">\(0.20\)</span>; Stubborn:
+            <span class="math inline">\(0.80\)</span>
+          </td>
+          <td style="text-align: left">Parameter sweeps, prompt-baseline comparison, profile grids</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Confirmation asymmetry</td>
+          <td style="text-align: left">
+            <span
+              ><span class="math inline">\(B\)</span><br />
+              <code>confirmation_bias</code></span
+            >
+          </td>
+          <td style="text-align: left"><span class="math inline">\(0.0\)</span></td>
+          <td style="text-align: left">All reported generated-agent runs</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Argument deduplication</td>
+          <td style="text-align: left">
+            <span
+              ><span class="math inline">\(\theta\)</span><br />
+              <code>argument_similarity</code><br />
+              <code>_threshold</code></span
+            >
+          </td>
+          <td style="text-align: left">
+            <span class="math inline">\(0.80\)</span> in model sweeps; <span class="math inline">\(0.60\)</span> in matched-baseline and
+            Open-minded/Stubborn profile runs
+          </td>
+          <td style="text-align: left">Memory admission and replacement</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Self-argument deduplication</td>
+          <td style="text-align: left">
+            <span
+              ><span class="math inline">\(\theta_{\mathrm{self}}\)</span><br />
+              <code>self_similarity</code><br />
+              <code>_threshold</code></span
+            >
+          </td>
+          <td style="text-align: left">
+            <span class="math inline">\(0.50\)</span> in model sweeps; <span class="math inline">\(0.45\)</span> in matched-baseline and profile runs
+          </td>
+          <td style="text-align: left">Self-generated argument filtering</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Seed arguments</td>
+          <td style="text-align: left">
+            <span
+              ><span class="math inline">\(n\)</span><br />
+              <code>seeding_limit</code></span
+            >
+          </td>
+          <td style="text-align: left">
+            Limit <span class="math inline">\(10\)</span> per side; <span class="math inline">\(8\)</span> admitted in single-agent sweeps
+          </td>
+          <td style="text-align: left">All generated-agent runs</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Retrieved context</td>
+          <td style="text-align: left"><span class="math inline">\(k\)</span></td>
+          <td style="text-align: left">At most <span class="math inline">\(5\)</span> active arguments per turn</td>
+          <td style="text-align: left">BE and RAG conditions</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Debate horizon</td>
+          <td style="text-align: left">
+            <span
+              ><span class="math inline">\(R\)</span><br />
+              <code>rounds</code></span
+            >
+          </td>
+          <td style="text-align: left"><span class="math inline">\(15\)</span> rounds</td>
+          <td style="text-align: left">All generated-agent runs</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Initial stance target</td>
+          <td style="text-align: left"><span class="math inline">\(S_0\)</span></td>
+          <td style="text-align: left">
+            Uptake sweeps: target <span class="math inline">\(+0.99\)</span>, realised <span class="math inline">\(+0.928\)</span>; anchoring sweeps:
+            seed-derived, varying with <span class="math inline">\(a\)</span>; two-agent comparisons and profile grids:
+            <span class="math inline">\((+0.75,-0.75)\)</span>
+          </td>
+          <td style="text-align: left">Initialisation</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Trials</td>
+          <td style="text-align: left">–</td>
+          <td style="text-align: left">
+            <span class="math inline">\(5\)</span> per sweep setting; <span class="math inline">\(3\)</span> per matched-baseline topic/setup and
+            profile-pairing cell
+          </td>
+          <td style="text-align: left">Aggregation</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Agent generation temperature</td>
+          <td style="text-align: left"><span class="math inline">\(T_{\mathrm{agent}}\)</span></td>
+          <td style="text-align: left"><span class="math inline">\(0.7\)</span></td>
+          <td style="text-align: left">Generated utterances</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">External stance judge</td>
+          <td style="text-align: left">–</td>
+          <td style="text-align: left">
+            Scores text in <span class="math inline">\([-1,1]\)</span> at temperature <span class="math inline">\(0.0\)</span> when no internal stance
+            is available
+          </td>
+          <td style="text-align: left">Prompt baselines</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<h3 id="sec:model-identifiers">H.2 Model identifiers</h3>
+<div>
+  <div
+    aria-label="Table A10. Model identifiers and evaluator roles used in the reported experiments. Release locations"
+    class="paper-table-scroll"
+    role="region"
+    tabindex="0"
+  >
+    <table id="tab:model-identifiers">
+      <caption>
+        Table A10. Model identifiers and evaluator roles used in the reported experiments. Release locations and reproduction instructions are given
+        in Appendix <a data-reference="sec:code-release-plan" data-reference-type="ref" href="#sec:code-release-plan">H.5</a
+        >.
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col" style="text-align: left"><strong>Use</strong></th>
+          <th scope="col" style="text-align: left"><strong>Model family / identifier</strong></th>
+          <th scope="col" style="text-align: left"><strong>Reporting note</strong></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: left">Generated BE sweeps</td>
+          <td style="text-align: left"><code>gpt-4o-mini</code>; Qwen 3.5 9B; Gemma 4 E4B</td>
+          <td style="text-align: left">
+            Used to test whether the same uptake/anchoring controls behave consistently across hosted and local model backends.
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Matched generated-agent and prompt baselines</td>
+          <td style="text-align: left"><code>gpt-5.4-mini</code></td>
+          <td style="text-align: left">Used for the two-agent comparison between BE, prompt self-update, and RAG.</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">External stance judge</td>
+          <td style="text-align: left"><code>gpt-5.4-mini</code></td>
+          <td style="text-align: left">
+            Zero-temperature judge used for prompt baselines, the common-evaluator comparison, and the stance-expression validation.
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: left">AQR extraction audit</td>
+          <td style="text-align: left"><code>gpt-4o-mini</code></td>
+          <td style="text-align: left">Used for the frozen extraction audit.</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Argument strength classifier</td>
+          <td style="text-align: left">DeBERTa-v3-large regressor</td>
+          <td style="text-align: left">Local classifier used to score support strength before stance updating.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<h3 id="sec:exact-prompts">H.3 Prompt families and call structure</h3>
+<p>
+  Runtime values are filled from the resolved config, retrieved memory, and transcript. Table <a
+    data-reference="tab:prompt-families"
+    data-reference-type="ref"
+    href="#tab:prompt-families"
+    >A11</a
+  >
+  lists each prompt family with its inputs and structured output. The implementation stores the prompt strings used by these components. Reproducing a
+  reported run also requires its configuration and code version.
+</p>
+<div>
+  <div aria-label="Table A11. Prompt families used by the LLM-facing components." class="paper-table-scroll" role="region" tabindex="0">
+    <table id="tab:prompt-families">
+      <caption>
+        Table A11. Prompt families used by the LLM-facing components.
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col" style="text-align: left"><strong>Component</strong></th>
+          <th scope="col" style="text-align: left"><strong>Inputs</strong></th>
+          <th scope="col" style="text-align: left"><strong>Structured output</strong></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: left">Argument extraction</td>
+          <td style="text-align: left">Topic and message text</td>
+          <td style="text-align: left">
+            JSON list of <code>{claim, evidence_snippets}</code> objects, with multi-point messages split into distinct claims.
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Argument classification</td>
+          <td style="text-align: left">Topic and extracted claims</td>
+          <td style="text-align: left">
+            JSON list of <code>{polarity, support_strength, category_tags}</code> objects in input order, with polarity fixed to affirmative or
+            negative.
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: left">BE response generation</td>
+          <td style="text-align: left">Persona, topic, current stance, retrieved memory, opponent message, and recent transcript</td>
+          <td style="text-align: left">A concise debate response conditioned on the explicit BE stance and retrieved evidence.</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Prompt-only baselines</td>
+          <td style="text-align: left">Previous self-reported stance, latest opponent message, transcript, and optional retrieved context</td>
+          <td style="text-align: left">JSON stance update plus response generation, without access to the stance update rule.</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">External stance judge</td>
+          <td style="text-align: left">Topic, speaker name, and one generated statement</td>
+          <td style="text-align: left">
+            JSON stance score in <span class="math inline">\([-1,1]\)</span>, measuring expressed support for the proposition as written.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<h4 id="argument-extractor-prompt.">Argument extractor prompt.</h4>
+<p>We prompt the argument extractor using the following prompt, where <code>{topic}</code> is the debate topic.</p>
+<pre
+  data-basicstyle="\ttfamily\scriptsize"
+  data-breaklines="true"
+  data-columns="fullflexible"
+  data-frame="single"
+  data-keepspaces="true"
+><code>You are an expert conversational argument extractor.
+Your task is to identify and extract distinct persuasive points from a casual chat debate regarding the topic: "{topic}".
+
+Extraction rules:
+- Extract ANY stated reason, belief, anecdote, concern, rhetorical question, or personal feeling that acts as persuasion.
+- Only ignore pure filler ("hello", "how are you", "I have to go").
+- If the message contains multiple distinct points, extract them separately.
+- Re-phrase rhetorical questions or anecdotes into clear, standalone claims.
+
+For each argument, identify:
+1. The canonical claim: A clear, standalone sentence summarizing the point.
+2. Evidence snippets: Specific quotes from the text that support this claim.
+
+Output must be a valid JSON list of objects.
+Example:
+[
+    {
+        "claim": "Intermittent fasting helps control weight by limiting eating windows.",
+        "evidence_snippets": ["I would fast one day a week and be off of on the other six days"]
+    }
+]</code></pre>
+<h3 id="sec:asset-licences">H.4 Existing assets and licences</h3>
+<p>
+  Table <a data-reference="tab:existing-assets" data-reference-type="ref" href="#tab:existing-assets">A12</a> lists the external datasets, model
+  families, and hosted services used in the reported experiments. We cite datasets and model families where they are introduced in the main text. The
+  DEBATE source is <a class="uri" href="https://huggingface.co/datasets/seantw/DEBATE_LLM">https://huggingface.co/datasets/seantw/DEBATE_LLM</a>, and
+  the other Hugging Face entries are repository identifiers. The release does not redistribute third-party datasets, hosted-model weights, or raw
+  proprietary API responses. Appendix <a data-reference="sec:code-release-plan" data-reference-type="ref" href="#sec:code-release-plan">H.5</a>
+  describes the included results and release status.
+</p>
+<div>
+  <div
+    aria-label="Table A12. Existing assets used in the reported experiments, with source, licence or access terms, a"
+    class="paper-table-scroll"
+    role="region"
+    tabindex="0"
+  >
+    <table id="tab:existing-assets">
+      <caption>
+        Table A12. Existing assets used in the reported experiments, with source, licence or access terms, and redistribution handling.
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col" style="text-align: left"><strong>Asset</strong></th>
+          <th scope="col" style="text-align: left"><strong>Use</strong></th>
+          <th scope="col" style="text-align: left"><strong>Source and licence / terms</strong></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: left">DEBATE_LLM dataset</td>
+          <td style="text-align: left">Human transcript replay and pre/post opinion validation</td>
+          <td style="text-align: left">
+            Chuang et al. [<a href="#ref-chuang2025debate">3</a>]; Hugging Face <code>seantw/DEBATE_LLM</code>; DEBATE Dataset Research-Only License
+            (Non-Commercial, v1.0). Not redistributed.
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: left">AQR / IBM argument-quality ranking data</td>
+          <td style="text-align: left">Seed arguments and crowd-rated argument-quality labels for judgement diagnostics</td>
+          <td style="text-align: left">
+            Gretz et al. [<a href="#ref-Gretz2019argumentquality">42</a>]; Hugging Face <code>ibm/argument_quality_ranking_30k</code>; CC-BY-SA 3.0.
+            Not redistributed.
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: left">DeBERTa-v3-large</td>
+          <td style="text-align: left">Backbone for the local argument-strength regressor</td>
+          <td style="text-align: left">
+            He et al. [<a href="#ref-deberta2023paper">41</a>]; Hugging Face <code>microsoft/deberta-v3-large</code>; MIT licence. The fine-tuned
+            scorer is released separately (Appendix <a data-reference="sec:code-release-plan" data-reference-type="ref" href="#sec:code-release-plan"
+              >H.5</a
+            >).
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Qwen 3.5 9B</td>
+          <td style="text-align: left">Open-weight generated-agent base model</td>
+          <td style="text-align: left">Hugging Face <code>Qwen/Qwen3.5-9B</code>; Apache-2.0. Model weights not redistributed.</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Gemma 4 E4B</td>
+          <td style="text-align: left">Open-weight generated-agent base model</td>
+          <td style="text-align: left">Hugging Face <code>google/gemma-4-E4B-it</code>; Apache-2.0. Model weights not redistributed.</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">OpenAI API models</td>
+          <td style="text-align: left">Hosted generator, extraction-audit, and external-judge roles</td>
+          <td style="text-align: left">
+            Model identifiers in Table <a data-reference="tab:model-identifiers" data-reference-type="ref" href="#tab:model-identifiers">A10</a>;
+            provider API terms apply. Model weights are not accessed or redistributed.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<h3 id="sec:code-release-plan">H.5 Code and data release</h3>
+<p>
+  The code and reproduction materials are publicly available at
+  <a class="uri" href="https://github.com/joshuay1/belief-engine">https://github.com/joshuay1/belief-engine</a>, with the camera-ready version
+  archived as release <code>v1.0.0</code>. Original code is provided under the MIT licence. The release contains the agent implementation, versioned
+  stance-update rules, offline tests, and compact saved inputs for the reported analyses. The README gives a short setup guide, and
+  <code>REPRODUCING.md</code> explains how to rebuild the results without model calls. In particular, <code>make rebuild-paper</code> checks the six
+  camera-ready analysis packages, while <code>make rebuild-replay-stats</code> rebuilds the DEBATE fold statistics. A figure index maps the final
+  manuscript figures to their saved inputs. The original reviewer snapshot remains at
+  <a class="uri" href="https://anonymous.4open.science/r/belief-engine-684F">https://anonymous.4open.science/r/belief-engine-684F</a>.
+</p>
+<p>
+  The fine-tuned argument-quality scorer is publicly available at
+  <a class="uri" href="https://huggingface.co/joshcyang/belief-engine-argument-quality-deberta-v3-large"
+    >https://huggingface.co/joshcyang/belief-engine-argument-quality-deberta-v3-large</a
+  >, under release <code>original-2025-12-v1</code>. The repository configuration pins its full revision. The scorer takes claim text alone, truncates
+  and pads inputs to 128 tokens, and clips the raw regression output to <span class="math inline">\([0,1]\)</span> without a sigmoid. Its model card
+  provides download and verification instructions.
+</p>
+<p>
+  For analyses with saved model outputs, reproduction means rebuilding the reported summaries from those outputs. Live reruns additionally require
+  access to the relevant datasets and models and may produce different responses from hosted APIs. Third-party dataset access is described in Table <a
+    data-reference="tab:existing-assets"
+    data-reference-type="ref"
+    href="#tab:existing-assets"
+    >A12</a
+  >.
+</p>
+<h2 id="sec:two-agent-topic-grids">I Additional Two-Agent Topic Grids</h2>
+<p>
+  The remaining topic-level stance grids from the generated two-agent topic run appear in Figs. <a
+    data-reference="fig:two-agent-topic-grids-social-entrapment"
+    data-reference-type="ref"
+    href="#fig:two-agent-topic-grids-social-entrapment"
+    >A4</a
+  >–<a
+    data-reference="fig:two-agent-topic-grids-journalism-zero-tolerance"
+    data-reference-type="ref"
+    href="#fig:two-agent-topic-grids-journalism-zero-tolerance"
+    >A7</a
+  >, and Table <a data-reference="tab:two-agent-topic-convergence" data-reference-type="ref" href="#tab:two-agent-topic-convergence">A13</a> reports
+  the corresponding topic-level convergence values.
+</p>
+<div>
+  <div
+    aria-label="Table A13. Mean convergence in the ten-topic generated two-agent topic run. Convergence is the reduc"
+    class="paper-table-scroll"
+    role="region"
+    tabindex="0"
+  >
+    <table id="tab:two-agent-topic-convergence">
+      <caption>
+        Table A13. Mean convergence in the ten-topic generated two-agent topic run. Convergence is the reduction in pro–con stance distance from the
+        beginning to the end of the debate, averaged over three runs per topic–pairing cell.
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col" style="text-align: left">Topic</th>
+          <th scope="col" style="text-align: right">
+            <span
+              >Open/<br />
+              Open</span
+            >
+          </th>
+          <th scope="col" style="text-align: right">
+            <span
+              >Open/<br />
+              Stubborn</span
+            >
+          </th>
+          <th scope="col" style="text-align: right">
+            <span
+              >Stubborn/<br />
+              Open</span
+            >
+          </th>
+          <th scope="col" style="text-align: right">
+            <span
+              >Stubborn/<br />
+              Stubborn</span
+            >
+          </th>
+          <th scope="col" style="text-align: right">Mean</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align: left">Social media brings more harm than good</td>
+          <td style="text-align: right">1.255</td>
+          <td style="text-align: right">1.010</td>
+          <td style="text-align: right">1.399</td>
+          <td style="text-align: right">0.330</td>
+          <td style="text-align: right">0.999</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Homeopathy brings more harm than good</td>
+          <td style="text-align: right">0.515</td>
+          <td style="text-align: right">0.279</td>
+          <td style="text-align: right">0.360</td>
+          <td style="text-align: right">0.099</td>
+          <td style="text-align: right">0.313</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">Entrapment should be legalized</td>
+          <td style="text-align: right">0.611</td>
+          <td style="text-align: right">0.537</td>
+          <td style="text-align: right">0.334</td>
+          <td style="text-align: right">0.215</td>
+          <td style="text-align: right">0.424</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">We should adopt a zero-tolerance policy in schools</td>
+          <td style="text-align: right">1.091</td>
+          <td style="text-align: right">1.119</td>
+          <td style="text-align: right">1.021</td>
+          <td style="text-align: right">0.407</td>
+          <td style="text-align: right">0.910</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">We should introduce compulsory voting</td>
+          <td style="text-align: right">1.305</td>
+          <td style="text-align: right">1.167</td>
+          <td style="text-align: right">0.774</td>
+          <td style="text-align: right">0.357</td>
+          <td style="text-align: right">0.901</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">We should adopt an austerity regime</td>
+          <td style="text-align: right">1.436</td>
+          <td style="text-align: right">1.386</td>
+          <td style="text-align: right">0.860</td>
+          <td style="text-align: right">0.447</td>
+          <td style="text-align: right">1.032</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">We should legalize sex selection</td>
+          <td style="text-align: right">0.736</td>
+          <td style="text-align: right">0.951</td>
+          <td style="text-align: right">0.566</td>
+          <td style="text-align: right">0.221</td>
+          <td style="text-align: right">0.619</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">We should adopt atheism</td>
+          <td style="text-align: right">1.286</td>
+          <td style="text-align: right">1.238</td>
+          <td style="text-align: right">0.675</td>
+          <td style="text-align: right">0.317</td>
+          <td style="text-align: right">0.879</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">We should subsidize journalism</td>
+          <td style="text-align: right">1.289</td>
+          <td style="text-align: right">0.842</td>
+          <td style="text-align: right">1.287</td>
+          <td style="text-align: right">0.333</td>
+          <td style="text-align: right">0.938</td>
+        </tr>
+        <tr>
+          <td style="text-align: left">We should adopt libertarianism</td>
+          <td style="text-align: right">1.313</td>
+          <td style="text-align: right">1.291</td>
+          <td style="text-align: right">1.336</td>
+          <td style="text-align: right">0.577</td>
+          <td style="text-align: right">1.129</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<figure id="fig:two-agent-topic-grids-social-entrapment">
+  <div class="paper-panels paper-panels-1">
+    <a
+      aria-label="Open figure a4 panel 1 at full resolution"
+      class="paper-image-link"
+      href="/assets/img/papers/belief-engine/social_media_2agent_belief_grid.png"
+      ><img
+        alt="Figure A4 panel 1; description in the caption below"
+        decoding="async"
+        height="752"
+        loading="lazy"
+        src="/assets/img/papers/belief-engine/social_media_2agent_belief_grid.png"
+        style="aspect-ratio: 2400 / 752"
+        width="2400" /></a
+    ><a
+      aria-label="Open figure a4 panel 2 at full resolution"
+      class="paper-image-link"
+      href="/assets/img/papers/belief-engine/entrapment_2agent_belief_grid.png"
+      ><img
+        alt="Figure A4 panel 2; description in the caption below"
+        decoding="async"
+        height="752"
+        loading="lazy"
+        src="/assets/img/papers/belief-engine/entrapment_2agent_belief_grid.png"
+        style="aspect-ratio: 2400 / 752"
+        width="2400"
+    /></a>
+  </div>
+  <figcaption>
+    Figure A4. Additional generated two-agent topic grids. Top: Social media brings more harm than good. Bottom: Entrapment should be legalized.
+  </figcaption>
+</figure>
+<figure id="fig:two-agent-topic-grids-compulsory-austerity">
+  <div class="paper-panels paper-panels-1">
+    <a
+      aria-label="Open figure a5 panel 1 at full resolution"
+      class="paper-image-link"
+      href="/assets/img/papers/belief-engine/compulsory_voting_2agent_belief_grid.png"
+      ><img
+        alt="Figure A5 panel 1; description in the caption below"
+        decoding="async"
+        height="752"
+        loading="lazy"
+        src="/assets/img/papers/belief-engine/compulsory_voting_2agent_belief_grid.png"
+        style="aspect-ratio: 2400 / 752"
+        width="2400" /></a
+    ><a
+      aria-label="Open figure a5 panel 2 at full resolution"
+      class="paper-image-link"
+      href="/assets/img/papers/belief-engine/austerity_2agent_belief_grid.png"
+      ><img
+        alt="Figure A5 panel 2; description in the caption below"
+        decoding="async"
+        height="752"
+        loading="lazy"
+        src="/assets/img/papers/belief-engine/austerity_2agent_belief_grid.png"
+        style="aspect-ratio: 2400 / 752"
+        width="2400"
+    /></a>
+  </div>
+  <figcaption>Figure A5. Additional generated two-agent topic grids. Top: compulsory voting. Bottom: austerity.</figcaption>
+</figure>
+<figure id="fig:two-agent-topic-grids-sex-atheism">
+  <div class="paper-panels paper-panels-1">
+    <a
+      aria-label="Open figure a6 panel 1 at full resolution"
+      class="paper-image-link"
+      href="/assets/img/papers/belief-engine/sex_selection_2agent_belief_grid.png"
+      ><img
+        alt="Figure A6 panel 1; description in the caption below"
+        decoding="async"
+        height="752"
+        loading="lazy"
+        src="/assets/img/papers/belief-engine/sex_selection_2agent_belief_grid.png"
+        style="aspect-ratio: 2400 / 752"
+        width="2400" /></a
+    ><a
+      aria-label="Open figure a6 panel 2 at full resolution"
+      class="paper-image-link"
+      href="/assets/img/papers/belief-engine/atheism_2agent_belief_grid.png"
+      ><img
+        alt="Figure A6 panel 2; description in the caption below"
+        decoding="async"
+        height="752"
+        loading="lazy"
+        src="/assets/img/papers/belief-engine/atheism_2agent_belief_grid.png"
+        style="aspect-ratio: 2400 / 752"
+        width="2400"
+    /></a>
+  </div>
+  <figcaption>
+    Figure A6. Additional generated two-agent topic grids. Top: We should legalize sex selection. Bottom: We should adopt atheism.
+  </figcaption>
+</figure>
+<figure id="fig:two-agent-topic-grids-journalism-zero-tolerance">
+  <div class="paper-panels paper-panels-1">
+    <a
+      aria-label="Open figure a7 panel 1 at full resolution"
+      class="paper-image-link"
+      href="/assets/img/papers/belief-engine/journalism_2agent_belief_grid.png"
+      ><img
+        alt="Figure A7 panel 1; description in the caption below"
+        decoding="async"
+        height="752"
+        loading="lazy"
+        src="/assets/img/papers/belief-engine/journalism_2agent_belief_grid.png"
+        style="aspect-ratio: 2400 / 752"
+        width="2400" /></a
+    ><a
+      aria-label="Open figure a7 panel 2 at full resolution"
+      class="paper-image-link"
+      href="/assets/img/papers/belief-engine/zero_tolerance_schools_2agent_belief_grid.png"
+      ><img
+        alt="Figure A7 panel 2; description in the caption below"
+        decoding="async"
+        height="752"
+        loading="lazy"
+        src="/assets/img/papers/belief-engine/zero_tolerance_schools_2agent_belief_grid.png"
+        style="aspect-ratio: 2400 / 752"
+        width="2400"
+    /></a>
+  </div>
+  <figcaption>
+    Figure A7. Additional generated two-agent topic grids. Top: We should subsidize journalism. Bottom: We should adopt a zero-tolerance policy in
+    schools.
+  </figcaption>
+</figure>
+
+{% endraw %}

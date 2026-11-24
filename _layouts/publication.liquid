@@ -19,17 +19,20 @@ layout: default
           {% endunless %}
         {% endif %}
       </p>
-      {% if publication.pdf_url or publication.source_url %}
+      {% if publication.pdf_url or publication.source_url or publication.apa or publication.bibtex %}
         <nav class="publication-links" aria-label="Paper links">
           {% if publication.pdf_url %}
             {% assign pdf_url = publication.pdf_url %}
             {% unless pdf_url contains '://' %}{% assign pdf_url = pdf_url | relative_url %}{% endunless %}
-            <a href="{{ pdf_url }}">Read the paper (PDF)</a>
+            <a href="{{ pdf_url }}">Download PDF</a>
           {% endif %}
           {% if publication.source_url and publication.source_url != publication.pdf_url %}
             <a href="{{ publication.source_url }}">
               {%- if publication.arxiv -%}arXiv{%- elsif publication.doi -%}Published paper{%- else -%}Read the paper{%- endif -%}
             </a>
+          {% endif %}
+          {% if publication.apa or publication.bibtex %}
+            <a href="#cite-this-paper">Cite this paper</a>
           {% endif %}
         </nav>
       {% endif %}
@@ -44,6 +47,25 @@ layout: default
       {% endif %}
       {{ content }}
     </div>
+    {% if publication.apa or publication.bibtex %}
+      <section class="paper-citation" id="cite-this-paper" aria-labelledby="paper-citation-title">
+        <h2 id="paper-citation-title">Cite this paper</h2>
+        {% if publication.apa %}
+          <p id="paper-citation-text">{{ publication.apa | escape }}</p>
+          <button type="button" class="paper-copy-button" data-copy-target="paper-citation-text">Copy citation</button>
+        {% endif %}
+        {% if publication.bibtex %}
+          <details class="paper-bibtex">
+            <summary>BibTeX</summary>
+            <pre><code id="paper-bibtex-text">{{ publication.bibtex | escape }}</code></pre>
+            <button type="button" class="paper-copy-button" data-copy-target="paper-bibtex-text">Copy BibTeX</button>
+            <button type="button" class="paper-copy-button" data-download-bibtex="{{ publication.slug | escape }}">Download .bib</button>
+          </details>
+        {% endif %}
+        <p class="paper-copy-status" role="status" aria-live="polite"></p>
+      </section>
+      <script defer src="{{ '/assets/js/paper-citation.js' | relative_url }}"></script>
+    {% endif %}
   </article>
 {% else %}
   <div class="post">
